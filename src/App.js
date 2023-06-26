@@ -1,10 +1,5 @@
 function App() {
-  console.log("hello");
-  return (
-    <div>
-      <h1>hello</h1>
-    </div>
-  );
+  return <></>;
 }
 
 export default App;
