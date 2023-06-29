@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { FaBars, FaRegUser } from "react-icons/fa6";
-import { HiOutlineLockClosed } from "react-icons/hi2";
+import { FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import LoginInput from "../component/LoginInput";
+import CheckBox from "../component/CheckBox";
 
 function LoginPage() {
   // styled-component CSS작업
@@ -57,30 +58,6 @@ function LoginPage() {
     flex-direction: column;
   `;
 
-  const InputDiv = styled.div`
-    width: 486px;
-    height: 64px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    background-color: white;
-    padding: 20px 20px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  `;
-
-  const Input = styled.input`
-    border: none;
-    background: none;
-  `;
-
-  const CheckBoxDiv = styled.div`
-    margin-bottom: 20px;
-  `;
-
-  const CheckBoxLabel = styled.label``;
-
   const SubmitButton = styled.button`
     height: 64px;
     padding: 10px;
@@ -128,20 +105,9 @@ function LoginPage() {
         <MainDiv>
           <Logo>와글와글</Logo>
           <Form>
-            <InputDiv>
-              <FaRegUser />
-              <Input type="text" placeholder="호명을 적어주시오." />
-            </InputDiv>
-            <InputDiv>
-              <HiOutlineLockClosed />
-              <Input type="password" placeholder="암호를 적어주시오." />
-            </InputDiv>
-            <CheckBoxDiv>
-              <Input type="checkbox" id="checkbox_input" />
-              <CheckBoxLabel htmlFor="checkbox_input">
-                호명 기억하기
-              </CheckBoxLabel>
-            </CheckBoxDiv>
+            <LoginInput type="text" />
+            <LoginInput type="password" />
+            <CheckBox labelName="호명 기억하기" />
             <SubmitButton type="submit">이리 오너라</SubmitButton>
           </Form>
           <JoinDiv>
