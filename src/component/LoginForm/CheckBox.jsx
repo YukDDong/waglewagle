@@ -1,10 +1,6 @@
 import { styled } from "styled-components";
 
-function CheckBox({ labelName }) {
-  const CheckBoxDiv = styled.div`
-    margin-bottom: 20px;
-  `;
-
+export default function CheckBox({ labelName }) {
   return (
     <CheckBoxDiv>
       <input type="checkbox" id="checkbox_input" />
@@ -13,4 +9,9 @@ function CheckBox({ labelName }) {
   );
 }
 
-export default CheckBox;
+const CheckBoxDiv = styled.div`
+  margin-bottom: 20px;
+  > label {
+    color: #929292;
+  }
+`;
