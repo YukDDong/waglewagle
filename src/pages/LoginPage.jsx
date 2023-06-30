@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import LoginInput from "../component/LoginInput";
-import CheckBox from "../component/CheckBox";
+import LoginForm from "../component/LoginForm/LoginForm";
 
 function LoginPage() {
   // styled-component CSS작업
@@ -53,22 +52,6 @@ function LoginPage() {
     margin-bottom: 30px;
   `;
 
-  const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-  `;
-
-  const SubmitButton = styled.button`
-    height: 64px;
-    padding: 10px;
-    box-sizing: border-box;
-    color: white;
-    font-size: large;
-    background-color: #e75852;
-    border: none;
-    border-radius: 6px;
-  `;
-
   const JoinDiv = styled.div`
     width: 486px;
     display: flex;
@@ -104,12 +87,7 @@ function LoginPage() {
       <Main>
         <MainDiv>
           <Logo>와글와글</Logo>
-          <Form>
-            <LoginInput type="text" />
-            <LoginInput type="password" />
-            <CheckBox labelName="호명 기억하기" />
-            <SubmitButton type="submit">이리 오너라</SubmitButton>
-          </Form>
+          <LoginForm />
           <JoinDiv>
             <p>
               자네, 이곳은 처음이오?
