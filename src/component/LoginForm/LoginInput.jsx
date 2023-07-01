@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineLockClosed, HiOutlineUser } from "react-icons/hi2";
 import { styled } from "styled-components";
 
@@ -22,6 +22,7 @@ function LoginInput({ type }) {
         placeholder={
           type === "text" ? "호명을 적어주시오." : "암호를 적어주시오."
         }
+        name={type === "text" ? "username" : "password"}
       />
     </InputDiv>
   );
