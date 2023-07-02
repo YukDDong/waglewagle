@@ -1,10 +1,22 @@
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import LoginForm from "../component/LoginForm/LoginForm";
-import SocialLogin from "../component/socialLogin/SocialLogin";
+import LoginForm from "../../component/LoginForm/LoginForm";
+import SocialLogin from "../../component/socialLogin/SocialLogin";
+import { useCallback, useEffect, useState } from "react";
 
-export default function LoginPage() {
+export default function Login() {
+  const [loginId, setLoginId] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const getUserInfo = useCallback((id, password) => {
+    setLoginId(id);
+    setLoginPassword(password);
+  }, []);
+
+  const onSubmit = useCallback(() => {
+    console.log(loginId, loginPassword);
+  }, [loginId, loginPassword]);
+
   return (
     <>
       <NavBar>
@@ -14,7 +26,7 @@ export default function LoginPage() {
       <Main>
         <MainDiv>
           <Logo>와글와글</Logo>
-          <LoginForm />
+          <LoginForm getUserInfo={getUserInfo} onSubmit={onSubmit} />
           <JoinDiv>
             <p>
               자네, 이곳은 처음이오?
