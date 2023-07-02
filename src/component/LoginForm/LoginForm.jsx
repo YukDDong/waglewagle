@@ -3,24 +3,32 @@ import CheckBox from "./CheckBox";
 import { HiOutlineLockClosed, HiOutlineUser } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import useInput from "../../hooks/useInput";
+import { useLocation } from "react-router-dom";
 
-export default function LoginForm({ getUserInfo, onSubmit }) {
+export default function LoginForm({ getUserInfo, onSubmit, joinUserInfo }) {
+  const location = useLocation().pathname;
   const [isFocus, setIsFocus] = useState("");
-  const [username, setUsername, resetUsername] = useInput("");
-  const [password, setPassword, resetPassword] = useInput("");
+  const [{ nickName, userId, password, checkPassword }, setForm, resetForm] =
+    useInput({
+      nickName: "",
+      userId: "",
+      password: "",
+      checkPassword: "",
+    });
   // input focus/blur시에 아이콘의 색상변경을 위한 상태값
   const onFocus = (e) => setIsFocus(e.currentTarget.name);
   const onBlur = () => setIsFocus("");
 
   useEffect(() => {
-    getUserInfo(username, password);
-  }, [username, password]);
+    location === "/login"
+      ? getUserInfo(userId, password)
+      : joinUserInfo(nickName, userId, password, checkPassword);
+  }, [nickName, userId, password, checkPassword]);
 
   const onClick = (e) => {
     e.preventDefault();
     onSubmit();
-    resetUsername();
-    resetPassword();
+    resetForm();
   };
 
   return (
@@ -28,16 +36,20 @@ export default function LoginForm({ getUserInfo, onSubmit }) {
       <InputDiv>
         <HiOutlineUser
           size={20}
-          color={isFocus === "username" ? "red" : "black"}
+          color={isFocus === "userId" ? "red" : "black"}
         />
         <input
           type="text"
           onFocus={onFocus}
           onBlur={onBlur}
-          onChange={setUsername}
-          value={username}
-          placeholder="호명을 적어주시오."
-          name="username"
+          onChange={setForm}
+          value={userId}
+          placeholder={
+            location === "/login"
+              ? "호명을 적어주시오."
+              : "이메일을 적어주세요."
+          }
+          name="userId"
           required
         />
       </InputDiv>
@@ -50,15 +62,17 @@ export default function LoginForm({ getUserInfo, onSubmit }) {
           type="password"
           onFocus={onFocus}
           onBlur={onBlur}
-          onChange={setPassword}
+          onChange={setForm}
           value={password}
           placeholder={"암호를 적어주시오."}
           name="password"
           required
         />
       </InputDiv>
-      <CheckBox labelName="호명 기억하기" />
-      <SubmitButton onClick={onClick}>이리 오너라</SubmitButton>
+      {location === "/login" ? <CheckBox labelName="호명 기억하기" /> : null}
+      <SubmitButton onClick={onClick}>
+        {location === "/login" ? "이리 오너라" : "회원가입하기"}
+      </SubmitButton>
     </Form>
   );
 }

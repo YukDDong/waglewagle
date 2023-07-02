@@ -1,15 +1,16 @@
 import { useCallback, useState } from "react";
 
 export default function useInput(initialValue) {
-  const [value, setValue] = useState(initialValue);
+  const [form, setForm] = useState(initialValue);
 
   const onChange = useCallback((e) => {
-    setValue(e.target.value);
+    const { name, value } = e.target;
+    setForm((form) => ({ ...form, [name]: value }));
   }, []);
 
   const reset = useCallback(() => {
-    setValue(initialValue);
+    setForm(initialValue);
   }, [initialValue]);
 
-  return [value, onChange, reset];
+  return [form, onChange, reset];
 }
