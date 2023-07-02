@@ -1,28 +1,31 @@
 import styled from "styled-components";
-import { FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import LoginForm from "../../component/LoginForm/LoginForm";
 import SocialLogin from "../../component/socialLogin/SocialLogin";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import NavBar from "../../component/NavBar/NavBar";
 
 export default function Login() {
-  const [loginId, setLoginId] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const getUserInfo = useCallback((id, password) => {
-    setLoginId(id);
-    setLoginPassword(password);
+  // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
+  const [{ loginId, loginPassword }, setLoginInfo] = useState({
+    loginId: "",
+    loginPassword: "",
+  });
+  const getUserInfo = useCallback((userId, password) => {
+    setLoginInfo({
+      loginId: userId,
+      loginPassword: password,
+    });
   }, []);
 
+  // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = useCallback(() => {
     console.log(loginId, loginPassword);
   }, [loginId, loginPassword]);
 
   return (
     <>
-      <NavBar>
-        <NavLogo>와글와글</NavLogo>
-        <FaBars color="white" size={27} />
-      </NavBar>
+      <NavBar />
       <Main>
         <MainDiv>
           <Logo>와글와글</Logo>
@@ -46,26 +49,6 @@ export default function Login() {
 }
 
 // styled-component CSS작업
-const NavBar = styled.nav`
-  width: 100%;
-  height: 70px;
-  background-color: rgba(26, 42, 83, 1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 10px;
-  box-sizing: border-box;
-`;
-
-const NavLogo = styled.h1`
-  width: 170px;
-  height: 40px;
-  background-color: rgba(139, 139, 139, 0.3);
-  font-size: 35px;
-  text-align: center;
-  line-height: 40px;
-  color: white;
-`;
 
 const Main = styled.main`
   width: 100%;
