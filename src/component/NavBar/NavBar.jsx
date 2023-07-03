@@ -21,7 +21,7 @@ const Nav = styled.nav`
   box-sizing: border-box;
 `;
 
-const NavLogo = styled.h1`
+const NavLogo = styled.h2`
   width: 170px;
   height: 40px;
   background-color: rgba(139, 139, 139, 0.3);

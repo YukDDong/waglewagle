@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import LoginForm from "../../component/LoginForm/LoginForm";
+import LoginForm from "../../component/Form/LoginForm";
 import SocialLogin from "../../component/socialLogin/SocialLogin";
 import { useCallback, useState } from "react";
 import NavBar from "../../component/NavBar/NavBar";
@@ -11,10 +11,10 @@ export default function Login() {
     loginId: "",
     loginPassword: "",
   });
-  const getUserInfo = useCallback((userId, password) => {
+  const getUserInfo = useCallback((form) => {
     setLoginInfo({
-      loginId: userId,
-      loginPassword: password,
+      loginId: form.userId,
+      loginPassword: form.password,
     });
   }, []);
 
