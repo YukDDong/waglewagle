@@ -1,13 +1,13 @@
 import { styled } from "styled-components";
 import useInput from "../../hooks/useInput";
 import {
-  HiEnvelope,
+  HiOutlineEnvelope,
   HiOutlineLockClosed,
   HiOutlineUser,
 } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 
-export default function Input({ icon, type, placeholder, name, updateForm }) {
+export default function Input({ icon, updateForm, name, ...rest }) {
   const [input, setInput] = useInput("");
   const [isFocus, setIsFocus] = useState(false);
   const onFocusChange = () => {
@@ -27,7 +27,9 @@ export default function Input({ icon, type, placeholder, name, updateForm }) {
               <HiOutlineUser size={20} color={isFocus ? "red" : "black"} />
             );
           case "Email":
-            return <HiEnvelope size={20} color={isFocus ? "red" : "black"} />;
+            return (
+              <HiOutlineEnvelope size={20} color={isFocus ? "red" : "black"} />
+            );
           case "Password":
             return (
               <HiOutlineLockClosed
@@ -40,12 +42,11 @@ export default function Input({ icon, type, placeholder, name, updateForm }) {
         }
       })()}
       <input
-        type={type}
+        {...rest}
+        value={input}
         onFocus={onFocusChange}
         onBlur={onFocusChange}
         onChange={setInput}
-        value={input}
-        placeholder={placeholder}
         name={name}
         required
       />
@@ -63,6 +64,7 @@ const InputDiv = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  margin-top: 15px;
   margin-bottom: 5px;
   &:focus-within {
     border: 1px solid red;
@@ -74,6 +76,9 @@ const InputDiv = styled.div`
     border: none;
     background: none;
     margin-left: 10px;
+    &::placeholder {
+      color: #9e9e9e;
+    }
     &:focus {
       outline: none;
       &::placeholder {
