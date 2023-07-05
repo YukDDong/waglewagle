@@ -10,7 +10,6 @@ export default function CheckBox({ labelName }) {
 }
 
 const CheckBoxDiv = styled.div`
-  margin-bottom: 20px;
   > label {
     color: #929292;
   }
