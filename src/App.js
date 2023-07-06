@@ -4,7 +4,7 @@ import Login from "./pages/Login/Login";
 import Join from "./pages/Join/Join";
 import "./App.css";
 
-const router = createBrowserRouter([
+const routes = [
   {
     path: "/",
     element: <Onboarding />,
@@ -17,7 +17,9 @@ const router = createBrowserRouter([
     path: "/join",
     element: <Join />,
   },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 function App() {
   return <RouterProvider router={router} />;
