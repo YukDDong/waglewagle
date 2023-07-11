@@ -1,10 +1,7 @@
 import { styled } from "styled-components";
 import useInput from "../../hooks/useInput";
-import {
-  HiOutlineEnvelope,
-  HiOutlineLockClosed,
-  HiOutlineUser,
-} from "react-icons/hi2";
+import { ReactComponent as UserIcon } from "../../assets/octicon-person-24.svg";
+import { ReactComponent as PasswordIcon } from "../../assets/icons-8-lock-2.svg";
 import { useEffect, useState } from "react";
 
 export default function Input({ icon, updateForm, name, ...rest }) {
@@ -23,20 +20,9 @@ export default function Input({ icon, updateForm, name, ...rest }) {
       {(() => {
         switch (icon) {
           case "User":
-            return (
-              <HiOutlineUser size={20} color={isFocus ? "red" : "black"} />
-            );
-          case "Email":
-            return (
-              <HiOutlineEnvelope size={20} color={isFocus ? "red" : "black"} />
-            );
+            return <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
           case "Password":
-            return (
-              <HiOutlineLockClosed
-                size={20}
-                color={isFocus ? "red" : "black"}
-              />
-            );
+            return <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
           default:
             break;
         }
@@ -55,19 +41,19 @@ export default function Input({ icon, updateForm, name, ...rest }) {
 }
 
 const InputDiv = styled.div`
-  width: 486px;
+  width: 438px;
   height: 64px;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: white;
-  padding: 20px 20px;
+  border: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  padding: 0 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  margin-top: 15px;
   margin-bottom: 5px;
   &:focus-within {
-    border: 1px solid red;
+    border: 1px solid #e75852;
+    background-color: #fff;
   }
   > input {
     width: 100%;
@@ -76,13 +62,27 @@ const InputDiv = styled.div`
     border: none;
     background: none;
     margin-left: 10px;
+    color: #bdbdbd;
+    font-family: Noto Sans KR;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.64px;
     &::placeholder {
-      color: #9e9e9e;
+      color: #bdbdbd;
     }
     &:focus {
       outline: none;
+      color: #222;
+      font-family: Noto Sans KR;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0.64px;
       &::placeholder {
-        color: red;
+        color: #e75852;
       }
     }
   }
