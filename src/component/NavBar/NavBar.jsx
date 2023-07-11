@@ -1,32 +1,40 @@
-import { FaBars } from "react-icons/fa6";
 import { styled } from "styled-components";
+import { ReactComponent as NavIcon } from "../../assets/ic_baseline_menu.svg";
 
 export default function NavBar() {
   return (
     <Nav>
       <NavLogo>와글와글</NavLogo>
-      <FaBars color="white" size={27} />
+      <NavIconDiv>
+        <NavIcon width={42} height={42} fill="black" />
+      </NavIconDiv>
     </Nav>
   );
 }
 
 const Nav = styled.nav`
   width: 100%;
-  height: 70px;
-  background-color: rgba(26, 42, 83, 1);
+  height: 120px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 0px 10px;
   box-sizing: border-box;
 `;
 
-const NavLogo = styled.h2`
-  width: 170px;
-  height: 40px;
-  background-color: rgba(139, 139, 139, 0.3);
-  font-size: 35px;
+const NavLogo = styled.p`
+  width: 180px;
+  height: 55px;
+  font-size: 36px;
   text-align: center;
-  line-height: 40px;
-  color: white;
+  font-family: "EBSHunminjeongeumSBA";
+`;
+
+const NavIconDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 168px;
+  background-image: url("../../assets/rectangle-33.svg");
 `;

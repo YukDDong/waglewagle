@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import LoginForm from "../../component/Form/LoginForm";
+import Form from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function Join() {
         <MainDiv>
           <Title>호패 만들기</Title>
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-          <LoginForm joinUserInfo={joinUserInfo} onSubmit={onJoinSubmit} />
+          <Form joinUserInfo={joinUserInfo} onSubmit={onJoinSubmit} />
           <ToLogin>
             이미 와글와글 계정이 있으신가요?{" "}
             <Link to={"/login"}>로그인하기</Link>
