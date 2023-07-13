@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import CheckBox from "./CheckBox";
+import CheckBox from "../CheckBox/CheckBox";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Input from "./Input";
+import Input from "../Input/Input";
 import Button from "../Button/Button";
 
 export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
-    nickName: "",
     userId: "",
     password: "",
     checkPassword: "",
@@ -36,7 +35,7 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
   };
 
   return (
-    <FormComponent>
+    <FormComponent location={location}>
       <Input
         icon={"User"}
         type={"email"}
@@ -58,7 +57,8 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
         </LoginCheckDiv>
       ) : (
         <CheckInfo>
-          6~16자, 영문 대.소문자, 숫자, 특수문자 중 2개 이상 사용하세요.{" "}
+          <span>* </span>
+          6~16자, 영문 대.소문자, 숫자, 특수문자 중 2개 이상 사용하세요.
         </CheckInfo>
       )}
       {location !== "/login" && (
@@ -70,12 +70,14 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
           updateForm={updateForm}
         />
       )}
-      <Button buttonText={"로그인"} onClick={onClick}></Button>
       <Button
-        buttonText={"회원가입"}
-        onClick={linkToJoin}
-        color={"white"}
-      ></Button>
+        buttonText={location === "/login" ? "로그인" : "회원가입"}
+        onClick={onClick}
+        location={location}
+      />
+      {location === "/login" && (
+        <Button buttonText={"회원가입"} onClick={linkToJoin} color={"white"} />
+      )}
     </FormComponent>
   );
 }
@@ -83,7 +85,7 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
 const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: ${(props) => (props.location === "/login" ? "40px" : "20px")};
 `;
 
 const LoginCheckDiv = styled.div`
@@ -109,8 +111,13 @@ const LinkItem = styled(Link)`
 
 const CheckInfo = styled.span`
   display: block;
-  font-size: 12px;
   color: #9e9e9e;
-  padding-left: 10px;
-  box-sizing: border-box;
+  font-family: Noto Sans KR;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  > span {
+    color: #e75852;
+  }
 `;

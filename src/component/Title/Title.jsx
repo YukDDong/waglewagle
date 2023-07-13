@@ -5,7 +5,7 @@ export default function Title({ title }) {
 }
 
 const TitleComponent = styled.h1`
-  width: 135px;
+  width: 180px;
   height: 50px;
   text-align: center;
   font-size: 46px;

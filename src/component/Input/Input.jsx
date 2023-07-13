@@ -2,11 +2,16 @@ import { styled } from "styled-components";
 import useInput from "../../hooks/useInput";
 import { ReactComponent as UserIcon } from "../../assets/octicon-person-24.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/icons-8-lock-2.svg";
+import { ReactComponent as ClosedEyeIcon } from "../../assets/humbleicons-eye-close.svg";
+import { ReactComponent as OpendEyeIcon } from "../../assets/fluent-eye-12-filled.svg";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export default function Input({ icon, updateForm, name, ...rest }) {
+export default function Input({ icon, updateForm, name, type, ...rest }) {
+  const location = useLocation().pathname;
   const [input, setInput] = useInput("");
   const [isFocus, setIsFocus] = useState(false);
+  const [passwordShowing, setPasswordShowing] = useState(false);
   const onFocusChange = () => {
     setIsFocus((isFocus) => !isFocus);
   };
@@ -15,7 +20,7 @@ export default function Input({ icon, updateForm, name, ...rest }) {
   }, [name, input]);
 
   return (
-    <InputDiv>
+    <InputDiv location={location}>
       {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
       {(() => {
         switch (icon) {
@@ -29,6 +34,9 @@ export default function Input({ icon, updateForm, name, ...rest }) {
       })()}
       <input
         {...rest}
+        type={
+          type !== "password" ? type : passwordShowing ? "text" : "password"
+        }
         value={input}
         onFocus={onFocusChange}
         onBlur={onFocusChange}
@@ -36,6 +44,15 @@ export default function Input({ icon, updateForm, name, ...rest }) {
         name={name}
         required
       />
+      {location === "/join" && icon === "Password" ? (
+        <EyeIconBtn
+          onClick={() =>
+            setPasswordShowing((passwordShowing) => !passwordShowing)
+          }
+        >
+          {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
+        </EyeIconBtn>
+      ) : null}
     </InputDiv>
   );
 }
@@ -50,7 +67,8 @@ const InputDiv = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-top: ${(props) => (props.location === "/join" ? "20px" : null)};
+  margin-bottom: ${(props) => (props.location === "/login" ? "5px" : null)};
   &:focus-within {
     border: 1px solid #e75852;
     background-color: #fff;
@@ -62,7 +80,7 @@ const InputDiv = styled.div`
     border: none;
     background: none;
     margin-left: 10px;
-    color: #bdbdbd;
+    color: #222;
     font-family: Noto Sans KR;
     font-size: 16px;
     font-style: normal;
@@ -86,4 +104,12 @@ const InputDiv = styled.div`
       }
     }
   }
+`;
+
+const EyeIconBtn = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
 `;

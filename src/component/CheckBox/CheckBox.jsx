@@ -26,14 +26,3 @@ const CheckBoxDiv = styled.div`
     letter-spacing: 0.64px;
   }
 `;
-
-// input[id="check1"]:checked + label::after{
-//   content:'✔';
-//   font-size: 25px;
-//   width: 30px;
-//   height: 30px;
-//   text-align: center;
-//   position: absolute;
-//   left: 0;
-//   top:0;
-// }
