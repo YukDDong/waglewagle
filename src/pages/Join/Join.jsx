@@ -28,12 +28,11 @@ export default function Join() {
       <NavBar />
       <Main>
         <MainDiv>
-          <Title title={"회원가입"} />
+          <Title title="회원가입" />
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
           <Form joinUserInfo={joinUserInfo} onSubmit={onJoinSubmit} />
           <ToLogin>
-            이미 와글와글 계정이 있으신가요?{" "}
-            <Link to={"/login"}>로그인하기</Link>
+            이미 와글와글 계정이 있으신가요? <Link to="/login">로그인하기</Link>
           </ToLogin>
         </MainDiv>
       </Main>

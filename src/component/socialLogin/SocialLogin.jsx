@@ -4,23 +4,16 @@ import googleIconPath from "../../assets/symbol-google.svg";
 import naverIconPath from "../../assets/symbol-naver.svg";
 
 export default function SocialLogin() {
+  const socialList = ["kakao", "google", "naver"];
   return (
     <Container>
-      <SocialIconBox>
-        <IconImg social="kakao">
-          <span></span>
-        </IconImg>
-      </SocialIconBox>
-      <SocialIconBox>
-        <IconImg social="google">
-          <span></span>
-        </IconImg>
-      </SocialIconBox>
-      <SocialIconBox>
-        <IconImg social="naver">
-          <span></span>
-        </IconImg>
-      </SocialIconBox>
+      {socialList.map((social, index) => (
+        <SocialIconBox key={index}>
+          <IconImg social={social}>
+            <span />
+          </IconImg>
+        </SocialIconBox>
+      ))}
     </Container>
   );
 }

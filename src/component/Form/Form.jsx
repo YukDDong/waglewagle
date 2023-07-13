@@ -37,36 +37,32 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
   return (
     <FormComponent location={location}>
       <Input
-        icon={"User"}
-        type={"email"}
-        placeholder={"이메일을 적어주세요."}
-        name={"userId"}
+        icon="User"
+        type="email"
+        placeholder="이메일을 적어주세요."
+        name="userId"
         updateForm={updateForm}
       />
       <Input
-        icon={"Password"}
-        type={"password"}
-        placeholder={"비밀번호를 적어주세요."}
-        name={"password"}
+        icon="Password"
+        type="password"
+        placeholder="비밀번호를 적어주세요."
+        name="password"
         updateForm={updateForm}
       />
-      {location === "/login" ? (
+      {location === "/login" && (
         <LoginCheckDiv>
           <CheckBox labelName="이메일, 비밀번호 저장" />
-          <LinkItem to={"/find_password"}>비밀번호 찾기</LinkItem>
+          <LinkItem to="/find_password">비밀번호 찾기</LinkItem>
         </LoginCheckDiv>
-      ) : (
-        <CheckInfo>
-          <span>* </span>
-          6~16자, 영문 대.소문자, 숫자, 특수문자 중 2개 이상 사용하세요.
-        </CheckInfo>
       )}
       {location !== "/login" && (
         <Input
-          icon={"Password"}
-          type={"password"}
-          placeholder={"비밀번호를 한번 더 적어주세요."}
-          name={"checkPassword"}
+          icon="Password"
+          type="password"
+          placeholder="비밀번호를 한번 더 적어주세요."
+          name="checkPassword"
+          password={form.password}
           updateForm={updateForm}
         />
       )}
@@ -76,7 +72,7 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
         location={location}
       />
       {location === "/login" && (
-        <Button buttonText={"회원가입"} onClick={linkToJoin} color={"white"} />
+        <Button buttonText="회원가입" onClick={linkToJoin} color="white" />
       )}
     </FormComponent>
   );
@@ -107,17 +103,4 @@ const LinkItem = styled(Link)`
   text-decoration-line: none;
   padding-bottom: 1px;
   border-bottom: 1px solid #9e9e9e;
-`;
-
-const CheckInfo = styled.span`
-  display: block;
-  color: #9e9e9e;
-  font-family: Noto Sans KR;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  > span {
-    color: #e75852;
-  }
 `;
