@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import CheckBox from "./CheckBox";
+import CheckBox from "../CheckBox/CheckBox";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Input from "./Input";
+import Input from "../Input/Input";
 import Button from "../Button/Button";
 
 export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
-    nickName: "",
     userId: "",
     password: "",
     checkPassword: "",
@@ -36,46 +35,45 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
   };
 
   return (
-    <FormComponent>
+    <FormComponent location={location}>
       <Input
-        icon={"User"}
-        type={"email"}
-        placeholder={"이메일을 적어주세요."}
-        name={"userId"}
+        icon="User"
+        type="email"
+        placeholder="이메일을 적어주세요."
+        name="userId"
         updateForm={updateForm}
       />
       <Input
-        icon={"Password"}
-        type={"password"}
-        placeholder={"비밀번호를 적어주세요."}
-        name={"password"}
+        icon="Password"
+        type="password"
+        placeholder="비밀번호를 적어주세요."
+        name="password"
         updateForm={updateForm}
       />
-      {location === "/login" ? (
+      {location === "/login" && (
         <LoginCheckDiv>
           <CheckBox labelName="이메일, 비밀번호 저장" />
-          <LinkItem to={"/find_password"}>비밀번호 찾기</LinkItem>
+          <LinkItem to="/find_password">비밀번호 찾기</LinkItem>
         </LoginCheckDiv>
-      ) : (
-        <CheckInfo>
-          6~16자, 영문 대.소문자, 숫자, 특수문자 중 2개 이상 사용하세요.{" "}
-        </CheckInfo>
       )}
       {location !== "/login" && (
         <Input
-          icon={"Password"}
-          type={"password"}
-          placeholder={"비밀번호를 한번 더 적어주세요."}
-          name={"checkPassword"}
+          icon="Password"
+          type="password"
+          placeholder="비밀번호를 한번 더 적어주세요."
+          name="checkPassword"
+          password={form.password}
           updateForm={updateForm}
         />
       )}
-      <Button buttonText={"로그인"} onClick={onClick}></Button>
       <Button
-        buttonText={"회원가입"}
-        onClick={linkToJoin}
-        color={"white"}
-      ></Button>
+        buttonText={location === "/login" ? "로그인" : "회원가입"}
+        onClick={onClick}
+        location={location}
+      />
+      {location === "/login" && (
+        <Button buttonText="회원가입" onClick={linkToJoin} color="white" />
+      )}
     </FormComponent>
   );
 }
@@ -83,7 +81,7 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
 const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: ${(props) => (props.location === "/login" ? "40px" : "20px")};
 `;
 
 const LoginCheckDiv = styled.div`
@@ -105,12 +103,4 @@ const LinkItem = styled(Link)`
   text-decoration-line: none;
   padding-bottom: 1px;
   border-bottom: 1px solid #9e9e9e;
-`;
-
-const CheckInfo = styled.span`
-  display: block;
-  font-size: 12px;
-  color: #9e9e9e;
-  padding-left: 10px;
-  box-sizing: border-box;
 `;

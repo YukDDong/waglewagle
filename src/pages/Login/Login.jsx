@@ -28,9 +28,9 @@ export default function Login() {
       <NavBar />
       <Main>
         <MainDiv>
-          <Title title={"로그인"} />
+          <Title title="로그인" />
           <Form getUserInfo={getUserInfo} onSubmit={onSubmit} />
-          <LineDiv></LineDiv>
+          <LineDiv />
           <SocialLoginText>SNS 계정으로 로그인</SocialLoginText>
           <SocialLogin />
         </MainDiv>

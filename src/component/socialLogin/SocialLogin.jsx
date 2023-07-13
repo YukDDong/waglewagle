@@ -1,17 +1,19 @@
 import { styled } from "styled-components";
+import kakaoIconPath from "../../assets/symbol-kakao.svg";
+import googleIconPath from "../../assets/symbol-google.svg";
+import naverIconPath from "../../assets/symbol-naver.svg";
 
 export default function SocialLogin() {
+  const socialList = ["kakao", "google", "naver"];
   return (
     <Container>
-      <SocialIconBox>
-        <IconImg social="kakao" />
-      </SocialIconBox>
-      <SocialIconBox>
-        <IconImg social="google" />
-      </SocialIconBox>
-      <SocialIconBox>
-        <IconImg social="naver" />
-      </SocialIconBox>
+      {socialList.map((social, index) => (
+        <SocialIconBox key={index}>
+          <IconImg social={social}>
+            <span />
+          </IconImg>
+        </SocialIconBox>
+      ))}
     </Container>
   );
 }
@@ -28,23 +30,33 @@ const Container = styled.ul`
 const SocialIconBox = styled.li``;
 
 const IconImg = styled.span`
-  display: block;
-  width: 50px;
-  height: 50px;
+  display: flex;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background-image: ${(props) => {
-    if (props.social === "kakao") {
-      return "url('https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png')";
-    } else if (props.social === "google") {
-      return "url('https://cdn.icon-icons.com/icons2/2699/PNG/512/google_tile_logo_icon_170069.png')";
-    } else {
-      return "url('http://lab.anybuild.co.kr/API/naver/img/naver_g_a_login.PNG')";
-    }
-  }};
+  background-color: ${(props) =>
+    props.social === "kakao"
+      ? "#FAE100"
+      : props.social === "google"
+      ? "#FFFFFF"
+      : "#00C300"};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: start;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   cursor: pointer;
+  > span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: ${(props) =>
+      props.social === "kakao"
+        ? `url(${kakaoIconPath})`
+        : props.social === "google"
+        ? `url(${googleIconPath})`
+        : `url(${naverIconPath})`};
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 `;
