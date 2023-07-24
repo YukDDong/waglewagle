@@ -21,7 +21,10 @@ export default function Input({
   const [isFocus, setIsFocus] = useState(false);
   const [passwordShowing, setPasswordShowing] = useState(false);
   const onFocusChange = () => {
-    setIsFocus((isFocus) => !isFocus);
+    setIsFocus(true);
+  };
+  const onBlurChange = () => {
+    input === "" && setIsFocus(false);
   };
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export default function Input({
 
   return (
     <Container>
-      <InputDiv location={location}>
+      <InputDiv location={location} isFocus={isFocus}>
         {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
         {(() => {
           switch (icon) {
@@ -49,7 +52,7 @@ export default function Input({
           }
           value={input}
           onFocus={onFocusChange}
-          onBlur={onFocusChange}
+          onBlur={onBlurChange}
           onChange={setInput}
           name={name}
           required
@@ -90,10 +93,11 @@ const InputDiv = styled.div`
   align-items: center;
   margin-top: ${(props) => (props.location === "/join" ? "20px" : null)};
   margin-bottom: ${(props) => (props.location === "/login" ? "5px" : null)};
-  &:focus-within {
-    border: 1px solid #e75852;
-    background-color: #fff;
-  }
+  ${(props) =>
+    props.isFocus
+      ? `border: 1px solid #e75852;
+    background-color: #fff;`
+      : null}
   > input {
     width: 100%;
     font-size: 18px;
@@ -114,7 +118,6 @@ const InputDiv = styled.div`
     &:focus {
       outline: none;
       color: #222;
-      font-family: Noto Sans KR;
       font-size: 16px;
       font-style: normal;
       font-weight: 500;
