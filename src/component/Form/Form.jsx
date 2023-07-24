@@ -94,7 +94,6 @@ const LoginCheckDiv = styled.div`
 
 const LinkItem = styled(Link)`
   color: #9e9e9e;
-  font-family: Noto Sans KR;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

@@ -100,11 +100,11 @@ const IsFalse = styled.span`
 const CheckInfo = styled.span`
   display: block;
   color: #9e9e9e;
-  font-family: Noto Sans KR;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  margin-top: 5px;
   > span {
     color: #e75852;
   }

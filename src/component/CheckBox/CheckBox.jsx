@@ -18,7 +18,6 @@ const CheckBoxDiv = styled.div`
   }
   > label {
     color: #9e9e9e;
-    font-family: Noto Sans KR;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

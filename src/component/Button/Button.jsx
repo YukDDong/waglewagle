@@ -12,7 +12,7 @@ const ButtonComponent = styled.button`
   height: 64px;
   padding: 10px;
   box-sizing: border-box;
-  font-family: "EBSHunminjeongeumSBA";
+  font-family: var(--font-hunmin);
   font-size: 20px;
   font-weight: 400;
   border: 1px solid #e75852;
@@ -23,4 +23,8 @@ const ButtonComponent = styled.button`
   cursor: pointer;
   color: ${(props) => (props.color ? "#e75852" : "white")};
   background-color: ${(props) => (props.color ? "white" : "#e75852")};
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    font-size: 26px;
+  }
 `;
