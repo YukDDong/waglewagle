@@ -9,8 +9,6 @@ const TitleComponent = styled.h1`
   height: 50px;
   text-align: center;
   font-size: 46px;
-  font-style: normal;
-  font-weight: 500;
   line-height: normal;
-  font-family: "EBSHunminjeongeumSBA";
+  font-family: var(--font-hunmin);
 `;

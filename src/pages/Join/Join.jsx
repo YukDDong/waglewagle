@@ -59,7 +59,6 @@ const MainDiv = styled.div`
 const Sub = styled.h3`
   margin-top: 14px;
   color: #9e9e9e;
-  font-family: Noto Sans KR;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -72,7 +71,6 @@ const ToLogin = styled.p`
   gap: 10px;
   color: #9e9e9e;
   text-align: center;
-  font-family: Noto Sans KR;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -86,8 +84,7 @@ const ToLogin = styled.p`
     color: #e75852;
     text-align: center;
     font-size: 16px;
-    font-family: "EBSHunminjeongeumSBA";
+    font-family: var(--font-hunmin);
     border-bottom: 1px solid #e75852;
-    padding-bottom: 3px;
   }
 `;

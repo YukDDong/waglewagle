@@ -1,13 +1,10 @@
 import { styled } from "styled-components";
-import { ReactComponent as NavIcon } from "../../assets/ic_baseline_menu.svg";
 
 export default function NavBar() {
   return (
     <Nav>
       <NavLogo>와글와글</NavLogo>
-      <NavIconDiv>
-        <NavIcon width={42} height={42} fill="black" />
-      </NavIconDiv>
+      <NavIconDiv></NavIconDiv>
     </Nav>
   );
 }
@@ -27,14 +24,12 @@ const NavLogo = styled.p`
   height: 55px;
   font-size: 36px;
   text-align: center;
-  font-family: "EBSHunminjeongeumSBA";
+  font-family: var(--font-hunmin);
+  font-weight: 400;
+  font-style: normal;
 `;
 
 const NavIconDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 180px;
-  height: 168px;
-  background-image: url("../../assets/rectangle-33.svg");
+  height: auto;
 `;

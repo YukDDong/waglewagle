@@ -39,7 +39,6 @@ export default function Login() {
   );
 }
 
-// styled-component CSS작업
 const Main = styled.main`
   width: 100%;
   height: auto;
@@ -65,5 +64,10 @@ const LineDiv = styled.div`
 
 const SocialLoginText = styled.h4`
   margin-top: 40px;
-  font-weight: 600;
+  font-weight: 400;
+  font-family: var(--font-hunmin);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 `;
