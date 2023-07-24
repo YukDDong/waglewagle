@@ -102,7 +102,7 @@ const InputDiv = styled.div`
     background: none;
     margin-left: 10px;
     color: #222;
-    font-family: Noto Sans KR;
+    font-family: "Noto Sans KR";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;

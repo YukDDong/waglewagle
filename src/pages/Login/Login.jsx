@@ -65,5 +65,6 @@ const LineDiv = styled.div`
 
 const SocialLoginText = styled.h4`
   margin-top: 40px;
-  font-weight: 600;
+  font-weight: 400;
+  font-family: "Noto Sans KR";
 `;
