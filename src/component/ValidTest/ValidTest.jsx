@@ -11,37 +11,50 @@ export default function ValidTest({ name, value, password }) {
 
   // input값이 비어있는지 아닌지를 판단
   useEffect(() => {
-    if (value === "") {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
-    }
+    const emptyDelay = setTimeout(() => {
+      if (value === "") {
+        setIsEmpty(true);
+      } else {
+        setIsEmpty(false);
+      }
+    }, 500);
+
+    return () => {
+      clearTimeout(emptyDelay);
+    };
   }, [value]);
 
   useEffect(() => {
-    // email 유효성 검사
-    if (name === "userId") {
-      const emailRegex = /[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+/;
-      emailRegex.test(value) ? setIsEmail(true) : setIsEmail(false);
-      return;
-    }
+    const valid = setTimeout(() => {
+      // email 유효성 검사
+      if (name === "userId") {
+        const emailRegex = /[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+/;
+        emailRegex.test(value) ? setIsEmail(true) : setIsEmail(false);
+        return;
+      }
 
-    // password 유효성 검사
-    if (name === "password") {
-      const passwordRegex =
-        /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{6,16}$/;
-      // 입력한 password가 정규식에 만족하는지 확인
-      passwordRegex.test(value) ? setIsPassword(true) : setIsPassword(false);
-      return;
-    }
+      // password 유효성 검사
+      if (name === "password") {
+        const passwordRegex =
+          /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{6,16}$/;
+        // 입력한 password가 정규식에 만족하는지 확인
+        passwordRegex.test(value) ? setIsPassword(true) : setIsPassword(false);
+        return;
+      }
 
-    if (name === "checkPassword") {
-      value === password
-        ? setIsPasswordConfirm(true)
-        : setIsPasswordConfirm(false);
+      if (name === "checkPassword") {
+        value === password
+          ? setIsPasswordConfirm(true)
+          : setIsPasswordConfirm(false);
+        return;
+      }
+
       return;
-    }
-  }, [name, value]);
+    }, 300);
+    return () => {
+      clearTimeout(valid);
+    };
+  }, [name, value, password]);
 
   return (
     <Container>
