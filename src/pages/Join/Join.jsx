@@ -11,6 +11,15 @@ export default function Join() {
     password: "",
     checkPassword: "",
   });
+
+  const [isValid, setIsValid] = useState({
+    isEmail: false,
+    isPassword: false,
+    isPasswordConfirm: false,
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const joinUserInfo = useCallback((form) => {
     setJoinInfo({
       userId: form.userId,
@@ -19,18 +28,42 @@ export default function Join() {
     });
   }, []);
 
+  const validUserInfo = useCallback(
+    (name, value) => {
+      setIsValid({ ...isValid, [name]: value });
+    },
+    [isValid]
+  );
+
   const onJoinSubmit = useCallback(() => {
-    console.log(userId, password, checkPassword);
-  }, [userId, password, checkPassword]);
+    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
+      setIsModalOpen(true);
+      console.log(userId, password, checkPassword);
+    }
+  }, [userId, password, checkPassword, isValid]);
 
   return (
     <>
+      {isModalOpen ? (
+        <ModalBg>
+          <Modal>
+            <ModalTop>회원가입이 완료되었습니다.</ModalTop>
+            <ModalBottom>
+              <Link to="/login">확인</Link>
+            </ModalBottom>
+          </Modal>
+        </ModalBg>
+      ) : null}
       <NavBar />
       <Main>
         <MainDiv>
           <Title title="회원가입" />
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-          <Form joinUserInfo={joinUserInfo} onSubmit={onJoinSubmit} />
+          <Form
+            joinUserInfo={joinUserInfo}
+            onSubmit={onJoinSubmit}
+            validUserInfo={validUserInfo}
+          />
           <ToLogin>
             이미 와글와글 계정이 있으신가요? <Link to="/login">로그인하기</Link>
           </ToLogin>
@@ -39,6 +72,50 @@ export default function Join() {
     </>
   );
 }
+
+const ModalBg = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(32, 32, 32, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Modal = styled.div`
+  width: 340px;
+  height: 180px;
+  background-color: #fff;
+  border-radius: 10px;
+`;
+
+const ModalTop = styled.div`
+  width: 100%;
+  height: 118px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  line-height: 118px;
+  color: #222;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.64px;
+`;
+
+const ModalBottom = styled.div`
+  width: 100%;
+  height: 61px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > a {
+    text-decoration: none;
+    color: #e75852;
+    text-align: center;
+    font-family: var(--font-hunmin);
+    font-size: 20px;
+  }
+`;
 
 const Main = styled.main`
   width: 100%;

@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
-export default function ValidTest({ name, value, password }) {
+export default function ValidTest({ name, value, password, validUserInfo }) {
   const [isEmpty, setIsEmpty] = useState(true);
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-
-  // 유효성 검사를 통한 문구 출력
 
   // input값이 비어있는지 아닌지를 판단
   useEffect(() => {
@@ -24,6 +22,7 @@ export default function ValidTest({ name, value, password }) {
     };
   }, [value]);
 
+  // 유효성 검사를 통한 문구 출력
   useEffect(() => {
     const valid = setTimeout(() => {
       // email 유효성 검사
@@ -42,7 +41,7 @@ export default function ValidTest({ name, value, password }) {
         return;
       }
 
-      if (name === "checkPassword") {
+      if (name === "checkPassword" && !(password === "")) {
         value === password
           ? setIsPasswordConfirm(true)
           : setIsPasswordConfirm(false);
@@ -55,6 +54,15 @@ export default function ValidTest({ name, value, password }) {
       clearTimeout(valid);
     };
   }, [name, value, password]);
+
+  // 유효성 검사가 통과하면 해당 결과를 valid함수에 추가
+  useEffect(() => {
+    if (isEmail) validUserInfo("isEmail", isEmail);
+    if (isPassword) validUserInfo("isPassword", isPassword);
+    if (isPasswordConfirm)
+      validUserInfo("isPasswordConfirm", isPasswordConfirm);
+    return;
+  }, [isEmail, isPassword, isPasswordConfirm]);
 
   return (
     <Container>

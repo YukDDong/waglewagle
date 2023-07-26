@@ -5,7 +5,12 @@ import { Link, useLocation } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 
-export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
+export default function Form({
+  getUserInfo,
+  onSubmit,
+  joinUserInfo,
+  validUserInfo,
+}) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
     userId: "",
@@ -24,13 +29,12 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
     [form]
   );
 
-  const onClick = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
+  // const onClick = (e) => {
+  //   e.preventDefault();
+  //   onSubmit();
+  // };
 
-  const linkToJoin = (e) => {
-    e.preventDefault();
+  const linkToJoin = () => {
     window.location.pathname = "/join";
   };
 
@@ -42,6 +46,7 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
         placeholder="이메일을 적어주세요."
         name="userId"
         updateForm={updateForm}
+        validUserInfo={validUserInfo}
       />
       <Input
         icon="Password"
@@ -49,6 +54,7 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
         placeholder="비밀번호를 적어주세요."
         name="password"
         updateForm={updateForm}
+        validUserInfo={validUserInfo}
       />
       {location === "/login" && (
         <LoginCheckDiv>
@@ -64,11 +70,12 @@ export default function Form({ getUserInfo, onSubmit, joinUserInfo }) {
           name="checkPassword"
           password={form.password}
           updateForm={updateForm}
+          validUserInfo={validUserInfo}
         />
       )}
       <Button
         buttonText={location === "/login" ? "로그인" : "회원가입"}
-        onClick={onClick}
+        onClick={onSubmit}
         location={location}
       />
       {location === "/login" && (
