@@ -14,6 +14,7 @@ export default function Input({
   name,
   type,
   password,
+  validUserInfo,
   ...rest
 }) {
   const location = useLocation().pathname;
@@ -73,6 +74,7 @@ export default function Input({
           value={input}
           location={location}
           password={password}
+          validUserInfo={validUserInfo}
         />
       )}
     </Container>
