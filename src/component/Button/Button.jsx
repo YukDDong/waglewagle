@@ -13,6 +13,9 @@ export default function Button({ onClick, buttonText, color, location }) {
 }
 
 const ButtonComponent = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 64px;
   padding: 10px;
   box-sizing: border-box;

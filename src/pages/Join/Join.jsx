@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Title from "../../component/Title/Title";
 
-export default function Join() {
+const Join = () => {
   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
     userId: "",
     password: "",
@@ -71,7 +71,9 @@ export default function Join() {
       </Main>
     </>
   );
-}
+};
+
+export default Join;
 
 const ModalBg = styled.div`
   position: fixed;

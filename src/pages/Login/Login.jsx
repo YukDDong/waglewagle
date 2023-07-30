@@ -5,7 +5,14 @@ import { useCallback, useState } from "react";
 import NavBar from "../../component/NavBar/NavBar";
 import Title from "../../component/Title/Title";
 
-export default function Login() {
+const Login = () => {
+  // 임시 유저정보(로그인을 위한 유저정보)
+  const user = {
+    id: "ekfhd5537@naver.com",
+    password: "qwer12345",
+    name: "육동영",
+  };
+
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
   const [{ loginId, loginPassword }, setLoginInfo] = useState({
     loginId: "",
@@ -20,7 +27,12 @@ export default function Login() {
 
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = useCallback(() => {
-    console.log(loginId, loginPassword);
+    // 임시 로그인 코드(테스트용)
+    if (loginId === user.id && loginPassword === user.password) {
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      localStorage.setItem("isLogin", JSON.stringify(true));
+      window.location.pathname = "/main";
+    }
   }, [loginId, loginPassword]);
 
   return (
@@ -37,7 +49,9 @@ export default function Login() {
       </Main>
     </>
   );
-}
+};
+
+export default Login;
 
 const Main = styled.main`
   width: 100%;
