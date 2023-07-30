@@ -11,7 +11,8 @@ export default function NavBar() {
   const [isLogin, setIsLogin] = useState(false);
 
   // 임시코드(로그인된 유저정보를 로컬스토리지에서 불러옴)
-  const userName = JSON.parse(localStorage.getItem("loggedInUser")).name;
+  const userInfo = JSON.parse(localStorage.getItem("loggedInUser"));
+  const userName = !(userInfo === null) ? userInfo.name : "";
 
   const menuBtnClick = () => {
     setMenuOpen((menuOpen) => !menuOpen);
