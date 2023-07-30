@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-function Onboarding() {
+const Onboarding = () => {
   const moveToLogin = () => {
     window.location.pathname = "/login";
   };
@@ -10,7 +10,7 @@ function Onboarding() {
       <button onClick={moveToLogin}>시작하기</button>
     </Section>
   );
-}
+};
 
 export default Onboarding;
 

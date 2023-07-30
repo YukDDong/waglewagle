@@ -7,6 +7,13 @@ const GlobalStyles = createGlobalStyle`
     --btn-main-color : #E75852;
     --font-hunmin: "EBS Hunminjeongeum SB";
   }
+  a{
+    text-decoration: none;
+  }
+  button{
+    all: unset;
+    cursor: pointer;
+  }
   body{
     font-family: "Noto Sans KR", sans-serif;
   }
