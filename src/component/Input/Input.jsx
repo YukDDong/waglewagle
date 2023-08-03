@@ -68,7 +68,7 @@ export default function Input({
           </EyeIconBtn>
         ) : null}
       </InputDiv>
-      {location === "/join" && (
+      {location !== "/login" && (
         <ValidTest
           name={name}
           value={input}
