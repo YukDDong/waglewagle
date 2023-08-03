@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 
-export default function Form({
+function Form({
   getUserInfo,
   onSubmit,
   joinUserInfo,
@@ -84,6 +84,60 @@ export default function Form({
     </FormComponent>
   );
 }
+
+
+function FormMakeHopae({
+  getUserInfo,
+  onSubmit,
+  joinUserInfo,
+  validUserInfo,
+}) {
+  const location = useLocation().pathname;
+  const [form, setForm] = useState({
+    userId: "",
+    password: "",
+    checkPassword: "",
+  });
+
+  useEffect(() => {
+    location === "/login" ? getUserInfo(form) : joinUserInfo(form);
+  }, [form, location, getUserInfo, joinUserInfo]);
+
+  const updateForm = useCallback(
+    (name, value) => {
+      setForm({ ...form, [name]: value });
+    },
+    [form]
+  );
+
+  // const onClick = (e) => {
+  //   e.preventDefault();
+  //   onSubmit();
+  // };
+
+  const linkToJoin = () => {
+    window.location.pathname = "/join";
+  };
+
+  return (
+    <FormComponent location={location}>
+      <Input
+        icon="User"
+        type="text"
+        placeholder="호명을 적어주세요."
+        name="hopae"
+        updateForm={updateForm}
+        validUserInfo={validUserInfo}
+      />
+  
+      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin} color="white" />
+
+    </FormComponent>
+  );
+}
+
+export { Form as default, FormMakeHopae };
+
 
 const FormComponent = styled.form`
   display: flex;

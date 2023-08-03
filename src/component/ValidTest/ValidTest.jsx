@@ -102,6 +102,22 @@ export default function ValidTest({ name, value, password, validUserInfo }) {
           )
         ) : null
       ) : null}
+
+      {/* hopae 유효성 검사 */}
+      {name === "hopae" ? (
+        !isEmpty ? (
+          isPassword ? (
+            <IsTrue>유효한 호패입니다.</IsTrue>
+          ) : (
+            <IsFalse>호패의 이름은 한글이어야 합니다.</IsFalse>
+          )
+        ) : (
+          <CheckInfo>
+            <span>* </span>
+            호명은 한글만 사용 가능해요.
+          </CheckInfo>
+        )
+      ) : null}
     </Container>
   );
 }

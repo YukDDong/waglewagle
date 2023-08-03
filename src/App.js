@@ -3,6 +3,7 @@ import Onboarding from "./pages/Onboarding/Onboarding";
 import Login from "./pages/Login/Login";
 import Join from "./pages/Join/Join";
 import Main from "./pages/Main/Main";
+import MakeHopae from "./pages/MakeHopae/MakeHopae";
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "/main",
     element: <Main />,
+  },
+  {
+    path: "/makeHopae",
+    element: <MakeHopae />,
   },
 ];
 
