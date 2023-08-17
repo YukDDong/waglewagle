@@ -4,8 +4,11 @@ import SocialLogin from "../../component/socialLogin/SocialLogin";
 import { useCallback, useState } from "react";
 import NavBar from "../../component/NavBar/NavBar";
 import Title from "../../component/Title/Title";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/userActions";
 
 const Login = () => {
+  const dispatch = useDispatch();
   // 임시 유저정보(로그인을 위한 유저정보)
   const user = {
     id: "ekfhd5537@naver.com",
@@ -29,8 +32,13 @@ const Login = () => {
   const onSubmit = useCallback(() => {
     // 임시 로그인 코드(테스트용)
     if (loginId === user.id && loginPassword === user.password) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      localStorage.setItem("isLogin", JSON.stringify(true));
+      dispatch(
+        login({
+          id: user.id,
+          name: user.name,
+          loggedIn: true,
+        })
+      );
       window.location.pathname = "/main";
     }
   }, [loginId, loginPassword]);
