@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Form from "../../component/Form/Form";
-import SocialLogin from "../../component/socialLogin/SocialLogin";
+import SocialLogin from "../../component/SocialLogin/SocialLogin";
 import { useCallback, useState } from "react";
 import NavBar from "../../component/NavBar/NavBar";
 import Title from "../../component/Title/Title";
@@ -14,6 +14,7 @@ const Login = () => {
     id: "ekfhd5537@naver.com",
     password: "qwer12345",
     name: "육동영",
+    data: {},
   };
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정

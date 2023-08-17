@@ -5,6 +5,7 @@ const initialState = {
     id: "",
     name: "",
     loggedIn: false,
+    data: {},
   },
 };
 
@@ -18,6 +19,7 @@ export const userCheckReducer = (state = initialState, action) => {
           id: action.payload.id,
           name: action.payload.name,
           loggedIn: action.payload.loggedIn,
+          data: action.payload.data,
         },
       };
     case LOGOUT_USER:
@@ -27,6 +29,7 @@ export const userCheckReducer = (state = initialState, action) => {
           id: "",
           name: "",
           loggedIn: false,
+          data: {},
         },
       };
     default:
