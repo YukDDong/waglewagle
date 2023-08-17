@@ -2,14 +2,30 @@ import { styled } from "styled-components";
 import kakaoIconPath from "../../assets/symbol-kakao.svg";
 import googleIconPath from "../../assets/symbol-google.svg";
 import naverIconPath from "../../assets/symbol-naver.svg";
+import { KAKAO_AUTH_URL } from "./socialLoginUrl";
 
 export default function SocialLogin() {
-  const socialList = ["kakao", "google", "naver"];
+  const linkToKakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+  const linkToGoogleLogin = () => {
+    console.log("google login");
+  };
+  const linkToNaverLogin = () => {
+    console.log("naver login");
+  };
+
+  const socialList = [
+    { name: "kakao", link: linkToKakaoLogin },
+    { name: "google", link: linkToGoogleLogin },
+    { name: "naver", link: linkToNaverLogin },
+  ];
+
   return (
     <Container>
       {socialList.map((social, index) => (
-        <SocialIconBox key={index}>
-          <IconImg social={social}>
+        <SocialIconBox key={index} onClick={social.link}>
+          <IconImg social={social.name}>
             <span />
           </IconImg>
         </SocialIconBox>

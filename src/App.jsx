@@ -4,6 +4,8 @@ import Login from "./pages/Login/Login";
 import Join from "./pages/Join/Join";
 import Main from "./pages/Main/Main";
 import MakeHopae from "./pages/MakeHopae/MakeHopae";
+import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
+import Sample from "./pages/Sample/Sample";
 
 const routes = [
   {
@@ -25,6 +27,14 @@ const routes = [
   {
     path: "/makeHopae",
     element: <MakeHopae />,
+  },
+  {
+    path: "/kakao_login",
+    element: <KakaoLogin />,
+  },
+  {
+    path: "/sample",
+    element: <Sample />,
   },
 ];
 
