@@ -120,7 +120,7 @@ function FormMakeHopae({
   };
 
   return (
-    <FormComponent location={location}>
+    <FormComponent2 location={location}>
       <Input
         icon="User"
         type="text"
@@ -132,7 +132,7 @@ function FormMakeHopae({
   
       <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin}/>
 
-    </FormComponent>
+    </FormComponent2>
   );
 }
 
@@ -143,6 +143,12 @@ const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: ${(props) => (props.location === "/login" ? "40px" : "20px")};
+`;
+
+const FormComponent2 = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 `;
 
 const LoginCheckDiv = styled.div`
