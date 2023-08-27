@@ -1,15 +1,17 @@
 import React from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
-import { Link } from "react-router-dom";
+import mainBg from "../../assets/bg_main.png";
+import mainHouse from "../../assets/main_house.png";
 
 const Main = () => {
   return (
     <>
-      <NavBar />
       <ExDiv>
-        <p>메인페이지입니다.</p>
-        <Link to="/sample">샘플페이지로 이동</Link>
+        <NavBar />
+        <StyledMain>
+          <HouseBox></HouseBox>
+        </StyledMain>
       </ExDiv>
     </>
   );
@@ -19,13 +21,25 @@ export default Main;
 
 const ExDiv = styled.div`
   width: 100vw;
-  height: auto;
+  height: 100vh;
+  background-image: url(${mainBg});
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+`;
+
+const StyledMain = styled.main`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  padding-top: 200px;
-  font-size: 50px;
-  gap: 50px;
+  align-items: center;
+`;
+
+const HouseBox = styled.div`
+  width: 800px;
+  height: 700px;
+  margin-left: 100px;
+  background: url(${mainHouse}) no-repeat;
+  background-size: 800px 700px;
+  margin-top: 100px;
 `;

@@ -88,8 +88,9 @@ const Nav = styled.nav`
   height: 120px;
   display: flex;
   align-items: center;
-  padding-left: 19vw;
+  /* padding-left: 19vw; */
   box-sizing: border-box;
+  position: relative;
 `;
 
 const NavLogo = styled.p`
@@ -99,6 +100,8 @@ const NavLogo = styled.p`
   text-align: center;
   font-family: var(--font-hunmin);
   line-height: 55px;
+  position: absolute;
+  left: 19vw;
 `;
 
 const NavMenu = styled.div`
