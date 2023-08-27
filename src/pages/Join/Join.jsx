@@ -4,6 +4,7 @@ import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Title from "../../component/Title/Title";
+import { join } from "../../apis/user";
 
 const Join = () => {
   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
@@ -37,8 +38,14 @@ const Join = () => {
 
   const onJoinSubmit = useCallback(() => {
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-      setIsModalOpen(true);
-      console.log(userId, password, checkPassword);
+      join({
+        email: userId,
+        password: password,
+        username: "닉네임1",
+      }).then((result) => {
+        console.log(result);
+        // setIsModalOpen(true);
+      });
     }
   }, [userId, password, checkPassword, isValid]);
 
