@@ -3,15 +3,17 @@ import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import mainBg from "../../assets/bg_main.png";
 import mainHouse from "../../assets/main_house.png";
+import RightSide from "../../component/RightSide/RightSide";
 
 const Main = () => {
   return (
     <>
+      {/* <NavBar /> */}
       <ExDiv>
-        <NavBar />
         <StyledMain>
           <HouseBox></HouseBox>
         </StyledMain>
+        <RightSide></RightSide>
       </ExDiv>
     </>
   );

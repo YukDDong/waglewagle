@@ -121,9 +121,10 @@ const ModalBottom = styled.div`
 
 const Main = styled.main`
   width: 100%;
-  height: auto;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const MainDiv = styled.div`
@@ -131,7 +132,7 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  /* padding-top: 100px; */
   box-sizing: border-box;
 `;
 

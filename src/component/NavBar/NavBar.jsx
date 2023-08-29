@@ -90,7 +90,10 @@ const Nav = styled.nav`
   align-items: center;
   /* padding-left: 19vw; */
   box-sizing: border-box;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
 `;
 
 const NavLogo = styled.p`
