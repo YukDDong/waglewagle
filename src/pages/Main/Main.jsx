@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import mainBg from "../../assets/bg_main.png";
@@ -6,14 +6,23 @@ import mainHouse from "../../assets/main_house.png";
 import RightSide from "../../component/RightSide/RightSide";
 
 const Main = () => {
+  const [openNav, setOpenNav] = useState(true);
+  const [openMakeup, setOpenMakeup] = useState(false);
+  const openMakeupHouse = () => {
+    setOpenNav(false);
+    setTimeout(() => {
+      setOpenMakeup(true);
+    }, 300);
+  };
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBar isShowing={openNav} />
       <ExDiv>
         <StyledMain>
-          <HouseBox></HouseBox>
+          <HouseBox className={openMakeup ? "left" : null}></HouseBox>
         </StyledMain>
-        <RightSide></RightSide>
+        <RightSide openMakeup={openMakeup}></RightSide>
+        {openMakeup ? null : <button onClick={openMakeupHouse}>클릭</button>}
       </ExDiv>
     </>
   );
@@ -28,6 +37,11 @@ const ExDiv = styled.div`
   background-size: cover;
   position: relative;
   overflow: hidden;
+  > button {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+  }
 `;
 
 const StyledMain = styled.main`
@@ -35,13 +49,19 @@ const StyledMain = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const HouseBox = styled.div`
   width: 800px;
   height: 700px;
-  margin-left: 100px;
   background: url(${mainHouse}) no-repeat;
   background-size: 800px 700px;
-  margin-top: 100px;
+  position: absolute;
+  left: 620px;
+  top: 200px;
+  transition: all ease-in-out 1s;
+  &.left {
+    left: 285px;
+  }
 `;

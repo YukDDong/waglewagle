@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { keyframes, styled } from "styled-components";
 import { ReactComponent as GnbFooter } from "../../assets/gnb-footer.svg";
 import { ReactComponent as MenuBtn } from "../../assets/ic_baseline_menu.svg";
 import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userCheckReducer } from "../../redux/reducers/userReducer";
 import { logout } from "../../redux/actions/userActions";
 
-export default function NavBar() {
+export default function NavBar({ isShowing = true }) {
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -36,8 +36,14 @@ export default function NavBar() {
     setIsLogin(userInfo.loggedIn);
   }, []);
 
+  useEffect(() => {
+    if (!isShowing) {
+      setMenuOpen(false);
+    }
+  }, [isShowing]);
+
   return (
-    <Nav>
+    <Nav className={isShowing ? null : "no-showing"}>
       <NavLogo>와글와글</NavLogo>
       <NavMenu>
         <NavMenuTop>
@@ -93,8 +99,24 @@ const Nav = styled.nav`
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 1;
   z-index: 100;
+  transition: all ease-in-out 1s;
+  &.no-showing {
+    top: -150px;
+    opacity: 0;
+  }
 `;
+
+// const goToUp = keyframes`
+//   0%{
+//     transform: ;
+//   }
+//   100%{
+//     top: -150px;
+//     opacity: 0;
+//   }
+// `;
 
 const NavLogo = styled.p`
   width: 180px;
