@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import { Link } from "react-router-dom";
+import { jwtTestApi } from "../../apis/user";
 
 const Main = () => {
+  useEffect(() => {
+    // jwt토큰을 넣어서 get요청하는 api호출
+    jwtTestApi().then((result) => {
+      alert(result.data);
+    });
+  }, []);
   return (
     <>
       <NavBar />

@@ -4,6 +4,7 @@ import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Title from "../../component/Title/Title";
+import { joinApi } from "../../apis/user";
 
 const Join = () => {
   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
@@ -37,10 +38,25 @@ const Join = () => {
 
   const onJoinSubmit = useCallback(() => {
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-      setIsModalOpen(true);
-      console.log(userId, password, checkPassword);
+      try {
+        joinApi({
+          email: userId,
+          password: password,
+          username: "닉네임2",
+        }).then((result) => {
+          if (result.status === 200) {
+            setIsModalOpen(true);
+          }
+          // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
+          if (result.status === 500) {
+            console.log("error500");
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, [userId, password, checkPassword, isValid]);
+  }, []);
 
   return (
     <>
@@ -90,6 +106,7 @@ const Modal = styled.div`
   height: 180px;
   background-color: #fff;
   border-radius: 10px;
+  z-index: 200;
 `;
 
 const ModalTop = styled.div`
