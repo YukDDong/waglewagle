@@ -130,7 +130,7 @@ function FormMakeHopae({
         validUserInfo={validUserInfo}
       />
   
-      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin} color="white" />
+      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin}/>
 
     </FormComponent>
   );

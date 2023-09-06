@@ -60,7 +60,7 @@ const MakeHopae = () => {
         <MainDiv>
           <Title title="호패만들기" />
           <Sub>자네, 이곳은 처음이요?</Sub>
-          <Sub>이곳은 호패가 없으면 들어갈 수가 없다네</Sub>
+          <Sub>이곳은 호패가 없으면 들어갈 수가 없다네.</Sub>
           <FormMakeHopae
             joinUserInfo={joinUserInfo}
             onSubmit={onJoinSubmit}
@@ -140,8 +140,8 @@ const Sub = styled.h3`
   color: #9e9e9e;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 20px;
+  font-weight: 350;
+  line-height: 10px;
 `;
 
 const ToLogin = styled.p`
