@@ -5,14 +5,21 @@ import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
 import { ReactComponent as MenuXBtn } from "../../assets/x-menu.svg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userCheckReducer } from "../../redux/reducers/userReducer";
+import { logout } from "../../redux/actions/userActions";
 
 export default function NavBar() {
+  const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
   // 임시코드(로그인된 유저정보를 로컬스토리지에서 불러옴)
-  const userInfo = JSON.parse(localStorage.getItem("loggedInUser"));
-  const userName = !(userInfo === null) ? userInfo.name : "";
+  // const userInfo = JSON.parse(localStorage.getItem("loggedInUser"));
+  // const userName = !(userInfo === null) ? userInfo.name : "";
+  // 위 코드를 리덕스로 바꾼 부분이 아래부분입니다.
+  const userInfo = useSelector((state) => state.userCheckReducer.User);
+  const userName = userInfo.name;
 
   const menuBtnClick = () => {
     setMenuOpen((menuOpen) => !menuOpen);
@@ -21,15 +28,12 @@ export default function NavBar() {
   // 임시코드(로그아웃/로컬스토리지에 저장되어있는 로그인정보를 지움)
   const logoutBtnClick = (e) => {
     e.preventDefault();
-    localStorage.removeItem("isLogin");
-    localStorage.removeItem("loggedInUser");
+    dispatch(logout());
     setIsLogin(false);
   };
 
   useEffect(() => {
-    let loginTrue = JSON.parse(localStorage.getItem("isLogin"));
-    if (loginTrue === null) loginTrue = false;
-    setIsLogin(loginTrue);
+    setIsLogin(userInfo.loggedIn);
   }, []);
 
   return (
@@ -64,11 +68,11 @@ export default function NavBar() {
               <StyledLink>사그업에 대하여</StyledLink>
               <StyledLink>문의하기</StyledLink>
             </MyInfoItem>
-            {isLogin ? (
+            {isLogin && (
               <MyInfoItem>
                 <LogoutBtn onClick={logoutBtnClick}>로그아웃</LogoutBtn>
               </MyInfoItem>
-            ) : null}
+            )}
           </MyInfo>
         </NavMenuMiddle>
         <NavMenuBottom>
