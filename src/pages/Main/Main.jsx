@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import mainBg from "../../assets/bg_main.png";
 import mainHouse from "../../assets/main_house.png";
 import RightSide from "../../component/RightSide/RightSide";
+import { jwtTestApi } from "../../apis/user";
 
 const Main = () => {
   const [openNav, setOpenNav] = useState(true);
   const [openMakeup, setOpenMakeup] = useState(false);
+
+  useEffect(() => {
+    // jwt토큰을 넣어서 get요청하는 api호출
+    jwtTestApi().then((result) => {
+      alert(result.data);
+    });
+  }, []);
+
   const openMakeupHouse = () => {
     setOpenNav(false);
     setTimeout(() => {
