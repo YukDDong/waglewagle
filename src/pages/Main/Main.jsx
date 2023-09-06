@@ -1,22 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
-import { Link } from "react-router-dom";
+import mainBg from "../../assets/bg_main.png";
+import mainHouse from "../../assets/main_house.png";
+import RightSide from "../../component/RightSide/RightSide";
 import { jwtTestApi } from "../../apis/user";
 
 const Main = () => {
+  const [openNav, setOpenNav] = useState(true);
+  const [openMakeup, setOpenMakeup] = useState(false);
+
   useEffect(() => {
     // jwt토큰을 넣어서 get요청하는 api호출
     jwtTestApi().then((result) => {
       alert(result.data);
     });
   }, []);
+
+  const openMakeupHouse = () => {
+    setOpenNav(false);
+    setTimeout(() => {
+      setOpenMakeup(true);
+    }, 300);
+  };
   return (
     <>
-      <NavBar />
+      <NavBar isShowing={openNav} />
       <ExDiv>
-        <p>메인페이지입니다.</p>
-        <Link to="/sample">샘플페이지로 이동</Link>
+        <StyledMain>
+          <HouseBox className={openMakeup ? "left" : null}></HouseBox>
+        </StyledMain>
+        <RightSide openMakeup={openMakeup}></RightSide>
+        {openMakeup ? null : <button onClick={openMakeupHouse}>클릭</button>}
       </ExDiv>
     </>
   );
@@ -26,13 +41,36 @@ export default Main;
 
 const ExDiv = styled.div`
   width: 100vw;
-  height: auto;
+  height: 100vh;
+  background-image: url(${mainBg});
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  > button {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+  }
+`;
+
+const StyledMain = styled.main`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  padding-top: 200px;
-  font-size: 50px;
-  gap: 50px;
+  align-items: center;
+  position: relative;
+`;
+
+const HouseBox = styled.div`
+  width: 800px;
+  height: 700px;
+  background: url(${mainHouse}) no-repeat;
+  background-size: 800px 700px;
+  position: absolute;
+  left: 620px;
+  top: 200px;
+  transition: all ease-in-out 1s;
+  &.left {
+    left: 285px;
+  }
 `;
