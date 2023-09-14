@@ -6,7 +6,7 @@ import mainHouse from "../../assets/main_house.png";
 import CatImg from "../../assets/Cats.svg";
 import RightSide from "../../component/RightSide/RightSide";
 import { jwtTestApi } from "../../apis/user";
-import GiwaModal from "../../component/Modal/GiwaModal";
+import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState(false);

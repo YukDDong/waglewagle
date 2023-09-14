@@ -5,7 +5,8 @@ export default function Button({
   buttonText,
   color,
   location,
-  disabled,
+  disabled = false,
+  ...rest
 }) {
   const onClickBtn = (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ export default function Button({
       color={color}
       location={location}
       disabled={disabled}
+      {...rest}
     >
       {buttonText}
     </ButtonComponent>
