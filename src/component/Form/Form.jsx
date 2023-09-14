@@ -87,21 +87,16 @@ function Form({
 
 
 function FormMakeHopae({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
   validUserInfo,
 }) {
+
   const location = useLocation().pathname;
+
   const [form, setForm] = useState({
     userId: "",
     password: "",
     checkPassword: "",
   });
-
-  useEffect(() => {
-    location === "/login" ? getUserInfo(form) : joinUserInfo(form);
-  }, [form, location, getUserInfo, joinUserInfo]);
 
   const updateForm = useCallback(
     (name, value) => {
@@ -110,27 +105,35 @@ function FormMakeHopae({
     [form]
   );
 
-  // const onClick = (e) => {
-  //   e.preventDefault();
-  //   onSubmit();
-  // };
-
   const linkToJoin = () => {
     window.location.pathname = "/join";
   };
 
+  // 호패만들기 '기와집 만들러 가기' 버튼 비활성화 위한 변수
+  const [isValidHopae, setIsValidHopae] = useState(true);
+
+  const handleIsValidHopae = (newData) => {
+    setIsValidHopae(newData);
+  };
+
   return (
-    <FormComponent2 location={location}>
+    <FormComponent2>
       <Input
         icon="User"
         type="text"
-        placeholder="호명을 적어주세요."
+        placeholder="호명을 적어주시오."
         name="hopae"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}
       />
   
-      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin}/>
+      <Button 
+        buttonText="기와집 만들러 가기" 
+        location={location} 
+        onClick={linkToJoin}
+        disabled={isValidHopae}
+      />
 
     </FormComponent2>
   );

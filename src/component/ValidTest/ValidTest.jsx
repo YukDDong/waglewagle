@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
-export default function ValidTest({ name, value, password, validUserInfo }) {
+export default function ValidTest({ name, value, password, validUserInfo, handleIsValidHopae }) {
   const [isEmpty, setIsEmpty] = useState(true);
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
@@ -52,27 +52,36 @@ export default function ValidTest({ name, value, password, validUserInfo }) {
       // hopae 유효성 검사
       if (name === "hopae") {
 
-        // 한글 유효성 검사 기호 정의
-        const hopaeRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-
-        // 한 글자씩 분해
-        // 한글과 영문이 섞인 호패도 유효하지 않게 분류 위함.
-        let validBool = true;
-        for(let val of value){
-          
-          // 한 글자씩 한글 유효성 검사
-          // 한글이 아닌 경우
-          if (!hopaeRegex.test(val)){
-            validBool = false;
-            break;
-          }
+        // 빈 문자열인 경우
+        if (value == ""){
+          setIsHopae(false);
         }
 
-        // 모든 글자가 한글일 때 유효성 확인
-        validBool 
-        ? setIsHopae(true) 
-        : setIsHopae(false);
+        // 비어있지 않은 경우
+        else{
 
+          // 한글 유효성 검사 기호 정의
+          const hopaeRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+          // 한 글자씩 분해
+          // 한글과 영문이 섞인 호패도 유효하지 않게 분류 위함.
+          let validBool = true;
+          for(let val of value){
+            
+            // 한 글자씩 한글 유효성 검사
+            // 한글이 아닌 경우
+            if (!hopaeRegex.test(val)){
+              validBool = false;
+              break;
+            }
+          }
+
+          // 모든 글자가 한글일 때 유효성 확인
+          validBool 
+          ? setIsHopae(true) 
+          : setIsHopae(false);
+        }
+        
         return;
       }
 
@@ -90,8 +99,13 @@ export default function ValidTest({ name, value, password, validUserInfo }) {
     if (isPasswordConfirm)
       validUserInfo("isPasswordConfirm", isPasswordConfirm);
     if (isHopae) validUserInfo("isHopae", isHopae);
+
     return;
   }, [isEmail, isPassword, isPasswordConfirm, isHopae]);
+
+
+  handleIsValidHopae(!isHopae);
+  console.log(isHopae);
 
   return (
     <Container>

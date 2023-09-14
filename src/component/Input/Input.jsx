@@ -15,6 +15,7 @@ export default function Input({
   type,
   password,
   validUserInfo,
+  handleIsValidHopae,
   ...rest
 }) {
   const location = useLocation().pathname;
@@ -75,6 +76,7 @@ export default function Input({
           location={location}
           password={password}
           validUserInfo={validUserInfo}
+          handleIsValidHopae={handleIsValidHopae}
         />
       )}
     </Container>
