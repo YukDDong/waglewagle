@@ -7,6 +7,7 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isHopae, setIsHopae] = useState(false);
+  const [isHopaeWarn, setIsHopaeWarn] = useState("");
 
   // input값이 비어있는지 아닌지를 판단
   useEffect(() => {
@@ -60,26 +61,42 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
         // 비어있지 않은 경우
         else{
 
-          // 한글 유효성 검사 기호 정의
-          const hopaeRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-
-          // 한 글자씩 분해
-          // 한글과 영문이 섞인 호패도 유효하지 않게 분류 위함.
-          let validBool = true;
-          for(let val of value){
-            
-            // 한 글자씩 한글 유효성 검사
-            // 한글이 아닌 경우
-            if (!hopaeRegex.test(val)){
-              validBool = false;
-              break;
-            }
+          // 최대 8자 이하로 작성해 주세요.
+          if (value.length > 8){
+            setIsHopae(false);
+            setIsHopaeWarn("최대 8자 이하로 작성해 주세요.");
           }
 
-          // 모든 글자가 한글일 때 유효성 확인
-          validBool 
-          ? setIsHopae(true) 
-          : setIsHopae(false);
+          // 호명이 8자 이하인 경우
+          else{
+            
+            // 한글 유효성 검사 기호 정의
+            const hopaeRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  
+            // 한 글자씩 분해
+            // 한글과 영문이 섞인 호패도 유효하지 않게 분류 위함.
+            let validBool = true;
+            for(let val of value){
+              
+              // 한 글자씩 한글 유효성 검사
+              // 한글이 아닌 경우
+              if (!hopaeRegex.test(val)){
+                validBool = false;
+                break;
+              }
+            }
+
+            // 모든 글자가 한글일 때 유효성 확인
+            if (validBool){
+              setIsHopae(true);
+            } 
+            
+            // 호명에 영문이 섞인 경우
+            else{
+              setIsHopae(false);
+              setIsHopaeWarn("호명은 한글만 사용할 수 있습니다.");
+            }
+          }
         }
         
         return;
@@ -104,8 +121,8 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
   }, [isEmail, isPassword, isPasswordConfirm, isHopae]);
 
 
+  // '기와 만들러 가기' 버튼 활성화/비활성화
   handleIsValidHopae(!isHopae);
-  console.log(isHopae);
 
   return (
     <Container>
@@ -152,7 +169,7 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
           isHopae ? (
             <IsTrue>유효한 호패입니다.</IsTrue>
           ) : (
-            <IsFalse>호패의 이름은 한글이어야 합니다.</IsFalse>
+            <IsFalse>{isHopaeWarn}</IsFalse>
           )
         ) : (
           <CheckInfo>
