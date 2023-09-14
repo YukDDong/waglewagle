@@ -38,6 +38,11 @@ function Form({
     window.location.pathname = "/join";
   };
 
+  // dummy ftn
+  const handleIsValidHopae = (newData) => {
+    console.log(newData);
+  };
+
   return (
     <FormComponent location={location}>
       <Input
@@ -47,6 +52,7 @@ function Form({
         name="userId"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}   // dummy
       />
       <Input
         icon="Password"
@@ -55,6 +61,7 @@ function Form({
         name="password"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}   // dummy
       />
       {location === "/login" && (
         <LoginCheckDiv>
@@ -71,6 +78,7 @@ function Form({
           password={form.password}
           updateForm={updateForm}
           validUserInfo={validUserInfo}
+          handleIsValidHopae={handleIsValidHopae}   // dummy
         />
       )}
       <Button

@@ -121,8 +121,10 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
   }, [isEmail, isPassword, isPasswordConfirm, isHopae]);
 
 
-  // '기와 만들러 가기' 버튼 활성화/비활성화
-  handleIsValidHopae(!isHopae);
+  // 호패만들기 페이지 '기와 만들러 가기' 버튼 활성화/비활성화
+  if (name === "hopae"){
+    handleIsValidHopae(!isHopae);
+  }
 
   return (
     <Container>
