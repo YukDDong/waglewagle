@@ -38,6 +38,11 @@ function Form({
     window.location.pathname = "/join";
   };
 
+  // dummy ftn
+  const handleIsValidHopae = (newData) => {
+    console.log(newData);
+  };
+
   return (
     <FormComponent location={location}>
       <Input
@@ -47,6 +52,7 @@ function Form({
         name="userId"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}   // dummy
       />
       <Input
         icon="Password"
@@ -55,6 +61,7 @@ function Form({
         name="password"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}   // dummy
       />
       {location === "/login" && (
         <LoginCheckDiv>
@@ -71,6 +78,7 @@ function Form({
           password={form.password}
           updateForm={updateForm}
           validUserInfo={validUserInfo}
+          handleIsValidHopae={handleIsValidHopae}   // dummy
         />
       )}
       <Button
@@ -87,21 +95,16 @@ function Form({
 
 
 function FormMakeHopae({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
   validUserInfo,
 }) {
+
   const location = useLocation().pathname;
+
   const [form, setForm] = useState({
     userId: "",
     password: "",
     checkPassword: "",
   });
-
-  useEffect(() => {
-    location === "/login" ? getUserInfo(form) : joinUserInfo(form);
-  }, [form, location, getUserInfo, joinUserInfo]);
 
   const updateForm = useCallback(
     (name, value) => {
@@ -110,29 +113,37 @@ function FormMakeHopae({
     [form]
   );
 
-  // const onClick = (e) => {
-  //   e.preventDefault();
-  //   onSubmit();
-  // };
-
   const linkToJoin = () => {
     window.location.pathname = "/join";
   };
 
+  // 호패만들기 '기와집 만들러 가기' 버튼 비활성화 위한 변수
+  const [isValidHopae, setIsValidHopae] = useState(true);
+
+  const handleIsValidHopae = (newData) => {
+    setIsValidHopae(newData);
+  };
+
   return (
-    <FormComponent location={location}>
+    <FormComponent2>
       <Input
         icon="User"
         type="text"
-        placeholder="호명을 적어주세요."
+        placeholder="호명을 적어주시오."
         name="hopae"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}
       />
   
-      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin}/>
+      <Button 
+        buttonText="기와집 만들러 가기" 
+        location={location} 
+        onClick={linkToJoin}
+        disabled={isValidHopae}
+      />
 
-    </FormComponent>
+    </FormComponent2>
   );
 }
 
@@ -143,6 +154,12 @@ const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: ${(props) => (props.location === "/login" ? "40px" : "20px")};
+`;
+
+const FormComponent2 = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 `;
 
 const LoginCheckDiv = styled.div`
