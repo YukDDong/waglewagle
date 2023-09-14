@@ -18,7 +18,7 @@ const persistConfig = {
   whitelist: ["userCheckReducer"],
 };
 
-const enhancers = compose(applyMiddleware(thunk), composeWithDevTools());
+const enhancers = compose(applyMiddleware(thunk));
 
 const store = createStore(
   persistReducer(persistConfig, rootReducer),
