@@ -6,9 +6,9 @@ import { ReactComponent as KigHat } from "./../../../assets/kigHat.svg"
 
 const NameContain = () => {
 
-  const GoodWord = "멋진 이름을 가지고 있구려!";
+  const goodWord = "멋진 이름을 가지고 있구려!";
   const errorWord = "한글로는 어떻게 불러야 하는가?";
-  const KoreanWord = "이 이름은 어떤가? 전에 있던 이름은 오해의 소지가 있어 보여 내가 바꿔보았다네";
+  const koreanWord = "이 이름은 어떤가? 전에 있던 이름은 오해의 소지가 있어 보여 내가 바꿔보았다네";
 
   return (
     <NameWrap>
