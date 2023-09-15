@@ -48,12 +48,17 @@ export default function NavBar({ isShowing = true }) {
       <NavMenu>
         <NavMenuTop>
           {menuOpen ? (
-            <StyledMenuXBtn onClick={menuBtnClick} />
+            <StyledMenuXBtn
+              onClick={menuBtnClick}
+              fill="white"
+              width={42}
+              height={42}
+            />
           ) : (
             <StyledMenuBtn onClick={menuBtnClick} />
           )}
         </NavMenuTop>
-        <NavMenuMiddle menuOpen={menuOpen} isLogin={isLogin}>
+        <NavMenuMiddle menuOpen={menuOpen} $isLogin={isLogin}>
           <MyInfo>
             <MyInfoItemFirst>
               {isLogin ? (
@@ -70,7 +75,7 @@ export default function NavBar({ isShowing = true }) {
               )}
             </MyInfoItemFirst>
             <MyInfoItem>
-              <LinkMypage isLogin={isLogin}>마이페이지</LinkMypage>
+              <LinkMypage $isLogin={isLogin}>마이페이지</LinkMypage>
               <StyledLink>사그업에 대하여</StyledLink>
               <StyledLink>문의하기</StyledLink>
             </MyInfoItem>
@@ -108,16 +113,6 @@ const Nav = styled.nav`
   }
 `;
 
-// const goToUp = keyframes`
-//   0%{
-//     transform: ;
-//   }
-//   100%{
-//     top: -150px;
-//     opacity: 0;
-//   }
-// `;
-
 const NavLogo = styled.p`
   width: 180px;
   height: 55px;
@@ -127,6 +122,7 @@ const NavLogo = styled.p`
   line-height: 55px;
   position: absolute;
   left: 19vw;
+  font-weight: 600;
 `;
 
 const NavMenu = styled.div`
@@ -201,6 +197,7 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     align-items: center;
     line-height: 26px;
     color: #fff;
+    font-weight: 400;
     font-size: 18px;
   }
 `;

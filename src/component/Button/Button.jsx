@@ -1,14 +1,26 @@
 import { styled } from "styled-components";
 
-export default function Button({ onClick, buttonText, color, location, disabled }) {
-  
+export default function Button({
+  onClick,
+  buttonText,
+  color,
+  location,
+  disabled = false,
+  ...rest
+}) {
   const onClickBtn = (e) => {
     e.preventDefault();
     onClick();
   };
 
   return (
-    <ButtonComponent onClick={onClickBtn} color={color} location={location} disabled={disabled}>
+    <ButtonComponent
+      onClick={onClickBtn}
+      color={color}
+      location={location}
+      disabled={disabled}
+      {...rest}
+    >
       {buttonText}
     </ButtonComponent>
   );
