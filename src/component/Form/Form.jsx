@@ -66,7 +66,7 @@ function Form({
       {location === "/login" && (
         <LoginCheckDiv>
           <CheckBox labelName="이메일, 비밀번호 저장" />
-          <LinkItem to="/find_password">비밀번호 찾기</LinkItem>
+          <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
         </LoginCheckDiv>
       )}
       {location !== "/login" && (
