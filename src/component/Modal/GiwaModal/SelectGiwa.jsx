@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as Hat } from "../../../assets/Group 2852.svg";
 import selectedGiwaPath from "../../../assets/selected_giwa.svg";
 import SelectTitle from "../../SelectTitle/SelectTitle";
+import GiwaLuck from "./GiwaLuck";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGiwa } from "../../../redux/actions/giwaActions";
 
@@ -64,7 +65,7 @@ const SelectGiwa = () => {
     <Container>
       <LeftBox>
         {selectedGiwa.number ? (
-          <div>{objectSelectedGiwa.giwaName}</div>
+          <GiwaLuck giwaName={objectSelectedGiwa.giwaName}/>
         ) : (
           <>
             <Hat />
@@ -107,8 +108,10 @@ export default SelectGiwa;
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 36px 0;
+  padding: 36px 13px;
   display: flex;
+  gap: 20px;
+  justify-content: space-between;  
 `;
 
 const LeftBox = styled.div`
@@ -122,7 +125,7 @@ const LeftBox = styled.div`
 `;
 
 const RightBox = styled.div`
-  width: 50%;
+  width: 440px;
   height: 365px;
 `;
 
@@ -133,7 +136,7 @@ const Text = styled.p`
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 23px;
 `;
 
 const PatternBox = styled.div`
@@ -142,7 +145,7 @@ const PatternBox = styled.div`
   border-radius: 20px;
   border: 1px solid #e6e6e6;
   box-sizing: border-box;
-  padding: 30px 30px 0 30px;
+  padding: 30px 12px 0 30px;
   > div {
     width: 100%;
     height: 100%;
@@ -155,20 +158,17 @@ const PatternBox = styled.div`
     /* 수직 스크롤바 스타일 */
     &::-webkit-scrollbar {
       box-sizing: border-box;
-      width: 4px; /* 스크롤바 너비 */
+      width: 8px; /* 스크롤바 너비 */
     }
-
     &::-webkit-scrollbar-thumb {
       background-color: #fff; /* 스크롤바 색상 */
       border-radius: 4px; /* 스크롤바 모서리 둥글게 */
       border: 1px solid rgba(170, 170, 170, 0.1);
       /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
     }
-
     &::-webkit-scrollbar-thumb:hover {
       background-color: #555; /* 마우스 호버 시 스크롤바 색상 변경 */
     }
-
     /* Firefox에서도 스크롤바 스타일 적용 */
     /* 수직 스크롤바 스타일 */
     scrollbar-width: thin;
@@ -176,7 +176,7 @@ const PatternBox = styled.div`
   }
 `;
 
-const GiwaItemBox = styled.div`
+const GiwaItemBox = styled.button`
   width: 110px;
   height: 110px;
   border-radius: 6px;

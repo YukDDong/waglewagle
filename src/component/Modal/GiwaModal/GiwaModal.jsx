@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import Modal from "../Modal";
 import { styled } from "styled-components";
-import { ReactComponent as XBtn } from "../../../assets/x-menu.svg";
+import { ReactComponent as CloseBtn } from "../../../assets/closeBtn.svg";
 import { ReactComponent as LeftArrow } from "../../../assets/ic_left_arrow.svg";
 import SelectGiwa from "./SelectGiwa";
 import Button from "../../Button/Button";
 import { useSelector } from "react-redux";
 import WriteGuestText from "./WriteGuestText";
+import NameContain from "./NameContain";
 
 const GiwaModal = ({ onXBtnClick }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
+
   return (
     <Modal>
       <ChooseBox>
         <XBtnBox>
-          <XBtn width={36} height={36} fill="black" onClick={onXBtnClick} />
+          <CloseBtn width={36} height={37} fill="black" onClick={onXBtnClick} />
         </XBtnBox>
         {pageNum === 1 ? (
           <>
@@ -36,7 +38,7 @@ const GiwaModal = ({ onXBtnClick }) => {
               style={{ width: "300px", height: "54px" }}
             />
           </>
-        ) : (
+        ) : pageNum === 2 ? (
           <>
             <TitleField>
               <span>둘.</span> 방명록을 써주시오.
@@ -50,11 +52,35 @@ const GiwaModal = ({ onXBtnClick }) => {
                 <GiwaBox>{selectedGiwa.giwaName}</GiwaBox>
               </GoBackBox>
               <Button
-                // disabled={!selectedGiwa.number}
+                disabled={!selectedGiwa.number}
+                onClick={() => {
+                  setPageNum(3);
+                }}
+                buttonText="방명록 작성하기"
+                style={{ width: "300px", height: "54px" }}
+              />
+            </ExDiv>
+          </>
+        ) : (
+          <>
+            <TitleField>
+              <span>셋.</span> 이름을 남겨주시오.
+            </TitleField>
+            <NameContain />
+            <ExDiv>
+              <GoBackBox>
+                <GoBackBtn onClick={() => setPageNum(2)}>
+                  <LeftArrow />
+                </GoBackBtn>
+                <GiwaBox>{selectedGiwa.giwaName}</GiwaBox>
+                <GiwaBox>{selectedGiwa.giwaName} 가</GiwaBox>
+              </GoBackBox>
+              <Button
+                disabled={!selectedGiwa.number}
                 onClick={() => {
                   alert("등록 완료");
                 }}
-                buttonText={"방명록 작성 완료"}
+                buttonText={"기와 등록하기"}
                 style={{ width: "300px", height: "54px", marginBottom: "0" }}
               />
             </ExDiv>
@@ -80,7 +106,7 @@ const ChooseBox = styled.div`
   align-items: center;
 `;
 
-const XBtnBox = styled.div`
+const XBtnBox = styled.button`
   width: 36px;
   height: 36px;
   position: absolute;
@@ -95,9 +121,14 @@ const TitleField = styled.h2`
   font-family: var(--font-hunmin);
   font-size: 32px;
   color: #222;
+  font-weight: 600;
   > span {
+    color: #1748C1;
+    text-align: center;
+    font-family: var(--font-hunmin-saeron);
     font-size: 22px;
-    color: #1748c1;
+    font-style: normal;
+    font-weight: 600;
   }
 `;
 
@@ -107,6 +138,7 @@ const ExDiv = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  button { margin:0; } 
 `;
 
 const GoBackBox = styled.div`
@@ -128,6 +160,9 @@ const GoBackBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  > svg {
+    margin:2px 0 0 -2px;
+  }
 `;
 
 const GiwaBox = styled.div`
@@ -136,3 +171,5 @@ const GiwaBox = styled.div`
   background-color: #ededed;
   border-radius: 5px;
 `;
+
+

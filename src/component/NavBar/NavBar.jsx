@@ -122,6 +122,7 @@ const NavLogo = styled.p`
   line-height: 55px;
   position: absolute;
   left: 19vw;
+  font-weight: 600;
 `;
 
 const NavMenu = styled.div`
@@ -196,6 +197,7 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     align-items: center;
     line-height: 26px;
     color: #fff;
+    font-weight: 400;
     font-size: 18px;
   }
 `;
