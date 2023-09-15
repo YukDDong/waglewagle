@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SelectTitle from "./../../SelectTitle/SelectTitle";
 import FontsArrow from "./../../../assets/fonts_arrow.svg"
-import { ReactComponent as KigHat } from "./../../../assets/kigHat.svg"
+import { ReactComponent as KigHat } from "./../../../assets/main/kigHat.svg"
 
 // 기본 데이터
 const fontColorDefault = ['#EA7E00', '#8B76C1', '#2BBDA3', '#82C317', '#1F6448', '#000000'];

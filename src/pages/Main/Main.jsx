@@ -7,8 +7,9 @@ import CatImg from "../../assets/Cats.svg";
 import RightSide from "../../component/RightSide/RightSide";
 import { jwtTestApi } from "../../apis/user";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
+import Completed from "../../component/Popup/Completed"; 
 
-const Main = () => {
+const Main = () => { 
   const [openModal, setOpenModal] = useState(false);
   const [openNav, setOpenNav] = useState(true);
   const [openMakeup, setOpenMakeup] = useState(false);
@@ -66,6 +67,9 @@ const Main = () => {
           </button>
         )}
       </ExDiv>
+      {/* 기와 등록 완료 팝업창 start */}
+      <Completed/>
+      {/* 기와 등록 완료 팝업창 end */}
     </>
   );
 };
