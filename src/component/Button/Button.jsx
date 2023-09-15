@@ -29,6 +29,7 @@ const ButtonComponent = styled.button`
   margin-bottom: 12px;
   margin-top: ${(props) => (props.location === "/join" ? "40px" : null)};
   margin-top: ${(props) => (props.location === "/makeHopae" ? "40px" : null)};
+  margin-top: ${(props) => (props.location === "/findPwd" ? "40px" : null)};
   box-sizing: border-box;
   cursor: pointer;
   color: ${(props) => (props.color ? "#e75852" : "white")};
