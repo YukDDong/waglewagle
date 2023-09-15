@@ -3,7 +3,7 @@ import {FormFindPwd} from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
-import Modal from "../../component/Modal/Modal";
+import ModalBasic from "../../component/Modal/ModalBasic";
 
 const FindPwd = () => {
 
@@ -32,7 +32,7 @@ const FindPwd = () => {
   return (
     <>
       {(visibleModal)
-        ? <Modal
+        ? <ModalBasic
           msg="성공적으로 메일을 보냈습니다!"
           buttonText="확인"
           visibleFtn={visibleFtn}
