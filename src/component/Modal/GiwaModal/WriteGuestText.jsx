@@ -23,7 +23,7 @@ const WriteGuestText = () => {
   const handleOnChangeSelectValue = (e) => {
     const { innerText } = e.target;
     setSelect({
-      ...selectData,
+      ...select,
       font: innerText
     })
   };
@@ -194,7 +194,7 @@ const Color = styled.div`
     width: 45px;
     height: 45px;
     background-color: #368c8f;
-    border:2px solid #E6E6E6;
+    border: 1px solid #E6E6E6;
     border-radius: 6px;
     box-sizing: border-box;
   }
