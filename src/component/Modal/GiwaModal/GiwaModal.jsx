@@ -94,7 +94,7 @@ const GiwaModal = ({ onXBtnClick }) => {
 export default GiwaModal;
 
 const ChooseBox = styled.div`
-  width: 1100px;
+  min-width: 1100px;
   height: 660px;
   background-color: #fff;
   padding: 70px 80px 50px 80px;
