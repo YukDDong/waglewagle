@@ -80,11 +80,10 @@ const GiwaModal = ({ onXBtnClick }) => {
                 onClick={() => {
                   alert("등록 완료");
                 }}
-                buttonText={"방명록 작성 완료"}
+                buttonText={"기와 등록하기"}
                 style={{ width: "300px", height: "54px", marginBottom: "0" }}
               />
             </ExDiv>
-
           </>
         )}
       </ChooseBox>
@@ -139,6 +138,7 @@ const ExDiv = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  button { margin:0; } 
 `;
 
 const GoBackBox = styled.div`
