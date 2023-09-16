@@ -1,7 +1,7 @@
 import React from 'react';
-import { ReactComponent as Booklet } from "./../../../assets/booklet.svg";
 import styled from 'styled-components';
-import SelectTitle from './../../../component/SelectTitle/SelectTitle';
+import SelectTitle from '../../SelectTitle/SelectTitle';
+import { ReactComponent as Booklet } from "./../../../assets/booklet.svg";
 import { ReactComponent as KigHat } from "./../../../assets/main/kigHat.svg"
 
 const NameContain = () => {
