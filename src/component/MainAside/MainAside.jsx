@@ -6,14 +6,13 @@ import { ReactComponent as Board } from "../../assets/main/board_img.svg";
 import { ReactComponent as SideBoard } from "../../assets/main/side_board_img.svg";
 import { ReactComponent as ToggleInline } from "../../assets/main/toggle_icon_inline.svg";
 import { ReactComponent as ToggleOutline } from "../../assets/main/toggle_icon_outline.svg";
-import { ReactComponent as Bell } from "../../assets/main/bell_icon.svg";
+import { ReactComponent as Issue } from "../../assets/main/bell_icon.svg";
 import { ReactComponent as Capture } from "../../assets/main/capture_icon.svg";
 import { ReactComponent as Sharing } from "../../assets/main/sharing_icon.svg";
 import { ReactComponent as GiwaSetting } from "../../assets/main/giwa_setting_icon.svg";
 
-const MainAside = ({openMakeup}) => {
+const MainAside = ({ openMakeup, openMakeupHouse }) => {
   const [iconIsOpen, setIconIsOpen] = useState(false);
-  console.log(openMakeup)
 
   return (
     <Contain className={openMakeup ? "hidden" : null}>
@@ -41,10 +40,10 @@ const MainAside = ({openMakeup}) => {
           <SideBoard className="side2" />
         </Name>
         <Various isOpen={iconIsOpen}>
-          <li><button><Bell /></button></li>
-          <li><button><Capture /></button></li>
-          <li><button><Sharing /></button></li>
-          <li><button><GiwaSetting /></button></li>
+          <li><button onClick={() => alert('소식')}><Issue /></button></li>
+          <li><button onClick={() => alert('캡쳐화면')}><Capture /></button></li>
+          <li><button onClick={() => alert('공유')}><Sharing /></button></li>
+          <li><button onClick={() => openMakeupHouse(true)}><GiwaSetting /></button></li>
         </Various>
         {
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
@@ -88,6 +87,7 @@ const History = styled.div`
   border: 1px solid #ECE0B9;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #ECE0B9;
+  box-sizing: border-box;
   > div {
     margin: 0 0 0 20px;
   }
