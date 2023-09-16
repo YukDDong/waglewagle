@@ -5,11 +5,11 @@ import mainBg from "../../assets/bg_main.png";
 import mainHouse from "../../assets/main_house.png";
 import CatImg from "../../assets/Cats.svg";
 import RightSide from "../../component/RightSide/RightSide";
-import { jwtTestApi } from "../../apis/user";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
-import Completed from "../../component/Popup/Completed"; 
+import Completed from "../../component/Popup/Completed";
+import MainAside from "../../component/MainAside/MainAside";
 
-const Main = () => { 
+const Main = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openNav, setOpenNav] = useState(true);
   const [openMakeup, setOpenMakeup] = useState(false);
@@ -67,8 +67,11 @@ const Main = () => {
           </button>
         )}
       </ExDiv>
+      {/* {openMakeup ? null : <MainAside className="/>} */}
+      <MainAside openMakeup={openMakeup} />
+      {/* <MainAside/> */}
       {/* 기와 등록 완료 팝업창 start */}
-      <Completed/>
+      {/* <Completed/> */}
       {/* 기와 등록 완료 팝업창 end */}
     </>
   );

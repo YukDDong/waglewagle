@@ -2,21 +2,21 @@ import React from 'react';
 import Modal from "../Modal/Modal";
 import styled from 'styled-components';
 import { ReactComponent as CloseBtn } from "../../assets/closeBtn.svg";
-import KoreanCaracter from "../../assets/main/korean_caracter.png";
+import Haetae from "../../assets/main/popup_haetae_img.png";
 import Pattern from "../../assets/main/pattern.png";
 
 const Completed = () => {
   const existMouseOver = (e) => {
-    e.target.parentNode.classList.add('first')
-    e.target.parentNode.classList.remove('two')
+    e.target.parentNode.classList.add('first');
+    e.target.parentNode.classList.remove('two');
   }
   const okayMouseOver = (e) => {
-    e.target.parentNode.classList.add('two')
-    e.target.parentNode.classList.remove('first')
+    e.target.parentNode.classList.add('two');
+    e.target.parentNode.classList.remove('first');
   }
   const mouseOut = (e) => {
-    e.target.parentNode.classList.remove('first')
-    e.target.parentNode.classList.remove('two')
+    e.target.parentNode.classList.remove('first');
+    e.target.parentNode.classList.remove('two');
   }
 
   return (
@@ -28,7 +28,7 @@ const Completed = () => {
         <Wrap>
           <p>기와 등록이 성공적으로 완료 되었소!</p>
           <strong>당신의 기와집을 <br />만들러 가보겠나?</strong>
-          <img className="koreanCaracter" src={KoreanCaracter} alt="" />
+          <img className="koreanCaracter" src={Haetae} alt="" />
           <img className="partten" src={Pattern} alt="" />
         </Wrap>
         <Button className="minju">
