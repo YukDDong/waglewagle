@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import { ReactComponent as XIcon } from "../../assets/x-menu.svg";
 import { ReactComponent as ResetIcon } from "../../assets/system-uicons_reset.svg";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
-import Button from "../Button/Button";
 
 const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
   return (

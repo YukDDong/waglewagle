@@ -30,6 +30,10 @@ const routes = [
     element: <MakeHopae />,
   },
   {
+    path: "/makeGiwaHouse",
+    element: <Main />,
+  },
+  {
     path: "/kakao_login",
     element: <KakaoLogin />,
   },

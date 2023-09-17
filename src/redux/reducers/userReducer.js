@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER, login, logout } from "../actions/userActions";
+import { LOGIN_USER, LOGOUT_USER, MAKE_HOPAE } from "../actions/userActions";
 
 const initialState = {
   User: {
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 // user의 로그인 유지와 로그아웃을 위한 Reducer
-export const userCheckReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
       return {
@@ -30,6 +30,14 @@ export const userCheckReducer = (state = initialState, action) => {
           name: "",
           loggedIn: false,
           data: {},
+        },
+      };
+    case MAKE_HOPAE:
+      return {
+        ...state,
+        User: {
+          ...state.User,
+          name: action.payload,
         },
       };
     default:
