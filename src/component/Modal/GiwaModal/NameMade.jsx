@@ -1,7 +1,7 @@
 import React from 'react';
-import { ReactComponent as Booklet } from "./../../../assets/booklet.svg";
 import styled from 'styled-components';
-import SelectTitle from './../../../component/SelectTitle/SelectTitle';
+import SelectTitle from '../../SelectTitle/SelectTitle';
+import { ReactComponent as Booklet } from "./../../../assets/booklet.svg";
 import { ReactComponent as KigHat } from "./../../../assets/main/kigHat.svg"
 
 const NameContain = () => {
@@ -40,14 +40,15 @@ export default NameContain;
 
 const NameWrap = styled.div`
   display: flex;
-  margin: 36px 0;
+  margin: 36px 0 45px;
   gap: 35px;
   align-items: center;
   justify-content: space-between;
 `;
 
 const Text = styled.div`
-  min-width: 578px;
+  width: 573px;
+  min-width: 573px;
   min-height: 357px;
   position: relative;
   padding: 50px 30px 50px 40px;
@@ -59,6 +60,7 @@ const Text = styled.div`
   p {
     height: 250px;
     position: relative;
+    padding: 0 10px 0 0;
     color: #000;
     font-size: 20px;
     font-style: normal;
@@ -87,7 +89,7 @@ const NameInput = styled.div`
     width: 275px;
     border-radius: 6px;
     border: 1px solid #E6E6E6;
-    background: #FAFAFA;
+    background-color: #FAFAFA;
     color: #BDBDBD;
     font-family: var(--font-hunmin);
     font-size: 16px;
@@ -98,6 +100,8 @@ const NameInput = styled.div`
     letter-spacing: 0.64px;
     &:hover, &:focus {
       outline: none;
+      border-color: #E6E6E6;
+      background-color: #fff;
     }
   }
 `;

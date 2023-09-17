@@ -51,6 +51,9 @@ const MainDiv = styled.div`
   align-items: center;
   padding-top: 50px;
   box-sizing: border-box;
+  button {
+    margin: 40px 0 0;
+  }
 `;
 
 const Sub = styled.h3`

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
-import mainBg from "../../assets/bg_main.png";
-import mainHouse from "../../assets/main_house.png";
-import CatImg from "../../assets/Cats.svg";
 import RightSide from "../../component/RightSide/RightSide";
-import { jwtTestApi } from "../../apis/user";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
+import MainAside from "../../component/MainAside/MainAside";
+import mainBg from "../../assets/bg_main.png";
+import mainHouse from "../../assets/main_house.png";
+import haetaeImg from "../../assets/main/haetae_img.png";
+import taegeukgi from "../../assets/main/taegeukgi.png";
+import CaptruePopup from "../../component/MainAside/IconPopup/CaptruePopup";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -47,7 +49,10 @@ const Main = () => {
       <ExDiv background={background === "day" ? mainBg : null}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
-            <CatImgDiv />
+            <CatImgDiv>
+              <img src={haetaeImg} alt="해태" />
+            </CatImgDiv>
+            <img src={taegeukgi} alt="태극기" />
           </HouseBox>
         </StyledMain>
         <RightSide
@@ -55,7 +60,9 @@ const Main = () => {
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
         ></RightSide>
-        {openMakeup ? null : <button onClick={openMakeupHouse}>클릭</button>}
+        {openMakeup ? null : (
+          <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
+        )}
         {openModal ? null : (
           <button
             onClick={() => {
@@ -63,10 +70,16 @@ const Main = () => {
             }}
             style={{ marginBottom: "50px" }}
           >
-            기와선택
+            방문자 : 기와선택
           </button>
         )}
+        <MainAside openMakeup={openMakeup} openMakeupHouse={openMakeupHouse} />
       </ExDiv>
+
+      {/* 캡쳐 팝업 start */}
+      {/* <CaptruePopup/> */}
+      {/* 캡쳐 팝업 end */}
+
       {/* 기와 등록 완료 팝업창 start */}
       {/* <Completed/> */}
       {/* 기와 등록 완료 팝업창 end */}
@@ -108,16 +121,24 @@ const HouseBox = styled.div`
   left: calc(50% - 300px);
   top: 200px;
   transition: all ease-in-out 1s;
+  > img {
+    position: absolute;
+    left: -105px;
+    top: 123px;
+  }
   &.left {
     left: 285px;
   }
 `;
 
 const CatImgDiv = styled.div`
+  width: 120px;
+  height: 120px;
   position: absolute;
-  top: 95px;
-  left: 400px;
-  width: 100px;
-  height: 100px;
-  background: url(${CatImg}) no-repeat;
+  top: 83px;
+  left: 381px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
