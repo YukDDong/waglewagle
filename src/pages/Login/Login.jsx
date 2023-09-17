@@ -33,10 +33,11 @@ const Login = () => {
       password: loginPassword,
     }).then((result) => {
       if (result.status === 200) {
+        console.log(result);
         // 테스트용 api에서는 jwt토큰 값만 내려오고 있음.
         // 유저정보(name)이 필요해서 찐api나오면 요청해야함
-        setItem("AUTH", result.data);
-        navigate("/main");
+        // setItem("AUTH", result.data);
+        // navigate("/main");
         // TODO-GOGI : api나오면 redux상태관리 로직도 추가
       }
     });

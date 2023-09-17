@@ -5,7 +5,6 @@ import persistReducer from "redux-persist/es/persistReducer";
 import thunk from "redux-thunk";
 import persistStore from "redux-persist/es/persistStore";
 import { giwaReducer } from "../reducers/giwaReducer";
-import { composeWithDevTools } from "redux-devtools-extension";
 
 const rootReducer = combineReducers({
   userCheckReducer: userCheckReducer,
