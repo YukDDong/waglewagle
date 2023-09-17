@@ -104,8 +104,7 @@ function FormMakeHopae({ validUserInfo }) {
     [form]
   );
 
-  const handleMakeHopae = (e) => {
-    e.preventDefault();
+  const handleMakeHopae = () => {
     // TODO-GOGI : 호패만들기 api 나오면 추가 예정
     // makeHopae({
     //   nickname: form.hopae,

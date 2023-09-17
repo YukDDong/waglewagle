@@ -40,7 +40,7 @@ const Login = () => {
           login({
             id: "아이디",
             name: "",
-            loggedIn: true,
+            data: {},
           })
         );
         navigate("/makeHopae");
