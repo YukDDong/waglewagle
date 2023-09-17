@@ -1,5 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import { useState } from "react";
+import styled from 'styled-components';
+import IssueNews from "./IconPopup/IssueNews";
+import Sharing from "./IconPopup/Sharing";
 import KigImg from "../../assets/main/kig_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/main/visit_icon.svg";
 import { ReactComponent as Board } from "../../assets/main/board_img.svg";
@@ -8,7 +10,7 @@ import { ReactComponent as ToggleInline } from "../../assets/main/toggle_icon_in
 import { ReactComponent as ToggleOutline } from "../../assets/main/toggle_icon_outline.svg";
 import { ReactComponent as Issue } from "../../assets/main/bell_icon.svg";
 import { ReactComponent as Capture } from "../../assets/main/capture_icon.svg";
-import { ReactComponent as Sharing } from "../../assets/main/sharing_icon.svg";
+import { ReactComponent as SharingIcon } from "../../assets/main/sharing_icon.svg";
 import { ReactComponent as GiwaSetting } from "../../assets/main/giwa_setting_icon.svg";
 
 const MainAside = ({ openMakeup, openMakeupHouse }) => {
@@ -40,9 +42,23 @@ const MainAside = ({ openMakeup, openMakeupHouse }) => {
           <SideBoard className="side2" />
         </Name>
         <Various isOpen={iconIsOpen}>
-          <li><button onClick={() => alert('소식')}><Issue /></button></li>
+          <li>
+            <button onClick={() => alert('소식')}>
+              <Issue />
+            </button>
+            {/* 소식통 start */}
+            <IssueNews />
+            {/* 소식통 end */}
+          </li>
           <li><button onClick={() => alert('캡쳐화면')}><Capture /></button></li>
-          <li><button onClick={() => alert('공유')}><Sharing /></button></li>
+          <li>
+            <button onClick={() => alert('공유')}>
+              <SharingIcon />
+            </button>
+            {/* 공유하기 start */}
+            <Sharing/>
+            {/* 공유하기 end */}
+          </li>
           <li><button onClick={() => openMakeupHouse(true)}><GiwaSetting /></button></li>
         </Various>
         {
@@ -213,30 +229,34 @@ const Various = styled.ul`
   visibility: ${(props) => props.isOpen ? 'visible' : 'hidden'};
   opacity: ${(props) => props.isOpen ? '1' : '0'};
   transition: width, .4s ease-in;
-  button {
-    width: 60px; 
-    height: 60px;
+  > li {
     position: relative;
-    border: 1px solid #C09B73;
-    border-radius: 60px;
-    transition: background-color, .2s;
-    &:hover {
-      background-color: #AE8960;
-      svg {
+    > button {
+      width: 60px; 
+      height: 60px;
+      position: relative;
+      border: 1px solid #C09B73;
+      border-radius: 60px;
+      transition: background-color, .2s;
+      &:hover {
+        background-color: #AE8960;
+        svg {
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+      > svg {
+        position: absolute; 
+        margin: auto;
+        top: 0; left: 0; right: 0; bottom: 0;
         path {
-          stroke: #fff;
+          transition: stroke, .2s;
         }
       }
     }
   }
-  svg {
-    position: absolute; 
-    margin: auto;
-    top: 0; left: 0; right: 0; bottom: 0;
-    path {
-      transition: stroke, .2s;
-    }
-  }
+
 `;
 const ToggleBtn = styled.button`
   width: 40px;
