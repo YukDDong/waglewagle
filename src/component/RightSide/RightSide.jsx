@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as ResetIcon } from "../../assets/system-uicons_reset.svg";
@@ -12,20 +12,59 @@ import giwaPink from "../../assets/main/giwa_pink.png";
 import daytime from "../../assets/main/daytime.png";
 import night from "../../assets/main/night.png";
 import haetaeFrame from "../../assets/main/haetae_frame.png";
+import { makeGiwaHouseApi } from "../../apis/giwa";
+import { generateRandomString } from "../../utils/generateRandomString";
 
-const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
+const RightSide = ({
+  openMakeup,
+  xBtnClickHandler,
+  setBackground,
+  updateFunction,
+}) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const username = useSelector((state) => state.userReducer.name);
   const isMakeGiwaHouse = location.pathname === "/makeGiwaHouse";
-  const [giwaStyleForm, setGiwaStyleForm] = useState({
+  const [giwaStyle, setGiwaStyle] = useState({
     giwaColor: 1,
     background: 1,
     friend: 1,
   });
 
-  const handleChangeForm =(e)=>{
-    setGiwa
-  }
+  useEffect(() => {
+    updateFunction(giwaStyle);
+  }, [giwaStyle]);
+
+  const handleChangeGiwaStyle = (e) => {
+    const name = e.target.name;
+    const value = Number(e.target.value);
+    setGiwaStyle({
+      ...giwaStyle,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = () => {
+    if (isMakeGiwaHouse) {
+      makeGiwaHouseApi({
+        version: "v1",
+        title: "아무타이틀",
+        broadStyle: {
+          colorCode: giwaStyle.giwaColor,
+          backGroundCode: giwaStyle.background,
+          friendCode: giwaStyle.friend,
+        },
+        url: generateRandomString(20),
+      }).then((result) => {
+        if (result.status === 200) {
+          navigate("/main");
+        }
+      });
+    }
+  };
+
+  console.log(giwaStyle);
+
   return (
     <Container className={openMakeup ? "show" : null}>
       {isMakeGiwaHouse ? null : (
@@ -48,26 +87,47 @@ const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
       <div>
         <SelectTitle title={"기와 색상 선택"} />
         <ItemLists>
-          <SelectItem label="청색 기와" img={giwaIndigo} name={"giwaColor"} value={} id={} onChange={handleChangeForm}/>
-          <SelectItem label="적색 기와" img={giwaPink} name={"giwaColor"} value={} id={} onChange={handleChangeForm}/>
-          <SelectItem label="흑색 기와" img={giwaBlack} name={"giwaColor"} value={} id={} onChange={handleChangeForm}/>
+          <SelectItem
+            label="청색 기와"
+            img={giwaIndigo}
+            name={"giwaColor"}
+            value={1}
+            id={"giwaIndigo"}
+            onChange={handleChangeGiwaStyle}
+          />
+          <SelectItem
+            label="먹색 기와"
+            img={giwaBlack}
+            name={"giwaColor"}
+            value={2}
+            id={"giwaBlack"}
+            onChange={handleChangeGiwaStyle}
+          />
+          <SelectItem
+            label="적색 기와"
+            img={giwaPink}
+            name={"giwaColor"}
+            value={3}
+            id={"giwaPink"}
+            onChange={handleChangeGiwaStyle}
+          />
         </ItemLists>
         <SelectTitle title={"배경 선택"} />
         <ItemLists>
           <SelectItem
             label={"낮"}
             id="day"
-            name="backGround"
-            value="day"
-            onChange={setBackground}
+            name="background"
+            value={1}
+            onChange={handleChangeGiwaStyle}
             img={daytime}
           />
           <SelectItem
             label={"밤"}
             id="night"
-            name="backGround"
-            value="night"
-            onChange={setBackground}
+            name="background"
+            value={2}
+            onChange={handleChangeGiwaStyle}
             img={night}
           />
         </ItemLists>
@@ -77,7 +137,7 @@ const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
         </ItemLists>
       </div>
       <div>
-        <Btn>모두 선택해 주시오.</Btn>
+        <Btn onClick={handleSubmit}>모두 선택해 주시오.</Btn>
         <ResetBox>
           <ResetIcon width={24} height={24} />
         </ResetBox>

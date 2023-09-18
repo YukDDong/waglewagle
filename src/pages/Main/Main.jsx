@@ -59,6 +59,7 @@ const Main = () => {
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
+          updateFunction={() => {}}
         ></RightSide>
         <Test>
           {openMakeup ? null : (

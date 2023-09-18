@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import RightSide from "../../component/RightSide/RightSide";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import mainHouse from "../../assets/main_house.png";
 
 const MakeGiwaHouse = () => {
+  const [giwaStyle, setGiwaStyle] = useState({
+    giwaColor: "1",
+    background: "1",
+    friend: "1",
+  });
   return (
     <ExDiv>
       <StyledMain>
@@ -14,7 +19,7 @@ const MakeGiwaHouse = () => {
           </CatImgDiv>
         </HouseBox>
       </StyledMain>
-      <RightSide openMakeup={true}></RightSide>
+      <RightSide openMakeup={true} updateFunction={setGiwaStyle}></RightSide>
     </ExDiv>
   );
 };
