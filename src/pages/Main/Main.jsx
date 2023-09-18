@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
+import GiwaMean from "../../component/RightSide/GiwaMean";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
-import mainBg from "../../assets/bg_main.png";
-import mainHouse from "../../assets/main_house.png";
+import GiwaButton from "../../component/GiwaButton/GiwaButton";
+import mainHouse from "../../assets/main/main_house.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import pineTreeFront from "../../assets/main/pine_tree_1.png";
@@ -45,7 +46,6 @@ const Main = () => {
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      {/* <ExDiv background={background === "day" ? mainBg : null}> */}
       <ExDiv background={background}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
@@ -53,14 +53,26 @@ const Main = () => {
               <img src={haetaeImg} alt="해태" />
             </CatImgDiv>
             <img src={taegeukgi} alt="태극기" />
+            {/* 기와 버튼 start */}
+            <GiwaButton/>
+            {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
         ></RightSide>
+
+        {/* 방명록/기와의미 start */}
+        {/* <GiwaMean
+          openMakeup={openMakeup}
+          xBtnClickHandler={closeMakeupHouse}
+          setBackground={changeBackground}
+        ></GiwaMean> */}
+        {/* 방명록/기와의미 end */}
+
         <Test>
           {openMakeup ? null : (
             <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
@@ -105,9 +117,9 @@ const ExDiv = styled.div`
   background: linear-gradient(
     140deg,
     ${({ background }) =>
-      background === "day"
-        ? "#FFFEF9 0%, #FFF8DC 100%"
-        : " #8C92CA 0%, #31365B 100%"}
+    background === "day"
+      ? "#FFFEF9 0%, #FFF8DC 100%"
+      : " #8C92CA 0%, #31365B 100%"}
   );
   position: relative;
   overflow: hidden;
@@ -126,7 +138,7 @@ const HouseBox = styled.div`
   width: 800px;
   height: 700px;
   background: url(${mainHouse}) no-repeat;
-  background-size: 800px 700px;
+  background-size: cover;
   position: absolute;
   left: 90px;
   top: 100px;

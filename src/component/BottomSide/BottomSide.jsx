@@ -1,23 +1,33 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import IssueNews from "./IconPopup/IssueNews";
 import Sharing from "./IconPopup/Sharing";
 import KigImg from "../../assets/main/kig_img.png";
-import { ReactComponent as VisitIcon } from "../../assets/main/visit_icon.svg";
-import { ReactComponent as Board } from "../../assets/main/board_img.svg";
-import { ReactComponent as SideBoard } from "../../assets/main/side_board_img.svg";
-import { ReactComponent as ToggleInline } from "../../assets/main/toggle_icon_inline.svg";
-import { ReactComponent as ToggleOutline } from "../../assets/main/toggle_icon_outline.svg";
-import { ReactComponent as Issue } from "../../assets/main/bell_icon.svg";
-import { ReactComponent as Capture } from "../../assets/main/capture_icon.svg";
-import { ReactComponent as SharingIcon } from "../../assets/main/sharing_icon.svg";
-import { ReactComponent as GiwaSetting } from "../../assets/main/giwa_setting_icon.svg";
+import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
+import { ReactComponent as Board } from "../../assets/bottomSide/board_img.svg";
+import { ReactComponent as SideBoard } from "../../assets/bottomSide/side_board_img.svg";
+import { ReactComponent as ToggleInline } from "../../assets/bottomSide/toggle_icon_inline.svg";
+import { ReactComponent as ToggleOutline } from "../../assets/bottomSide/toggle_icon_outline.svg";
+import { ReactComponent as Issue } from "../../assets/bottomSide/bell_icon.svg";
+import { ReactComponent as Capture } from "../../assets/bottomSide/capture_icon.svg";
+import { ReactComponent as SharingIcon } from "../../assets/bottomSide/sharing_icon.svg";
+import { ReactComponent as GiwaSetting } from "../../assets/bottomSide/giwa_setting_icon.svg";
+import gsap from "gsap";
 
 const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
   const [iconIsOpen, setIconIsOpen] = useState(false);
+  const ContainRef = useRef();
+  const houseRef = useRef();
+
+  useEffect(() => {
+    openMakeup
+      ? gsap.to(ContainRef.current, 1, { y: '100px', opacity: 0, display: 'none', ease: 'Power1.easeInOut' })
+      : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
+  }, [openMakeup])
 
   return (
-    <Contain className={openMakeup ? "hidden" : null}>
+    // <Contain className={openMakeup ? "hidden" : null}>
+    <Contain ref={ContainRef}>
       <History bg={bg}>
         <img src={KigImg} alt="세종대왕 이미지" />
         <div>
@@ -84,14 +94,8 @@ const Contain = styled.div`
   transform: translate(-50%,0);
   display: flex;
   justify-content: space-between;
-  transition: all ease-in-out 1s;
   opacity: 1;
   z-index: 3;
-  &.hidden {
-    visibility: hidden;
-    bottom: 0;
-    opacity: 0;
-  }
 `;
 
 /* 히스토리 사이드 바 */

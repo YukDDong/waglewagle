@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import giwaNews from "../../../assets/main/giwa_news.png";
+import giwaNews from "../../../assets/bottomSide/giwa_news.png";
 
 const newsData = [
   {
