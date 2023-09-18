@@ -1,10 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const SelectItem = ({ label, id, name, value, onChange }) => {
+const SelectItem = ({ label, id, name, value, onChange, img }) => {
   return (
     <Container htmlFor={id}>
-      <Item />
+      <Item $img={img} />
       <input
         type="radio"
         name={name}

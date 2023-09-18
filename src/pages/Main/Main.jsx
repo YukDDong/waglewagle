@@ -5,7 +5,7 @@ import RightSide from "../../component/RightSide/RightSide";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import MainAside from "../../component/MainAside/MainAside";
-import mainBg from "../../assets/bg_main.png";
+import mainBg from "../../assets/giwaHouse/bg_day.png";
 import mainHouse from "../../assets/main_house.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
@@ -23,10 +23,8 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // jwt토큰을 넣어서 get요청하는 api호출
-    // jwtTestApi().then((result) => {
-    //   alert(result.data);
-    // });
+    // main페이지에서는 기와집을 불러오는 get요청을 해야함
+    // 해당 api 확인되면 추가 예정
   }, []);
 
   const openMakeupHouse = () => {

@@ -57,7 +57,7 @@ export default function NavBar({ isShowing = true }) {
             <StyledMenuBtn onClick={menuBtnClick} />
           )}
         </NavMenuTop>
-        <NavMenuMiddle menuOpen={menuOpen} $isLogin={isLogin}>
+        <NavMenuMiddle $menuOpen={menuOpen} $isLogin={isLogin}>
           <MyInfo>
             <MyInfoItemFirst>
               {isLogin ? (
@@ -153,7 +153,7 @@ const StyledMenuBtn = styled(MenuBtn)`
 const NavMenuMiddle = styled.div`
   width: 100%;
   height: ${(props) =>
-    props.menuOpen ? (props.isLogin ? "320px" : "230px") : "0px"};
+    props.$menuOpen ? (props.$isLogin ? "320px" : "230px") : "0px"};
   background-color: #071b34;
   transition: all 0.5s ease-in-out;
   overflow: hidden;
@@ -209,7 +209,7 @@ const StyledLink = styled(Link)`
 `;
 
 const LinkMypage = styled(StyledLink)`
-  color: ${(props) => (props.isLogin ? "#fff" : "#455263")};
+  color: ${(props) => (props.$isLogin ? "#fff" : "#455263")};
 `;
 
 const LogoutBtn = styled.button`

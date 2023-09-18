@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as XIcon } from "../../assets/x-menu.svg";
 import { ReactComponent as ResetIcon } from "../../assets/system-uicons_reset.svg";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
+  const location = useLocation();
+  const username = useSelector((state) => state.userReducer.name);
+  const isMakeGiwaHouse = location.pathname === "/makeGiwaHouse";
+  const [giwaStyleForm, setgiwaStyleForm] = useState({
+    giwaColor: 1,
+    background: 1,
+    friend: 1,
+  });
   return (
     <Container className={openMakeup ? "show" : null}>
-      <XBox>
-        <XIcon
-          width={"40px"}
-          height={"40px"}
-          fill="#212121"
-          onClick={xBtnClickHandler}
-        />
-      </XBox>
+      {isMakeGiwaHouse ? null : (
+        <XBox>
+          <XIcon
+            width={"32px"}
+            height={"32px"}
+            fill="#212121"
+            onClick={xBtnClickHandler}
+          />
+        </XBox>
+      )}
       <HeaderBox>
         <TextField>
-          <span>홍길동</span>님, 환영하오.
+          <span>{username}</span>님, 환영하오.
           <br />
           기와집을 만들어 보시오.
         </TextField>
@@ -28,9 +40,24 @@ const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
       </HeaderBox>
       <SelectTitle title={"기와 색상 선택"} />
       <ItemLists>
-        <SelectItem label={"청색 기와"} />
-        <SelectItem label={"적색 기와"} />
-        <SelectItem label={"흑색 기와"} />
+        <SelectItem
+          label={"청색 기와"}
+          name={"giwaColor"}
+          id={"navy"}
+          value={1}
+        />
+        <SelectItem
+          label={"먹색 기와"}
+          name={"giwaColor"}
+          id={"black"}
+          value={2}
+        />
+        <SelectItem
+          label={"분홍 기와"}
+          name={"giwaColor"}
+          id={"pink"}
+          value={3}
+        />
       </ItemLists>
       <SelectTitle title={"배경 선택"} />
       <ItemLists>
@@ -77,7 +104,6 @@ const Container = styled.aside`
   box-sizing: border-box;
   padding: 60px 60px;
   transition: all ease-in-out 1s;
-  overflow-y: scroll;
   &.show {
     right: 0;
     opacity: 1;
@@ -86,6 +112,7 @@ const Container = styled.aside`
 
 const XBox = styled.div`
   width: 100%;
+  height: 32px;
   display: flex;
   justify-content: end;
   align-items: center;
