@@ -1,7 +1,7 @@
 import Modal from "../../Modal/Modal"
 import styled from 'styled-components';
 import captureImg from "../../../assets/main/capture_img.png";
-import { ReactComponent as CloseBtn } from "../../../assets/closeBtn.svg";
+import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
 import { ReactComponent as Board } from "../../../assets/main/board_img_2.svg";
 import { ReactComponent as SaveImg } from "../../../assets/main/save_img.svg";
 import { ReactComponent as InstarLogo } from "../../../assets/main/instar_logo.svg";
@@ -9,7 +9,7 @@ import { ReactComponent as InstarStory } from "../../../assets/main/instar_story
 import { ReactComponent as Kakao } from "../../../assets/main/kakao.svg";
 
 const CaptruePopup = () => {
-  return (
+  return ( 
     <Modal>
       <Contain>
         <XBtnBox>
