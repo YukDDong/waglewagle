@@ -24,10 +24,8 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // jwt토큰을 넣어서 get요청하는 api호출
-    // jwtTestApi().then((result) => {
-    //   alert(result.data);
-    // });
+    // main페이지에서는 기와집을 불러오는 get요청을 해야함
+    // 해당 api 확인되면 추가 예정
   }, []);
 
   const openMakeupHouse = () => {
@@ -61,9 +59,12 @@ const Main = () => {
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
+          updateFunction={() => {}}
         ></RightSide>
         <Test>
-          {openMakeup ? null : <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>}
+          {openMakeup ? null : (
+            <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
+          )}
           {openModal ? null : (
             <button
               onClick={() => {
@@ -101,7 +102,13 @@ export default Main;
 const ExDiv = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(140deg, ${({ background }) => background === 'day' ? '#FFFEF9 0%, #FFF8DC 100%' : ' #8C92CA 0%, #31365B 100%'}); 
+  background: linear-gradient(
+    140deg,
+    ${({ background }) =>
+      background === "day"
+        ? "#FFFEF9 0%, #FFF8DC 100%"
+        : " #8C92CA 0%, #31365B 100%"}
+  );
   position: relative;
   overflow: hidden;
 `;
@@ -121,15 +128,15 @@ const HouseBox = styled.div`
   background: url(${mainHouse}) no-repeat;
   background-size: 800px 700px;
   position: absolute;
-  left: 90px; 
+  left: 90px;
   top: 100px;
   right: 0;
-  bottom: 0; 
+  bottom: 0;
   margin: auto;
   transition: all ease-in-out 1s;
   z-index: 2;
   > img {
-    position: absolute; 
+    position: absolute;
     left: -105px;
     top: 123px;
   }
@@ -145,7 +152,7 @@ const CatImgDiv = styled.div`
   top: 83px;
   left: 381px;
   img {
-    width:100%;
+    width: 100%;
     height: 100%;
   }
 `;
@@ -153,13 +160,20 @@ const CatImgDiv = styled.div`
 const Tree = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute; 
-  left: 0; 
+  position: absolute;
+  left: 0;
   top: 0;
   > img {
     position: absolute;
-    &:nth-of-type(1) { left: 0; bottom: 0; z-index: 2; }
-    &:nth-of-type(2) { right: 0; top: 10%; }
+    &:nth-of-type(1) {
+      left: 0;
+      bottom: 0;
+      z-index: 2;
+    }
+    &:nth-of-type(2) {
+      right: 0;
+      top: 10%;
+    }
   }
 `;
 

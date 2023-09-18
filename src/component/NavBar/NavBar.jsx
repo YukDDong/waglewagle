@@ -6,7 +6,6 @@ import { ReactComponent as MenuXBtn } from "../../assets/x-menu.svg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userCheckReducer } from "../../redux/reducers/userReducer";
 import { logout } from "../../redux/actions/userActions";
 
 export default function NavBar({ isShowing = true }) {
@@ -18,7 +17,7 @@ export default function NavBar({ isShowing = true }) {
   // const userInfo = JSON.parse(localStorage.getItem("loggedInUser"));
   // const userName = !(userInfo === null) ? userInfo.name : "";
   // 위 코드를 리덕스로 바꾼 부분이 아래부분입니다.
-  const userInfo = useSelector((state) => state.userCheckReducer.User);
+  const userInfo = useSelector((state) => state.userReducer);
   const userName = userInfo.name;
 
   const menuBtnClick = () => {
@@ -58,7 +57,7 @@ export default function NavBar({ isShowing = true }) {
             <StyledMenuBtn onClick={menuBtnClick} />
           )}
         </NavMenuTop>
-        <NavMenuMiddle menuOpen={menuOpen} $isLogin={isLogin}>
+        <NavMenuMiddle $menuOpen={menuOpen} $isLogin={isLogin}>
           <MyInfo>
             <MyInfoItemFirst>
               {isLogin ? (
@@ -154,7 +153,7 @@ const StyledMenuBtn = styled(MenuBtn)`
 const NavMenuMiddle = styled.div`
   width: 100%;
   height: ${(props) =>
-    props.menuOpen ? (props.isLogin ? "320px" : "230px") : "0px"};
+    props.$menuOpen ? (props.$isLogin ? "320px" : "230px") : "0px"};
   background-color: #071b34;
   transition: all 0.5s ease-in-out;
   overflow: hidden;
@@ -210,7 +209,7 @@ const StyledLink = styled(Link)`
 `;
 
 const LinkMypage = styled(StyledLink)`
-  color: ${(props) => (props.isLogin ? "#fff" : "#455263")};
+  color: ${(props) => (props.$isLogin ? "#fff" : "#455263")};
 `;
 
 const LogoutBtn = styled.button`
