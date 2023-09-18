@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import RightSide from "../../component/RightSide/RightSide";
 import haetaeImg from "../../assets/main/haetae_img.png";
-import mainHouse from "../../assets/main_house.png";
+import mainHouse from "../../assets/main/main_house.png";
 
 const MakeGiwaHouse = () => {
   const [giwaStyle, setGiwaStyle] = useState({

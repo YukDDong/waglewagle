@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as SharingIcon } from "../../../assets/main/out_sharing_icon.svg";
+import { ReactComponent as SharingIcon } from "../../../assets/bottomSide/out_sharing_icon.svg";
 
 const Sharing = ({ bg }) => {
   return (
@@ -22,12 +22,12 @@ const Contain = styled.div`
   padding: 30px 35px;
   position: absolute; 
   bottom: 85px;
-  left: -65px;
+  left: -220px;
   content: "";
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, .6);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: ${({ bg }) => bg === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};

@@ -1,8 +1,9 @@
 import { keyframes, styled } from "styled-components";
-import { ReactComponent as GnbFooter } from "../../assets/gnb-footer.svg";
-import { ReactComponent as MenuBtn } from "../../assets/ic_baseline_menu.svg";
-import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
-import { ReactComponent as MenuXBtn } from "../../assets/x-menu.svg";
+import { ReactComponent as GnbFooter } from "../../assets/gnb/gnb-footer.svg";
+import { ReactComponent as MenuBtn } from "../../assets/gnb/ic_baseline_menu.svg";
+// import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
+import { ReactComponent as ArrowBtn } from "../../assets/common/visit_icon.svg";
+import { ReactComponent as MenuXBtn } from "../../assets/common/x-menu.svg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +70,7 @@ export default function NavBar({ isShowing = true }) {
               ) : (
                 <Link to="/login">
                   로그인하세요
-                  <ArrowBtn />
+                  <ArrowBtn width={11} height={12} />
                 </Link>
               )}
             </MyInfoItemFirst>
@@ -197,7 +198,14 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     line-height: 26px;
     color: #fff;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 18px;    
+    svg {
+      margin: 0 0 0 6px;
+      transition: transform, .2s ease-in-out;
+      path {
+        stroke: #fff;        
+      }
+    }
   }
 `;
 
