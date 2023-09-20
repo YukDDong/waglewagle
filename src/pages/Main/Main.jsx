@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
-import GiwaMean from "../../component/RightSide/GiwaMean";
+import GiwaMean from "../../component/RightSide/GuestBook";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
@@ -13,16 +13,24 @@ import taegeukgi from "../../assets/main/taegeukgi.png";
 import pineTreeLeft from "../../assets/main/pine_tree_left.png";
 import pineTreeRight from "../../assets/main/pine_tree_right.png";
 import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
+import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 
 const Main = () => {
+  const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false);
   const [openNav, setOpenNav] = useState(true);
   const [openMakeup, setOpenMakeup] = useState(false);
-  // 테스트용 - 수정예정
-  const [background, setBackground] = useState("day");
-  const changeBackground = (e) => {
-    setBackground(e.target.value);
-  };
+  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
+
+  /** ✅ juju ===============================
+    background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
+    Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
+    // 테스트용 - 수정예정 
+    // const [background, setBackground] = useState(true);
+    // const changeBackground = (e) => {
+    //   setBackground(e.target.value);
+    // };
+  ========================================== */
 
   useEffect(() => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
@@ -32,24 +40,29 @@ const Main = () => {
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
-    /* setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다 */
-    // setTimeout(() => {
-    //   setOpenMakeup(true);
-    // }, 300);
+    /** ✅ juju ===============================
+      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      // setTimeout(() => {
+      //   setOpenMakeup(true);
+      // }, 300);
+    ========================================== */
   };
 
   const closeMakeupHouse = () => {
     setOpenMakeup(false);
     setOpenNav(true);
-    // setTimeout(() => {
-    //   setOpenNav(true);
-    // }, 300);
+    /** ✅ juju ===============================
+      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      // setTimeout(() => {
+      //   setOpenNav(true);
+      // }, 300);
+    ========================================== */
   };
   return (
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $background={background}>
+      <ExDiv $bgColor={bgColor}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
             <HaetaeWrap>
@@ -64,17 +77,16 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          setBackground={changeBackground}
           updateFunction={() => { }}
         ></RightSide>
 
-        {/* 방명록/기와의미 start */}
-        {/* <GiwaMean
+        {/* 방명록 start */}
+        {/* <GuestBook
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
-        ></GiwaMean> */}
-        {/* 방명록/기와의미 end */}
+        ></GuestBook> */}
+        {/* 방명록 end */}
 
         <Test>
           {openMakeup ? null : (
@@ -94,15 +106,17 @@ const Main = () => {
         <BottomSide
           openMakeup={openMakeup}
           openMakeupHouse={openMakeupHouse}
-          backgroundState={background}
+          setCapturePopBol={setCapturePopBol}
         />
         <Tree>
           <img src={pineTreeLeft} alt="왼쪽 소나무" />
           <img src={pineTreeRight} alt="오른쪽 소나무" />
         </Tree>
+        <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
+
       {/* 캡쳐 팝업 start */}
-      {/* <CapturePopup/> */}
+      {capturePopBol && <CapturePopup setCapturePopBol={setCapturePopBol} />}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
@@ -119,10 +133,9 @@ const ExDiv = styled.div`
   height: 100vh;
   background: linear-gradient(
     140deg,
-    ${({ $background }) =>
-    $background === "day"
-      ? "#FFFEF9 0%, #FFF8DC 100%"
-      : " #8C92CA 0%, #31365B 100%"}
+    ${({ $bgColor }) => $bgColor
+    ? "#FFFEF9 0%, #FFF8DC 100%"
+    : " #8C92CA 0%, #31365B 100%"}
   );
   position: relative;
   overflow: hidden;
@@ -165,7 +178,7 @@ const HaetaeWrap = styled.div`
   position: absolute;
   top: 11%; 
   left: 47%;
-  z-index: 2;
+  z-index: 1;
   img {
     width: 100%;
     height: 100%;
@@ -205,4 +218,12 @@ const Test = styled.div`
     font-size: 20px;
     font-weight: 600;
   }
+`;
+
+const Test2 = styled.button`
+  position: absolute;
+  left:0; top:0;
+  font-size: 20px;
+  font-weight: 700; 
+  z-index: 9999;
 `;
