@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Hat } from "../../../assets/Group 2852.svg";
-import selectedGiwaPath from "../../../assets/selected_giwa.svg";
+import { ReactComponent as Hat } from "../../../assets/main/kigHat.svg";
+import selectedGiwaPath from "../../../assets/modal/selected_giwa.svg";
 import SelectTitle from "../../SelectTitle/SelectTitle";
 import GiwaLuck from "./GiwaLuck";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,7 +108,7 @@ export default SelectGiwa;
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 36px 13px;
+  padding: 36px 13px 37px;
   display: flex;
   gap: 20px;
   justify-content: space-between;  

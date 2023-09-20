@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
-import mainBg from "../../assets/bg_main.png";
-import mainHouse from "../../assets/main_house.png";
-import CatImg from "../../assets/Cats.svg";
 import RightSide from "../../component/RightSide/RightSide";
-import { jwtTestApi } from "../../apis/user";
+import GiwaMean from "../../component/RightSide/GiwaMean";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
+import Completed from "../../component/Popup/Completed";
+import BottomSide from "../../component/BottomSide/BottomSide";
+import GiwaButton from "../../component/GiwaButton/GiwaButton";
+import mainHouse from "../../assets/main/giwa_house_indigo.png";
+import haetaeImg from "../../assets/main/haetae_img.png";
+import taegeukgi from "../../assets/main/taegeukgi.png";
+import pineTreeLeft from "../../assets/main/pine_tree_left.png";
+import pineTreeRight from "../../assets/main/pine_tree_right.png";
+import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -16,56 +22,92 @@ const Main = () => {
   const [background, setBackground] = useState("day");
   const changeBackground = (e) => {
     setBackground(e.target.value);
-    console.log(e.target.value);
   };
 
   useEffect(() => {
-    // jwt토큰을 넣어서 get요청하는 api호출
-    // jwtTestApi().then((result) => {
-    //   alert(result.data);
-    // });
+    // main페이지에서는 기와집을 불러오는 get요청을 해야함
+    // 해당 api 확인되면 추가 예정
   }, []);
 
   const openMakeupHouse = () => {
     setOpenNav(false);
-    setTimeout(() => {
-      setOpenMakeup(true);
-    }, 300);
+    setOpenMakeup(true);
+    /* setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다 */
+    // setTimeout(() => {
+    //   setOpenMakeup(true);
+    // }, 300);
   };
 
   const closeMakeupHouse = () => {
     setOpenMakeup(false);
-    setTimeout(() => {
-      setOpenNav(true);
-    }, 300);
+    setOpenNav(true);
+    // setTimeout(() => {
+    //   setOpenNav(true);
+    // }, 300);
   };
   return (
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      <ExDiv background={background === "day" ? mainBg : null}>
+      <ExDiv $background={background}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
-            <CatImgDiv />
+            <HaetaeWrap>
+              <img src={haetaeImg} alt="해태" />
+            </HaetaeWrap>
+            <img src={taegeukgi} alt="태극기" />
+            {/* 기와 버튼 start */}
+            <GiwaButton />
+            {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
+          updateFunction={() => { }}
         ></RightSide>
-        {openMakeup ? null : <button onClick={openMakeupHouse}>클릭</button>}
-        {openModal ? null : (
-          <button
-            onClick={() => {
-              setOpenModal(true);
-            }}
-            style={{ marginBottom: "50px" }}
-          >
-            기와선택
-          </button>
-        )}
+
+        {/* 방명록/기와의미 start */}
+        {/* <GiwaMean
+          openMakeup={openMakeup}
+          xBtnClickHandler={closeMakeupHouse}
+          setBackground={changeBackground}
+        ></GiwaMean> */}
+        {/* 방명록/기와의미 end */}
+
+        <Test>
+          {openMakeup ? null : (
+            <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
+          )}
+          {openModal ? null : (
+            <button
+              onClick={() => {
+                setOpenModal(true);
+              }}
+              style={{ marginBottom: "50px" }}
+            >
+              방문자 : 기와선택
+            </button>
+          )}
+        </Test>
+        <BottomSide
+          openMakeup={openMakeup}
+          openMakeupHouse={openMakeupHouse}
+          backgroundState={background}
+        />
+        <Tree>
+          <img src={pineTreeLeft} alt="왼쪽 소나무" />
+          <img src={pineTreeRight} alt="오른쪽 소나무" />
+        </Tree>
       </ExDiv>
+      {/* 캡쳐 팝업 start */}
+      {/* <CapturePopup/> */}
+      {/* 캡쳐 팝업 end */}
+
+      {/* 기와 등록 완료 팝업창 start */}
+      {/* <Completed/> */}
+      {/* 기와 등록 완료 팝업창 end */}
     </>
   );
 };
@@ -75,20 +117,20 @@ export default Main;
 const ExDiv = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url(${(props) => props.background});
-  ${(props) => (!props.background ? "background-color: #8585fd;" : null)}
-  background-size: cover;
+  background: linear-gradient(
+    140deg,
+    ${({ $background }) =>
+    $background === "day"
+      ? "#FFFEF9 0%, #FFF8DC 100%"
+      : " #8C92CA 0%, #31365B 100%"}
+  );
   position: relative;
   overflow: hidden;
-  > button {
-    position: absolute;
-    bottom: 100px;
-    left: 100px;
-  }
 `;
 
 const StyledMain = styled.main`
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,24 +138,71 @@ const StyledMain = styled.main`
 `;
 
 const HouseBox = styled.div`
-  width: 800px;
-  height: 700px;
+  width: 770px;
+  height: 679px;
   background: url(${mainHouse}) no-repeat;
-  background-size: 800px 700px;
+  background-size: cover;
   position: absolute;
-  left: calc(50% - 300px);
-  top: 200px;
+  left: 7%;
+  top: 12%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   transition: all ease-in-out 1s;
+  z-index: 2;
+  > img {
+    position: absolute;
+    left: -14%;
+    top: 18%;
+  }
   &.left {
-    left: 285px;
+    left: -500px;
   }
 `;
 
-const CatImgDiv = styled.div`
+const HaetaeWrap = styled.div`
+  width: 120px;
   position: absolute;
-  top: 95px;
-  left: 400px;
-  width: 100px;
-  height: 100px;
-  background: url(${CatImg}) no-repeat;
+  top: 11%; 
+  left: 47%;
+  z-index: 2;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const Tree = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  > img {    
+    position: absolute;
+    &:nth-of-type(1) {
+      max-width: 460px;
+      left: 0;
+      bottom: 0;
+      z-index: 2;
+    }
+    &:nth-of-type(2) {
+      max-width: 410px;
+      right: 0;
+      top: 13%;
+    }
+  }
+`;
+
+const Test = styled.div`
+  position: relative;
+  z-index: 10;
+  > button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 20px;
+    font-weight: 600;
+  }
 `;

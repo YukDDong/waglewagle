@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Modal from "../Modal";
+import { useSelector } from "react-redux";
 import { styled } from "styled-components";
-import { ReactComponent as CloseBtn } from "../../../assets/closeBtn.svg";
-import { ReactComponent as LeftArrow } from "../../../assets/ic_left_arrow.svg";
+import Modal from "../Modal";
 import SelectGiwa from "./SelectGiwa";
 import Button from "../../Button/Button";
-import { useSelector } from "react-redux";
 import WriteGuestText from "./WriteGuestText";
-import NameContain from "./NameContain";
+import NameContain from "./NameMade";
+import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
+import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
 
 const GiwaModal = ({ onXBtnClick }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);
@@ -94,6 +94,7 @@ const GiwaModal = ({ onXBtnClick }) => {
 export default GiwaModal;
 
 const ChooseBox = styled.div`
+  min-width: 1100px;
   width: 1100px;
   height: 660px;
   background-color: #fff;
