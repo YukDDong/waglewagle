@@ -5,7 +5,7 @@ import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as Board } from "../../assets/main/board_img_3.svg";
 import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg";
 
-const GiwaMean = ({ openMakeup, xBtnClickHandler }) => {
+const GuestBook = ({ openMakeup, xBtnClickHandler }) => {
   return (
     <Container className={openMakeup ? "show" : null}>
       <XBox>
@@ -27,7 +27,7 @@ const GiwaMean = ({ openMakeup, xBtnClickHandler }) => {
             <p>Aliquam vehicula pellentesque id mi quam ipsum. Arcu nisl faucibus mattis etiam.</p>
           </GiwaText>
         </Title>
-        <GuestBook>
+        <GuestBookWrap>
           <Text>
             <Board />
             <p>들어봐 밤이, <br />
@@ -59,13 +59,13 @@ const GiwaMean = ({ openMakeup, xBtnClickHandler }) => {
               <span>심청이</span>가
             </b>
           </div>
-        </GuestBook>
+        </GuestBookWrap>
       </Wrap>
     </Container>
   );
 };
 
-export default GiwaMean;
+export default GuestBook;
 
 const Container = styled.aside`
   width: 680px;
@@ -91,11 +91,13 @@ const Container = styled.aside`
     opacity: 1;
   }
 `;
+
 const XBox = styled.button`
   position: absolute;
   top: 50px; 
   right: 48px;
 `;
+
 const Wrap = styled.div`
   > strong {
     display: block;
@@ -110,6 +112,7 @@ const Wrap = styled.div`
     }
   }
 `;
+
 const Title = styled.div`
   margin: 40px 0 10px;
   display: flex;
@@ -118,6 +121,7 @@ const Title = styled.div`
     background-color: red;
   }
 `;
+
 const GiwaImg = styled.div`
   min-width: 110px;
   min-height: 110px;
@@ -131,6 +135,7 @@ const GiwaImg = styled.div`
     left: 0; right: 0; bottom: 0; top: 0;
   }
 `;
+
 const GiwaText = styled.div`
   padding: 5px 0 0;
   b {
@@ -150,7 +155,8 @@ const GiwaText = styled.div`
     letter-spacing: 0.2px;
   }
 `;
-const GuestBook = styled.div`
+
+const GuestBookWrap = styled.div`
   > div {
     margin: 5px 0 0;
     float: right;
