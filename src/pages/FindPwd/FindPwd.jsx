@@ -21,19 +21,43 @@ const FindPwd = () => {
     [isValid]
   );
 
-  // visibleModal 변수
+  //// visibleModal
+
+  // 변수
   const [visibleModal, setVisibleModal] = useState(false);
 
-  // visibleModal 함수
+  // 함수
   const visibleFtn = (value) => {
     setVisibleModal(value);
   };
+
+
+  //// 등록된 이메일 확인
+
+  // 변수
+  const [registeredEmail, setRegisteredEmail] = useState(false);
+
+  // 함수
+  const registeredEmailFtn = () => {
+
+    // 등록된 이메일인지 확인.
+
+    // 변수 업데이트
+    setRegisteredEmail(true);
+
+    // modal 보이기
+    setVisibleModal(true);
+
+  };
+
 
   return (
     <>
       {(visibleModal)
         ? <ModalBasic
-          msg="성공적으로 메일을 보냈습니다!"
+          msg = {(registeredEmail)
+            ? "성공적으로 메일을 보냈습니다!"
+            : "등록되지 않은 이메일입니다."}
           buttonText="확인"
           visibleFtn={visibleFtn}
         />
@@ -47,7 +71,7 @@ const FindPwd = () => {
           <Sub>이메일로 보낸 링크를 타고 들어와서 비밀번호 변경이 가능합니다.</Sub>
           <FormFindPwd
             validUserInfo={validUserInfo}
-            onClickBtn={visibleFtn}
+            onClickBtn={registeredEmailFtn}
           />
         </MainDiv>
       </Main>

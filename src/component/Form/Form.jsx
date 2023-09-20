@@ -174,11 +174,6 @@ function FormFindPwd({
     setIsValidFindPwd(newData);
   };
 
-  // '메일 보내기' 확인 modal 창 띄우기
-  const onClick = ()=>{
-    onClickBtn(true);
-  }
-
   return (
     <FormComponent2>
       <Input
@@ -194,7 +189,7 @@ function FormFindPwd({
       <Button 
         buttonText="메일 보내기" 
         location={location} 
-        onClick={onClick}
+        onClick={onClickBtn}
         disabled={isValidFindPwd}
       />
 
