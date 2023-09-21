@@ -78,13 +78,18 @@ function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo }) {
           handleIsValidHopae={handleIsValidHopae} // dummy
         />
       )}
+      
       <Button
-        buttonText={location === "/login" ? "로그인" : "회원가입"}
         onClick={onSubmit}
         location={location}
-      />
+      >
+      {location === "/login" ? "로그인" : "회원가입"}
+      </Button>
+
       {location === "/login" && (
-        <Button buttonText="회원가입" onClick={linkToJoin} color="white" />
+        <Button onClick={linkToJoin} color="white">
+          회원가입
+        </Button>
       )}
     </FormComponent>
   );
@@ -135,12 +140,15 @@ function FormMakeHopae({ validUserInfo }) {
         validUserInfo={validUserInfo}
         handleIsValidHopae={handleIsValidHopae}
       />
+
       <Button
-        buttonText="기와집 만들러 가기"
         location={location}
         onClick={handleMakeHopae}
         disabled={isValidHopae}
-      />
+      >
+        기와집 만들러 가기
+      </Button>
+      
     </FormComponent2>
   );
 }
@@ -180,11 +188,12 @@ function FormFindPwd({ validUserInfo, onClickBtn }) {
         handleIsValidHopae={handleIsValidFindPwd}
       />
       <Button 
-        buttonText="메일 보내기" 
         location={location} 
         onClick={onClickBtn}
         disabled={isValidFindPwd}
-      />
+      >
+        메일 보내기
+      </Button>
     </FormComponent2>
   );
 }

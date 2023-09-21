@@ -1,0 +1,107 @@
+import { useCallback, useState } from "react";
+import {FormFindPwd} from "../../component/Form/Form";
+import NavBar from "../../component/NavBar/NavBar";
+import { styled } from "styled-components";
+import Title from "../../component/Title/Title";
+import ModalBasic from "../../component/Modal/ModalBasic";
+
+const FindPwd = () => {
+
+  const [isValid, setIsValid] = useState({
+    isEmail: false,
+    isPassword: false,
+    isPasswordConfirm: false,
+    isHopae: false,
+  });
+
+  const validUserInfo = useCallback(
+    (name, value) => {
+      setIsValid({ ...isValid, [name]: value });
+    },
+    [isValid]
+  );
+
+  //// visibleModal
+
+  // 변수
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  // 함수
+  const visibleFtn = (value) => {
+    setVisibleModal(value);
+  };
+
+
+  //// 등록된 이메일 확인
+
+  // 변수
+  const [registeredEmail, setRegisteredEmail] = useState(false);
+
+  // 함수
+  const registeredEmailFtn = () => {
+
+    // 등록된 이메일인지 확인.
+
+    // 변수 업데이트
+    setRegisteredEmail(true);
+
+    // modal 보이기
+    setVisibleModal(true);
+
+  };
+
+
+  return (
+    <>
+      {(visibleModal)
+        ? <ModalBasic
+          msg = {(registeredEmail)
+            ? "성공적으로 메일을 보냈습니다!"
+            : "등록되지 않은 이메일입니다."}
+          buttonText="확인"
+          visibleFtn={visibleFtn}
+        />
+        : null}
+
+      <NavBar />
+      <Main>
+        <MainDiv>
+          <Title title="비밀번호 변경" />
+          <Sub>비밀번호를 변경해 주세요.</Sub>
+          <FormFindPwd
+            validUserInfo={validUserInfo}
+            onClickBtn={registeredEmailFtn}
+          />
+        </MainDiv>
+      </Main>
+    </>
+  );
+};
+
+export default FindPwd;
+
+
+const Main = styled.main`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+`;
+
+const MainDiv = styled.div`
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  box-sizing: border-box;
+`;
+
+const Sub = styled.h3`
+  margin-top: 14px;
+  color: #9e9e9e;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: 10px;
+`;
