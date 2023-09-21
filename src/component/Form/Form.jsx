@@ -2,7 +2,7 @@ import styled from "styled-components";
 import CheckBox from "../CheckBox/CheckBox";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Input from "../Input/Input";
+import { default as Input, InputText, InputPwd} from "../Input/Input";
 import Button from "../Button/Button";
 import { makeHopae } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";

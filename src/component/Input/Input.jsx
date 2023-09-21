@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ValidTest from "../ValidTest/ValidTest";
 
-export default function Input({
+function Input({
   icon,
   updateForm,
   name,
@@ -82,6 +82,109 @@ export default function Input({
     </Container>
   );
 }
+
+// InputText
+function InputText({
+  placeholder,
+  dataName,
+  updateData
+}) {
+
+  const location = useLocation().pathname;
+  const [input, setInput] = useInput("");
+  const [isFocus, setIsFocus] = useState(false);
+  const onFocusChange = () => {
+    setIsFocus(true);
+  };
+  const onBlurChange = () => {
+    input === "" && setIsFocus(false);
+  };
+
+  useEffect(() => {
+    updateData(dataName, input);
+  }, [dataName, input]);
+
+  return (
+      
+    // Overlap
+    <InputDiv location={location} isFocus={isFocus}>
+      
+      {/* icon */}
+      <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
+      
+      {/* input */}
+      <input
+        type="text"
+        value={input}
+        placeholder={placeholder}
+        onFocus={onFocusChange}
+        onBlur={onBlurChange}
+        onChange={setInput}
+        required
+      />
+
+    </InputDiv>
+  );
+}
+
+// InputPwd
+function InputPwd({
+  placeholder,
+  dataName,
+  updateData
+}) {
+
+  const location = useLocation().pathname;
+  const [input, setInput] = useInput("");
+  const [isFocus, setIsFocus] = useState(false);
+  const [passwordShowing, setPasswordShowing] = useState(false);
+
+  const onFocusChange = () => {
+    setIsFocus(true);
+  };
+  const onBlurChange = () => {
+    input === "" && setIsFocus(false);
+  };
+
+  useEffect(() => {
+    updateData(dataName, input);
+  }, [dataName, input]);
+
+  return (
+      
+    // Overlap
+    <InputDiv location={location} isFocus={isFocus}>
+      
+      {/* icon */}
+      <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
+      
+      {/* input */}
+      <input
+        type={passwordShowing ? "text" : "password"}
+        value={input}
+        placeholder={placeholder}
+        onFocus={onFocusChange}
+        onBlur={onBlurChange}
+        onChange={setInput}
+        required
+      />
+
+      {/* EyeIconBtn */}
+      {location === "/join" ? (
+        <EyeIconBtn
+          onClick={() =>
+            setPasswordShowing((passwordShowing) => !passwordShowing)
+          }
+        >
+          {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
+        </EyeIconBtn>
+      ) : null}
+
+    </InputDiv>
+  );
+}
+
+export {Input as default, InputText, InputPwd};
 
 const Container = styled.div``;
 
