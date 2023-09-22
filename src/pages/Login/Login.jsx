@@ -9,6 +9,7 @@ import { login } from "../../redux/actions/userActions";
 import { loginApi } from "../../apis/user";
 import { setItem } from "../../utils/localStorage";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,8 +17,8 @@ const Login = () => {
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
   const [{ loginId, loginPassword }, setLoginInfo] = useState({
-    loginId: "",
-    loginPassword: "",
+    loginId: "test1111@naver.com",
+    loginPassword: "qwer1234",
   });
   const getUserInfo = useCallback((form) => {
     setLoginInfo({
@@ -27,7 +28,16 @@ const Login = () => {
   }, []);
 
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    // api통신 예시
+    // const response = await axios.post(
+    //   "https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/login",
+    //   {
+    //     email: loginId,
+    //     password: loginPassword,
+    //   }
+    // );
+
     loginApi({
       email: loginId,
       password: loginPassword,
@@ -47,9 +57,9 @@ const Login = () => {
 
         // TODO-GOGI : api나오면 redux상태관리 로직도 추가
         // TODO-GOGI : 유저 로그인 후 호패정보도 내려오면 있는지 확인 후 없다면
-        // navigate("/makeHopae")
+        navigate("/makeHopae");
         // 호패정보가 있다면
-        // navigate("/main")
+        navigate("/main");
       }
     });
   };
