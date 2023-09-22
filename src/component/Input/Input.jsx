@@ -184,8 +184,6 @@ function InputPwd({
   );
 }
 
-export {Input as default, InputText, InputPwd};
-
 const Container = styled.div``;
 
 const InputDiv = styled.div`
@@ -244,3 +242,6 @@ const EyeIconBtn = styled.div`
   width: 16px;
   height: 16px;
 `;
+
+
+export {Input as default, InputText, InputPwd};

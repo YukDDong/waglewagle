@@ -5,6 +5,9 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Title from "../../component/Title/Title";
 import { joinApi } from "../../apis/user";
+import ModalBasic from "../../component/Modal/ModalBasic";
+import { InputText, InputPwd } from "../../component/Input/Input";
+import ButtonActDeact from "../../component/Button/Button";
 
 const Join = () => {
   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
@@ -19,7 +22,15 @@ const Join = () => {
     isPasswordConfirm: false,
   });
 
+  //// visibleModal
+  
+  // 변수
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 함수
+  const visibleFtn = (value) => {
+    setIsModalOpen(value);
+  };
 
   const joinUserInfo = useCallback((form) => {
     setJoinInfo({
@@ -56,16 +67,16 @@ const Join = () => {
 
   return (
     <>
-      {isModalOpen ? (
-        <ModalBg>
-          <Modal>
-            <ModalTop>회원가입이 완료되었습니다.</ModalTop>
-            <ModalBottom>
-              <Link to="/login">확인</Link>
-            </ModalBottom>
-          </Modal>
-        </ModalBg>
-      ) : null}
+      {/* Modal */}
+      {(isModalOpen)
+        ? <ModalBasic
+          msg = "회원가입이 완료되었습니다."
+          buttonText="확인"
+          linkPath="/login"
+          visibleFtn={visibleFtn}
+        />
+        : null}
+
       <NavBar />
       <Main>
         <MainDiv>
@@ -85,57 +96,148 @@ const Join = () => {
   );
 };
 
-export default Join;
+const JoinRefine = () => {
 
-const ModalBg = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(32, 32, 32, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+  //// data
 
-const Modal = styled.div`
-  width: 340px;
-  height: 180px;
-  background-color: #fff;
-  border-radius: 10px;
-  z-index: 200;
-`;
+  // 변수
+  const [data, setData] = useState({
+    userId: "",
+    pwd: "",
+    confirmPwd: "",
+  });
 
-const ModalTop = styled.div`
-  width: 100%;
-  height: 118px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-  line-height: 118px;
-  color: #222;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 0.64px;
-`;
+  // 함수
+  const updateData = useCallback(
+    (name, value) => {
+      setData({ ...data, [name]: value });
+    },
+    [data]
+  );
 
-const ModalBottom = styled.div`
-  width: 100%;
-  height: 61px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  > a {
-    text-decoration: none;
-    color: #e75852;
-    text-align: center;
-    font-family: var(--font-hunmin);
-    font-size: 20px;
+  //// valid
+
+  // 변수
+  const [isValid, setIsValid] = useState({
+    isEmail: false,
+    isPassword: false,
+    isPasswordConfirm: false,
+  });
+
+  // 함수
+  const validUserInfo = useCallback(
+    (name, value) => {
+      setIsValid({ ...isValid, [name]: value });
+    },
+    [isValid]
+  );
+
+  //// 회원가입
+
+  // 회원가입 가능 판단
+  const onJoinSubmit = () => {
+    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
+      joinApi({
+        email: data.userId,
+        password: data.pwd,
+        username: "닉네임2",
+      }).then((result) => {
+        if (result.status === 200) {
+          setIsModalOpen(true);
+        }
+        // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
+        if (result.status === 500) {
+          console.log("error500");
+        }
+      });
+
+      // 로그인 화면으로 이동
+      handleClick();
+    }
+  };
+
+  // 회원가입 후 로그인 화면 이동
+  const handleClick = ()=>{
+    window.location.href = "/login"
   }
-`;
+
+  //// visibleModal
+  
+  // 변수
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 함수
+  const visibleFtn = (value) => {
+    setIsModalOpen(value);
+  };
+
+  return (
+    <>
+      {/* Modal */}
+      {(isModalOpen)
+        ? <ModalBasic
+          msg = "회원가입이 완료되었습니다."
+          buttonText="확인"
+          onClickBtn={handleClick}
+          visibleFtn={visibleFtn}
+        />
+        : null}
+
+      <NavBar />
+      <Main>
+        <MainDiv>
+
+          {/* Title */}
+          <Title title="회원가입" />
+          <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
+
+          {/* Email */}
+          <InputText
+            placeholder="이메일을 적어주세요."
+            dataName="userId"
+            updateData={updateData}
+          />
+
+          {/* Password */}
+          <InputPwd 
+            placeholder="비밀번호를 적어주세요."
+            dataName="pwd"
+            updateData={updateData}
+          />
+
+          <InputPwd 
+            placeholder="비밀번호를 한 번 더 적어주세요."
+            dataName="confirmPwd"
+            updateData={updateData}
+          />
+
+          {/* 회원가입 버튼 */}
+          <ButtonActDeact 
+            onClick={onJoinSubmit}
+            location={handleClick}
+          >
+            회원가입
+          </ButtonActDeact>
+        
+          {/* 하단 설명 */}
+          <ToLogin>
+            이미 와글와글 계정이 있으신가요? <Link to="/login">로그인하기</Link>
+          </ToLogin>
+
+        </MainDiv>
+      </Main>
+    </>
+  );
+};
+
+export default JoinRefine;
+
 
 const Main = styled.main`
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
