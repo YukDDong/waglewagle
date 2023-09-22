@@ -176,7 +176,7 @@ const JoinRefine = () => {
     setIsModalOpen(value);
   };
 
-  
+
   //// 출력
   return (
     <>
@@ -191,6 +191,7 @@ const JoinRefine = () => {
         : null}
 
       <NavBar />
+      
       <Main>
         <MainDiv>
 
