@@ -43,8 +43,7 @@ const Join = () => {
         password: password,
       }).then((result) => {
         if (result.status === 200) {
-          console.log("가입성공");
-          // setIsModalOpen(true);
+          setIsModalOpen(true);
         }
         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
         if (result.status === 500) {
