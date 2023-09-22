@@ -1,14 +1,14 @@
-import Modal from "../../Modal/Modal"
+import Modal from "../Modal/Modal"
 import styled from 'styled-components';
-import captureImg from "../../../assets/bottomSide/capture_img.png";
-import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
-import { ReactComponent as Board } from "../../../assets/bottomSide/board_img_2.svg";
-import { ReactComponent as SaveImg } from "../../../assets/bottomSide/save_img.svg";
-import { ReactComponent as InstarLogo } from "../../../assets/bottomSide/instar_logo.svg";
-import { ReactComponent as InstarStory } from "../../../assets/bottomSide/instar_story.svg";
-import { ReactComponent as Kakao } from "../../../assets/bottomSide/kakao.svg";
+import captureImg from "../../assets/popup/capture_img.png";
+import { ReactComponent as CloseBtn } from "../../assets/common/closeBtn.svg";
+import { ReactComponent as Board } from "../../assets/popup/board_img_2.svg";
+import { ReactComponent as SaveImg } from "../../assets/popup/save_img.svg";
+import { ReactComponent as InstarLogo } from "../../assets/popup/instar_logo.svg";
+import { ReactComponent as InstarStory } from "../../assets/popup/instar_story.svg";
+import { ReactComponent as Kakao } from "../../assets/popup/kakao.svg";
 
-const CaptruePopup = ({ setCapturePopBol }) => {
+const Captrue = ({ setCapturePopBol }) => {
   return (
     <Modal>
       <Contain>
@@ -53,7 +53,7 @@ const CaptruePopup = ({ setCapturePopBol }) => {
   );
 };
 
-export default CaptruePopup;
+export default Captrue;
 
 const Contain = styled.div`  
   position: relative;
