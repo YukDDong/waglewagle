@@ -5,20 +5,19 @@ import SelectItem from "../SelectItem/SelectItem";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
-import { ReactComponent as ResetIcon } from "../../assets/system-uicons_reset.svg";
-import giwaIndigo from "../../assets/main/giwa_indigo.png";
-import giwaBlack from "../../assets/main/giwa_black.png";
-import giwaPink from "../../assets/main/giwa_pink.png";
-import daytime from "../../assets/main/daytime.png";
-import night from "../../assets/main/night.png";
-import haetaeFrame from "../../assets/main/haetae_frame.png";
+import { ReactComponent as ResetIcon } from "../../assets/common/reset_icon.svg";
+import giwaIndigo from "../../assets/rightSide/giwa_indigo.png";
+import giwaBlack from "../../assets/rightSide/giwa_black.png";
+import giwaPink from "../../assets/rightSide/giwa_pink.png";
+import daytime from "../../assets/rightSide/daytime.png";
+import night from "../../assets/rightSide/night.png";
+import haetaeFrame from "../../assets/rightSide/haetae_frame.png";
 import { makeGiwaHouseApi } from "../../apis/giwa";
 import { generateRandomString } from "../../utils/generateRandomString";
 
 const RightSide = ({
   openMakeup,
   xBtnClickHandler,
-  setBackground,
   updateFunction,
 }) => {
   const location = useLocation();
@@ -62,8 +61,6 @@ const RightSide = ({
       });
     }
   };
-
-  console.log(giwaStyle);
 
   return (
     <Container className={openMakeup ? "show" : null}>
@@ -165,7 +162,7 @@ const Container = styled.aside`
   opacity: 0;
   box-sizing: border-box;
   padding: 60px 80px;
-  z-index: 1;
+  z-index: 2;
   transition: all ease-in-out 1s;
   &.show {
     right: 0;

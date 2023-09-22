@@ -2,26 +2,35 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
+import GiwaMean from "../../component/RightSide/GuestBook";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
-import mainBg from "../../assets/bg_main.png";
-import mainHouse from "../../assets/main_house.png";
+import GiwaButton from "../../component/GiwaButton/GiwaButton";
+import mainHouse from "../../assets/main/giwa_house_indigo.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
-import pineTreeFront from "../../assets/main/pine_tree_1.png";
-import pineTreeBack from "../../assets/main/pine_tree_2.png";
+import pineTreeLeft from "../../assets/main/pine_tree_left.png";
+import pineTreeRight from "../../assets/main/pine_tree_right.png";
 import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
+import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 
 const Main = () => {
+  const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false);
   const [openNav, setOpenNav] = useState(true);
   const [openMakeup, setOpenMakeup] = useState(false);
-  // 테스트용 - 수정예정
-  const [background, setBackground] = useState("day");
-  const changeBackground = (e) => {
-    setBackground(e.target.value);
-  };
+  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
+
+  /** ✅ juju ===============================
+    background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
+    Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
+    // 테스트용 - 수정예정 
+    // const [background, setBackground] = useState(true);
+    // const changeBackground = (e) => {
+    //   setBackground(e.target.value);
+    // };
+  ========================================== */
 
   useEffect(() => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
@@ -30,37 +39,55 @@ const Main = () => {
 
   const openMakeupHouse = () => {
     setOpenNav(false);
-    setTimeout(() => {
-      setOpenMakeup(true);
-    }, 300);
+    setOpenMakeup(true);
+    /** ✅ juju ===============================
+      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      // setTimeout(() => {
+      //   setOpenMakeup(true);
+      // }, 300);
+    ========================================== */
   };
 
   const closeMakeupHouse = () => {
     setOpenMakeup(false);
-    setTimeout(() => {
-      setOpenNav(true);
-    }, 300);
+    setOpenNav(true);
+    /** ✅ juju ===============================
+      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      // setTimeout(() => {
+      //   setOpenNav(true);
+      // }, 300);
+    ========================================== */
   };
   return (
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      {/* <ExDiv background={background === "day" ? mainBg : null}> */}
-      <ExDiv background={background}>
+      <ExDiv $bgColor={bgColor}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
-            <CatImgDiv>
+            <HaetaeWrap>
               <img src={haetaeImg} alt="해태" />
-            </CatImgDiv>
+            </HaetaeWrap>
             <img src={taegeukgi} alt="태극기" />
+            {/* 기와 버튼 start */}
+            <GiwaButton />
+            {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          setBackground={changeBackground}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
         ></RightSide>
+
+        {/* 방명록 start */}
+        {/* <GuestBook
+          openMakeup={openMakeup}
+          xBtnClickHandler={closeMakeupHouse}
+          setBackground={changeBackground}
+        ></GuestBook> */}
+        {/* 방명록 end */}
+
         <Test>
           {openMakeup ? null : (
             <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
@@ -79,15 +106,17 @@ const Main = () => {
         <BottomSide
           openMakeup={openMakeup}
           openMakeupHouse={openMakeupHouse}
-          bg={background}
+          setCapturePopBol={setCapturePopBol}
         />
         <Tree>
-          <img src={pineTreeFront} alt="앞 소나무" />
-          <img src={pineTreeBack} alt="뒤 소나무" />
+          <img src={pineTreeLeft} alt="왼쪽 소나무" />
+          <img src={pineTreeRight} alt="오른쪽 소나무" />
         </Tree>
+        <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
+
       {/* 캡쳐 팝업 start */}
-      {/* <CapturePopup/> */}
+      {capturePopBol && <CapturePopup setCapturePopBol={setCapturePopBol} />}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
@@ -104,10 +133,9 @@ const ExDiv = styled.div`
   height: 100vh;
   background: linear-gradient(
     140deg,
-    ${({ background }) =>
-      background === "day"
-        ? "#FFFEF9 0%, #FFF8DC 100%"
-        : " #8C92CA 0%, #31365B 100%"}
+    ${({ $bgColor }) => $bgColor
+    ? "#FFFEF9 0%, #FFF8DC 100%"
+    : " #8C92CA 0%, #31365B 100%"}
   );
   position: relative;
   overflow: hidden;
@@ -123,13 +151,13 @@ const StyledMain = styled.main`
 `;
 
 const HouseBox = styled.div`
-  width: 800px;
-  height: 700px;
+  width: 770px;
+  height: 679px;
   background: url(${mainHouse}) no-repeat;
-  background-size: 800px 700px;
+  background-size: cover;
   position: absolute;
-  left: 90px;
-  top: 100px;
+  left: 7%;
+  top: 12%;
   right: 0;
   bottom: 0;
   margin: auto;
@@ -137,20 +165,20 @@ const HouseBox = styled.div`
   z-index: 2;
   > img {
     position: absolute;
-    left: -105px;
-    top: 123px;
+    left: -14%;
+    top: 18%;
   }
   &.left {
-    left: -400px;
+    left: -500px;
   }
 `;
 
-const CatImgDiv = styled.div`
+const HaetaeWrap = styled.div`
   width: 120px;
-  height: 120px;
   position: absolute;
-  top: 83px;
-  left: 381px;
+  top: 11%; 
+  left: 47%;
+  z-index: 1;
   img {
     width: 100%;
     height: 100%;
@@ -163,16 +191,19 @@ const Tree = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  > img {
+  pointer-events: none;
+  > img {    
     position: absolute;
     &:nth-of-type(1) {
+      max-width: 460px;
       left: 0;
       bottom: 0;
       z-index: 2;
     }
     &:nth-of-type(2) {
+      max-width: 410px;
       right: 0;
-      top: 10%;
+      top: 13%;
     }
   }
 `;
@@ -187,4 +218,12 @@ const Test = styled.div`
     font-size: 20px;
     font-weight: 600;
   }
+`;
+
+const Test2 = styled.button`
+  position: absolute;
+  left:0; top:0;
+  font-size: 20px;
+  font-weight: 700; 
+  z-index: 9999;
 `;

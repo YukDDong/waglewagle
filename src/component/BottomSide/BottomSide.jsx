@@ -1,24 +1,60 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import styled from 'styled-components';
 import IssueNews from "./IconPopup/IssueNews";
 import Sharing from "./IconPopup/Sharing";
-import KigImg from "../../assets/main/kig_img.png";
-import { ReactComponent as VisitIcon } from "../../assets/main/visit_icon.svg";
-import { ReactComponent as Board } from "../../assets/main/board_img.svg";
-import { ReactComponent as SideBoard } from "../../assets/main/side_board_img.svg";
-import { ReactComponent as ToggleInline } from "../../assets/main/toggle_icon_inline.svg";
-import { ReactComponent as ToggleOutline } from "../../assets/main/toggle_icon_outline.svg";
-import { ReactComponent as Issue } from "../../assets/main/bell_icon.svg";
-import { ReactComponent as Capture } from "../../assets/main/capture_icon.svg";
-import { ReactComponent as SharingIcon } from "../../assets/main/sharing_icon.svg";
-import { ReactComponent as GiwaSetting } from "../../assets/main/giwa_setting_icon.svg";
+import KigImg from "../../assets/bottomSide/kig_img.png";
+import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
+import { ReactComponent as Board } from "../../assets/bottomSide/board_img.svg";
+import { ReactComponent as SideBoard } from "../../assets/bottomSide/side_board_img.svg";
+import { ReactComponent as ToggleInline } from "../../assets/bottomSide/toggle_icon_inline.svg";
+import { ReactComponent as ToggleOutline } from "../../assets/bottomSide/toggle_icon_outline.svg";
+import { ReactComponent as Issue } from "../../assets/bottomSide/bell_icon.svg";
+import { ReactComponent as Capture } from "../../assets/bottomSide/capture_icon.svg";
+import { ReactComponent as SharingIcon } from "../../assets/bottomSide/sharing_icon.svg";
+import { ReactComponent as GiwaSetting } from "../../assets/bottomSide/giwa_setting_icon.svg";
+import { useBgColor } from "../../contexts/BackgroundColor";
 
-const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
-  const [iconIsOpen, setIconIsOpen] = useState(false);
+const boleand = [
+  { type: 'issue', boolean: false },
+  { type: 'capture', boolean: false },
+  { type: 'sharing', boolean: false },
+]
+
+const BottomSide = ({ openMakeup, openMakeupHouse, setCapturePopBol }) => {
+  const { bgColor } = useBgColor(); // BG Color context
+  const [iconIsOpen, setIconIsOpen] = useState(true);
+  const ContainRef = useRef();
+
+  useEffect(() => {
+    openMakeup
+      ? gsap.to(ContainRef.current, 1, { y: '100px', opacity: 0, display: 'none', ease: 'Power1.easeInOut' })
+      : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
+  }, [openMakeup])
+
+  const [iconToggle, setIconToggle] = useState(boleand);
+
+  const clickToggleOpen = (e) => {
+    const currentType = e.target.closest('li').getAttribute('type');
+    const changeBoolean = iconToggle.map(item => {
+      if (item.type === currentType) {
+        return {
+          ...item,
+          boolean: !item.boolean
+        }
+      } else {
+        return {
+          ...item,
+          boolean: false
+        }
+      }
+    })
+    setIconToggle(changeBoolean);
+  }
 
   return (
-    <Contain className={openMakeup ? "hidden" : null}>
-      <History bg={bg}>
+    <Contain ref={ContainRef} $bgColor={bgColor}>
+      <History>
         <img src={KigImg} alt="세종대왕 이미지" />
         <div>
           <strong>내가 아는 한글의 역사는 어디까지?</strong>
@@ -29,8 +65,8 @@ const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
           <VisitIcon />
         </VisitLink>
       </History>
-      <IconBar>
-        <Name isOpen={iconIsOpen}>
+      <IconBar $isOpen={iconIsOpen}>
+        <Name>
           <SideBoard className="side1" />
           <div>
             <strong>
@@ -41,38 +77,48 @@ const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
           </div>
           <SideBoard className="side2" />
         </Name>
-        <Various isOpen={iconIsOpen} bg={bg}>
-          <li>
-            <button onClick={() => alert('소식')}>
-              <Issue />
+        <Various>
+          <li type="issue">
+            <button onClick={(e) => clickToggleOpen(e)}>
+              <Issue width={23} height={25} />
             </button>
-            {/* 소식통 start */}
-            <IssueNews bg={bg} />
-            {/* 소식통 end */}
+            {iconToggle[0].boolean && <IssueNews />}
           </li>
-          <li><button onClick={() => alert('캡쳐화면')}><Capture /></button></li>
-          <li>
-            <button onClick={() => alert('공유')}>
-              <SharingIcon />
+          <li type="capture">
+            <button onClick={(e) => {
+              clickToggleOpen(e)
+              setCapturePopBol(true)
+            }}>
+              <Capture width={29} height={30} />
             </button>
-            {/* 공유하기 start */}
-            <Sharing bg={bg} />
-            {/* 공유하기 end */}
           </li>
-          <li><button onClick={() => openMakeupHouse(true)}><GiwaSetting /></button></li>
-        </Various>
+          <li type="sharing">
+            <button onClick={(e) => clickToggleOpen(e)}>
+              <SharingIcon width={29} height={30} />
+            </button>
+            {iconToggle[2].boolean && <Sharing />}
+          </li>
+          <li>
+            <button onClick={(e) => {
+              openMakeupHouse(true)
+              clickToggleOpen(e)
+            }}>
+              <GiwaSetting width={29} height={30} />
+            </button>
+          </li>
+        </Various >
         {
-          <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)} bg={bg} isOpen={iconIsOpen}>
+          <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
           </ToggleBtn>
         }
-      </IconBar>
+      </IconBar >
     </Contain >
   );
 };
 
-export default MainAside;
+export default BottomSide;
 
 const Contain = styled.div`
   width: 1250px;
@@ -84,13 +130,77 @@ const Contain = styled.div`
   transform: translate(-50%,0);
   display: flex;
   justify-content: space-between;
-  transition: all ease-in-out 1s;
   opacity: 1;
   z-index: 3;
-  &.hidden {
-    visibility: hidden;
-    bottom: 0;
-    opacity: 0;
+  /* bgColor 조건 가르기 */
+  > div {
+    &:nth-of-type(1) {
+      border: ${({ $bgColor }) => $bgColor ? '1px solid #ECE0B9' : '1px solid #171A32'};
+      box-shadow: ${({ $bgColor }) => $bgColor ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
+      > a {
+        &:hover {
+          span {
+            color: ${({ $bgColor }) => $bgColor ? '#72543f' : '#080a16'};
+          }
+          svg {
+            path {
+              stroke: ${({ $bgColor }) => $bgColor ? '#72543f' : '#080a16'};
+            }
+          }
+        }
+        span {
+          color: ${({ $bgColor }) => $bgColor ? '#8B715F' : '#171A32'};
+        }
+        svg {
+          path {
+            stroke: ${({ $bgColor }) => $bgColor ? '#8B715F' : '#171A32'};
+          }
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      ul {
+        li {
+          &:nth-of-type(3) {
+            svg {
+              left: -1px;
+            }
+          }
+          > button {
+            border: ${({ $bgColor }) => $bgColor ? '1px solid #C09B73;' : '1px solid #fff'};
+            &:hover {
+              background-color: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#171A32'};
+              svg {
+                path {
+                  stroke: #fff;
+                }
+              }
+            }
+            > svg {
+              left: ${({ type }) => type === 'sharing' ? '-1px' : '0'};
+              path {
+                stroke: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#fff'};
+              }
+            }
+          }
+        }
+      }
+    }
+    > button {
+      &:hover {
+        svg {
+          path {
+            stroke: ${(props) => props.$bgColor ? '#FFEAC2' : '#fff'};
+            fill: ${(props) => props.$bgColor ? '#BC9267' : '#171A32'};
+          }
+        }
+      }
+      svg {
+        path {
+          stroke: ${(props) => props.$bgColor ? '#BC9267' : '#fff'};
+        }
+      }
+    }
   }
 `;
 
@@ -100,18 +210,16 @@ const History = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.65);
   padding: 20px 30px;
   border-radius: 20px;
-  box-sizing: border-box; 
-  border: ${({ bg }) => bg === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};
-  box-shadow: ${({ bg }) => bg === 'day' ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
+  box-sizing: border-box;   
   > div {
     margin: 0 0 0 20px;
   }
   strong {
     color: #222;
-    font-size: 18px;
+    font-size: 18px; 
     font-weight: 700;
     line-height: 24px; 
   }
@@ -121,26 +229,6 @@ const History = styled.div`
     font-size: 12px;
     font-weight: 400;
     line-height: 20px; 
-  }
-  > a {
-    &:hover {
-      span {
-        color: ${({ bg }) => bg === 'day' ? '#72543f' : '#080a16'};
-      }
-      svg {
-        path {
-          stroke: ${({ bg }) => bg === 'day' ? '#72543f' : '#080a16'};
-        }
-      }
-    }
-    span {
-      color: ${({ bg }) => bg === 'day' ? '#8B715F' : '#171A32'};
-    }
-    svg {
-      path {
-        stroke: ${({ bg }) => bg === 'day' ? '#8B715F' : '#171A32'};
-      }
-    }
   }
 `;
 
@@ -192,14 +280,28 @@ const IconBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  > div {
+    width: ${(props) => props.$isOpen ? '1px' : '368px'};
+    visibility: ${(props) => props.$isOpen ? 'hidden' : 'visible'};
+    opacity: ${(props) => props.$isOpen ? '0' : '1'};
+  }
+  > ul {
+    visibility: ${(props) => props.$isOpen ? 'visible' : 'hidden'};
+    opacity: ${(props) => props.$isOpen ? '1' : '0'};
+  }
+  > button {
+    svg {
+      &.inline {
+        left: ${(props) => props.$isOpen ? '2px' : '-1px'};
+        transform: ${(props) => props.$isOpen ? 'rotate(0)' : 'rotate(180deg)'};
+      }
+    }
+  }
 `;
+
 const Name = styled.div`
-  width: 368px;
-  width: ${(props) => props.isOpen ? '1px' : '368px'};
   position: relative;
-  transition: width, .4s ease-in;
-  visibility: ${(props) => props.isOpen ? 'hidden' : 'visible'};
-  opacity: ${(props) => props.isOpen ? '0' : '1'};
+  transition: width, .4s ease-in;  
   > svg {
     position: absolute;
     top: 0; 
@@ -239,6 +341,7 @@ const Name = styled.div`
     }
   }
 `;
+
 const Various = styled.ul`
   height: min-content;
   gap: 30px;
@@ -246,53 +349,46 @@ const Various = styled.ul`
   position: absolute;
   top: 0; bottom: 0; 
   margin: auto;
-  display: flex;
-  visibility: ${(props) => props.isOpen ? 'visible' : 'hidden'};
-  opacity: ${(props) => props.isOpen ? '1' : '0'};
+  display: flex;  
   transition: width, .4s ease-in;  
-  > li {
+  li {
     position: relative;
     > button {
-      width: 60px; 
-      height: 60px;
-      position: relative;
-      border: ${(props) => props.bg === 'day' ? '1px solid #C09B73;' : '1px solid #fff'};
-      border-radius: 60px;
-      transition: background-color, .2s;
-      &:hover {
-        background-color: ${(props) => props.bg === 'day' ? '#AE8960' : '#171A32'};
-        svg {
-          path {
-            stroke: #fff;
-          }
-        }
-      }
-      > svg {
-        position: absolute; 
-        margin: auto;
-        top: 0; left: 0; right: 0; bottom: 0;
+    width: 60px; 
+    height: 60px;
+    position: relative;
+    border: ${({ $bgColor }) => $bgColor ? '1px solid #C09B73;' : '1px solid #fff'};
+    border-radius: 60px;
+    transition: background-color, .2s;
+    &:hover {
+      background-color: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#171A32'};
+      svg {
         path {
-          transition: stroke, .2s;
-          stroke: ${(props) => props.bg === 'day' ? '#AE8960' : '#fff'};
+          stroke: #fff;
         }
       }
     }
+    > svg {
+      position: absolute; 
+      margin: auto;
+      top: 0;  
+      left: ${({ type }) => type === 'sharing' ? '-1px' : '0'};
+      right: 0; 
+      bottom: 0;
+      path {
+        transition: stroke, .2s;
+        stroke: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#fff'};
+      }
+    }
   }
-
+}
 `;
+
 const ToggleBtn = styled.button`
   width: 40px;
   height: 40px;
   position: absolute;
   right: 0;
-  &:hover {
-    svg {
-      path {
-        stroke: ${(props) => props.bg === 'day' ? '#FFEAC2' : '#fff'};
-        fill: ${(props) => props.bg === 'day' ? '#BC9267' : '#171A32'};
-      }
-    }
-  }
   svg {
     position: absolute; 
     left: 0; 
@@ -302,13 +398,10 @@ const ToggleBtn = styled.button`
     margin:auto;
     path {
       transition: all, .2s;
-      stroke: ${(props) => props.bg === 'day' ? '#BC9267' : '#fff'};
     }
     &.inline {
-      left: ${(props) => props.isOpen ? '-1px' : '2px'};
       /* top: -3px; */
       z-index: 1;
-      transform: ${(props) => props.isOpen && ' rotate(180deg)'};
       /* transition: all, .2s; */
     }
   }
