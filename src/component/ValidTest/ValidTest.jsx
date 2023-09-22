@@ -260,11 +260,15 @@ const Container = styled.div``;
 const IsTrue = styled.span`
   color: green;
   font-size: 16px;
+  margin-top: 5px;
+  display: block;
 `;
 
 const IsFalse = styled.span`
   color: red;
   font-size: 16px;
+  margin-top: 5px;
+  display: block;
 `;
 
 const CheckInfo = styled.span`
