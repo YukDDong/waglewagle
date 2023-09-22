@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Form from "../../component/Form/Form";
 import SocialLogin from "../../component/SocialLogin/SocialLogin";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import NavBar from "../../component/NavBar/NavBar";
 import Title from "../../component/Title/Title";
 import { useDispatch } from "react-redux";
@@ -94,6 +94,13 @@ const LoginRefine = () => {
     },
     [loginInfo]
   );
+
+  // // monitoring
+  // useEffect(() => {
+
+  //   console.log(loginInfo);
+
+  // }, [loginInfo]);
   
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = () => {
@@ -140,7 +147,7 @@ const LoginRefine = () => {
             {/* Email */}
             <InputText
               placeholder="이메일을 적어주세요."
-              dataName="userId"
+              dataName="id"
               updateData={updateData}
             />
 
