@@ -16,7 +16,12 @@ import { makeGiwaHouseApi } from "../../apis/giwa";
 import { generateRandomString } from "../../utils/generateRandomString";
 import { changeGiwaHouseStyle } from "../../redux/actions/giwaHouseActions";
 
-const RightSide = ({ openMakeup, xBtnClickHandler, updateFunction }) => {
+const RightSide = ({
+  openMakeup,
+  xBtnClickHandler,
+  updateFunction,
+  btnText,
+}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -134,7 +139,7 @@ const RightSide = ({ openMakeup, xBtnClickHandler, updateFunction }) => {
         </ItemLists>
       </div>
       <div>
-        <Btn onClick={handleSubmit}>기와집 만들기 완료</Btn>
+        <Btn onClick={handleSubmit}>{btnText}</Btn>
         <ResetBox>
           <ResetIcon width={24} height={24} />
         </ResetBox>
