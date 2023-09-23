@@ -105,6 +105,7 @@ const MakeHopaeRefine = () => {
   return (
     <>
       <NavBar />
+      
       <Main>
         <MainDiv>
 

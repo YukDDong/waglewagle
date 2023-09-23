@@ -1,9 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import {FormFindPwd} from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
 import ModalBasic from "../../component/Modal/ModalBasic";
+import { InputText } from "../../component/Input/Input";
+import { validEmail, IsTrue, IsFalse } from "../../component/ValidTest/ValidTest";
+import ButtonActDeact from "../../component/Button/Button";
 
 const FindPwd = () => {
 
@@ -98,15 +101,13 @@ const FindPwdRefine = () => {
     [data]
   );
 
-  //// visibleModal
+  // 이메일 형식 판별
+  useEffect(() => {
 
-  // 변수
-  const [visibleModal, setVisibleModal] = useState(false);
+    // 판별
+    updateData("isEmail", validEmail(data.email));
 
-  // 함수
-  const visibleFtn = (value) => {
-    setVisibleModal(value);
-  };
+  }, [data.email]);
 
 
   //// 등록된 이메일 확인
@@ -125,8 +126,23 @@ const FindPwdRefine = () => {
 
     // modal 보이기
     setVisibleModal(true);
-
   };
+
+
+  //// visibleModal
+
+  // 변수
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  // 함수
+  const visibleFtn = (value) => {
+    setVisibleModal(value);
+  };
+
+  // modal 확인 누르면 로그인 화면 이동
+  const handleClick = ()=>{
+    window.location.href = "/login"
+  }
 
 
   return (
@@ -152,13 +168,40 @@ const FindPwdRefine = () => {
           <Sub>비밀번호를 분실하셨나요?</Sub>
           <Sub>이메일로 보낸 링크를 타고 들어와서 비밀번호 변경이 가능합니다.</Sub>
 
+          <MainDivBottom>
+
+            {/* Email */}
+            <InputText
+              placeholder="이메일을 적어주세요."
+              dataName="email"
+              updateData={updateData}
+            />
+
+            {/* Email 판별 */}
+            {(data.email !== "")  // 비어있을 때
+              ? (data.isEmail)  // 이메일 형식에 맞는지
+                ? (<IsTrue></IsTrue>) 
+                : (<IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>)
+              : null
+            }
+
+            {/* 버튼 */}
+            <ButtonActDeact 
+              onClick={handleClick}
+              disabled={data.isEmail}
+            >
+              메일 보내기
+            </ButtonActDeact>
+
+          </MainDivBottom>
+          
         </MainDiv>
       </Main>
     </>
   );
 };
 
-export default FindPwd;
+export default FindPwdRefine;
 
 
 const Main = styled.main`
@@ -175,6 +218,14 @@ const MainDiv = styled.div`
   align-items: center;
   padding-top: 100px;
   box-sizing: border-box;
+`;
+
+const MainDivBottom = styled.div`
+  margin-top: 40px;
+  button {
+    margin: 40px 0 0;
+    width: 100%
+  }
 `;
 
 const Sub = styled.h3`

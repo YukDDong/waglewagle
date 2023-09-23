@@ -180,6 +180,8 @@ const JoinRefine = () => {
   //// 출력
   return (
     <>
+      <NavBar />
+
       {/* Modal */}
       {(isModalOpen)
         ? <ModalBasic
@@ -190,8 +192,6 @@ const JoinRefine = () => {
         />
         : null}
 
-      <NavBar />
-      
       <Main>
         <MainDiv>
 
@@ -303,7 +303,7 @@ const MainDiv = styled.div`
 `;
 
 const MainDiv2 = styled.div`
-margin-top: 20px;
+  margin-top: 20px;
   display: block;
 `;
 
