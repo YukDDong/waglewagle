@@ -50,7 +50,7 @@ const RightSide = ({ openMakeup, xBtnClickHandler, updateFunction }) => {
         url: generateRandomString(20),
       }).then((result) => {
         if (result.status === 200) {
-          navigate("/");
+          navigate("/main");
           return;
         }
       });

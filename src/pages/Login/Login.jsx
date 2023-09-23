@@ -43,23 +43,19 @@ const Login = () => {
       password: loginPassword,
     }).then((result) => {
       if (result.status === 200) {
-        // 테스트용 api에서는 jwt토큰 값만 내려오고 있음.
-        // 유저정보(name)이 필요해서 찐api나오면 요청해야함
-        setItem("AUTH", result.data);
+        setItem("AUTH", result.data.data.accessToken);
         dispatch(
           login({
-            id: "아이디",
-            name: "",
-            data: {},
+            userId: result.data.data.userId,
+            username: result.data.data.username,
           })
         );
-        navigate("/makeHopae");
-
-        // TODO-GOGI : api나오면 redux상태관리 로직도 추가
-        // TODO-GOGI : 유저 로그인 후 호패정보도 내려오면 있는지 확인 후 없다면
-        navigate("/makeHopae");
-        // 호패정보가 있다면
-        navigate("/main");
+        if (!result.data.data.isExistHopae) {
+          navigate("/makeHopae");
+          return;
+        } else {
+          navigate("/main");
+        }
       }
     });
   };
