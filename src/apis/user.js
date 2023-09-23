@@ -7,7 +7,7 @@ export const loginApi = async (payload) => {
 };
 
 export const checkEmailApi = async (payload) => {
-  const response = await client.get("/user", {
+  const response = await client.get("/users/duplicate-check", {
     params: {
       email: payload,
     },
