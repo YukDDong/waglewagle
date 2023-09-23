@@ -43,7 +43,12 @@ const Main = () => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
     // 해당 api 확인되면 추가 예정
 
-    gsap.to(speechRef.current.querySelectorAll('span'), .5, { stagger: .1, display: 'inline', delay: .3, ease: 'Power1.easeInOut' })
+    gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
+      stagger: 0.1,
+      display: "inline",
+      delay: 0.3,
+      ease: "Power1.easeInOut",
+    });
   }, []);
 
   const openMakeupHouse = () => {
@@ -73,7 +78,7 @@ const Main = () => {
   /** 😀 juju
    * 기와 클릭 시 방명록 오픈
    * 기와집 꾸미기 이벤트와 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
-  */
+   */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
@@ -85,7 +90,12 @@ const Main = () => {
 
   return (
     <>
-      {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} setCompletedGiwa={setCompletedGiwa} /> : null}
+      {openModal ? (
+        <GiwaModal
+          onXBtnClick={() => setOpenModal(false)}
+          setCompletedGiwa={setCompletedGiwa}
+        />
+      ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
         <StyledMain>
@@ -124,7 +134,8 @@ const Main = () => {
                     </button>
                   </>
                 } */}
-                { // 방문자
+                {
+                  // 방문자
                   <>
                     <p ref={speechRef}>
                       <span>기</span>
@@ -137,7 +148,10 @@ const Main = () => {
                       <span>오</span>
                       <span>!</span>
                     </p>
-                    <button className="giwa_plus" onClick={() => setOpenModal(true)}>
+                    <button
+                      className="giwa_plus"
+                      onClick={() => setOpenModal(true)}
+                    >
                       <GiwaPlus />
                     </button>
                   </>
@@ -153,7 +167,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
         ></RightSide>
         {/* 방명록 start */}
         <GuestBook
@@ -202,14 +216,13 @@ const Main = () => {
 
 export default Main;
 
-const ExDiv = styled.div`
+export const ExDiv = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
     140deg,
-    ${({ $bgColor }) => $bgColor
-    ? "#FFFEF9 0%, #FFF8DC 100%"
-    : " #8C92CA 0%, #31365B 100%"}
+    ${({ $bgColor }) =>
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #8C92CA 0%, #31365B 100%"}
   );
   position: relative;
   overflow: hidden;
@@ -250,7 +263,7 @@ const HouseBox = styled.div`
 const HaetaeWrap = styled.div`
   width: 120px;
   position: absolute;
-  top: 11%; 
+  top: 11%;
   left: 47%;
   z-index: 2;
   img {
@@ -271,15 +284,15 @@ const Speech = styled.div`
   text-align: center;
   > button {
     &.giwa_plus {
-      position: absolute; 
+      position: absolute;
       top: -35%;
       right: 15%;
-      margin: auto; 
+      margin: auto;
     }
     &.giwa_number {
       position: absolute;
       padding: 0 14px 3px;
-      background-color: #6C5847;
+      background-color: #6c5847;
       border-radius: 50px;
       right: 10%;
       top: -15%;
@@ -293,9 +306,9 @@ const Speech = styled.div`
       }
     }
   }
-  > p { 
+  > p {
     margin: 9% 0 0;
-    display: inline-block; 
+    display: inline-block;
     color: #222;
     font-family: var(--font-hunmin);
     font-size: 16px;
@@ -310,16 +323,14 @@ const Speech = styled.div`
   }
 `;
 
-
-
-const Tree = styled.div`
+export const Tree = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   left: 0;
   top: 0;
   pointer-events: none;
-  > img {    
+  > img {
     position: absolute;
     &:nth-of-type(1) {
       max-width: 460px;
@@ -349,8 +360,9 @@ const Test = styled.div`
 
 const Test2 = styled.button`
   position: absolute;
-  left:0; top:0;
+  left: 0;
+  top: 0;
   font-size: 20px;
-  font-weight: 700; 
+  font-weight: 700;
   z-index: 9999;
 `;
