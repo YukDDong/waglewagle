@@ -202,6 +202,7 @@ const Main = styled.main`
 `;
 
 const MainDiv = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 100px;
@@ -214,7 +215,6 @@ const MainDiv = styled.div`
 
 const MainDiv2 = styled.div`
   margin-top: 40px;
-  margin-bottom: 40px;
 `;
 
 const LineDiv = styled.div`
