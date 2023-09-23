@@ -301,7 +301,7 @@ const MainDiv = styled.div`
   box-sizing: border-box;
   button {
     margin: 40px 0 20px;
-    width: 438px;
+    width: 100%;
   }
 `;
 
