@@ -260,10 +260,7 @@ const JoinRefine = () => {
 
 
             {/* 회원가입 버튼 */}
-            <ButtonActDeact 
-              onClick={onJoinSubmit}
-              location={handleClick}
-            >
+            <ButtonActDeact onClick={onJoinSubmit}>
               회원가입
             </ButtonActDeact>
           
