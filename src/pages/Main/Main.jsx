@@ -18,7 +18,7 @@ import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 import Capture from "../../component/Popup/Capture";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 import { useParams, useSearchParams } from "react-router-dom";
-import { getGiwaHouseApi } from "../../apis/giwa";
+import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector } from "react-redux";
 
 const Main = () => {
@@ -31,7 +31,9 @@ const Main = () => {
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
-  const [giwaHouse, setGiwaHouse] = useState({});
+  const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
+  const [selectedGiwa, setSelectedGiwa] = useState(null);
+  const [giwaList, setGiwaList] = useState([]);
   const speechRef = useRef();
 
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
@@ -40,18 +42,29 @@ const Main = () => {
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : mockData;
-
     getGiwaHouseApi(requestData).then((result) => {
       if (result.status === 200) {
         setGiwaHouse(result.data);
-        const broadId = result.data.id;
-        console.log(broadId);
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        return;
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (!giwaHouse.id) return;
+    getGiwaListApi({
+      broadId: giwaHouse.id,
+      reverse: true,
+    }).then((result) => {
+      if (result.status === 200) {
+        setGiwaList(result.data);
+      }
+    });
+  }, [giwaHouse.id]);
+
   /** 😀 juju
     - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
       Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
@@ -184,7 +197,11 @@ const Main = () => {
             </HaetaeWrap>
             <img src={taegeukgi} alt="태극기" />
             {/* 기와 버튼 start */}
-            <GiwaButton setOpen={openGusetBookModal} />
+            <GiwaButton
+              setOpen={openGusetBookModal}
+              changeGiwa={setSelectedGiwa}
+              giwaList={giwaList.slice(0, 12)}
+            />
             {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
@@ -198,6 +215,7 @@ const Main = () => {
         <GuestBook
           openGusetBook={openGusetBook}
           xBtnClickHandler={closeGusetBookModal}
+          selectedGiwa={selectedGiwa}
         ></GuestBook>
         {/* 방명록 end */}
         <BottomSide
