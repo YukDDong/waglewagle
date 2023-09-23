@@ -18,16 +18,3 @@ client.interceptors.request.use(async (config) => {
 
   return config;
 });
-
-// axios.post(`${BASE_URL}/api/v1/posts`, {
-//   broadId: 1,
-//   version: "v1",
-//   message: "",
-//   nickName: str,
-//   postStyle: {
-//     fontColorCode: int,
-//     sortCode: int,
-//     shapeCode: int,
-//     fontSize: int,
-//   },
-// });
