@@ -181,9 +181,11 @@ const LoginRefine = () => {
 
           </MainDiv2>
           
+          {/* SNS 계정 연결 */}
           <LineDiv />
           <SocialLoginText>SNS 계정으로 로그인</SocialLoginText>
           <SocialLogin />
+
         </MainDiv>
       </Main>
     </>
