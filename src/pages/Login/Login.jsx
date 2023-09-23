@@ -140,6 +140,8 @@ const LoginRefine = () => {
       <NavBar />
       <Main>
         <MainDiv>
+
+          {/* Title */}
           <Title title="로그인" />
 
           <MainDiv2>

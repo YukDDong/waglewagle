@@ -110,7 +110,7 @@ const MakeHopaeRefine = () => {
 
           <MainDivTop>
 
-            {/* 상단 글자 */}
+            {/* Title */}
             <Title title="호패만들기" />
             <Sub>자네, 이곳은 처음이요?</Sub>
             <Sub>이곳은 호패가 없으면 들어갈 수가 없다네.</Sub>

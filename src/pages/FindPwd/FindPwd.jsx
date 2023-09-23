@@ -41,6 +41,7 @@ const FindPwd = () => {
   const registeredEmailFtn = () => {
 
     // 등록된 이메일인지 확인.
+    // 백엔드 통신
 
     // 변수 업데이트
     setRegisteredEmail(true);
@@ -73,6 +74,84 @@ const FindPwd = () => {
             validUserInfo={validUserInfo}
             onClickBtn={registeredEmailFtn}
           />
+        </MainDiv>
+      </Main>
+    </>
+  );
+};
+
+const FindPwdRefine = () => {
+
+  //// 기본 데이터
+
+  // 변수
+  const [data, setData] = useState({
+    email: "",
+    isEmail: false,
+  });
+
+  // 함수
+  const updateData = useCallback(
+    (name, value) => {
+      setData({ ...data, [name]: value });
+    },
+    [data]
+  );
+
+  //// visibleModal
+
+  // 변수
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  // 함수
+  const visibleFtn = (value) => {
+    setVisibleModal(value);
+  };
+
+
+  //// 등록된 이메일 확인
+
+  // 변수
+  const [registeredEmail, setRegisteredEmail] = useState(false);
+
+  // 함수
+  const registeredEmailFtn = () => {
+
+    // 등록된 이메일인지 확인.
+    // 백엔드 통신
+
+    // 변수 업데이트
+    setRegisteredEmail(true);
+
+    // modal 보이기
+    setVisibleModal(true);
+
+  };
+
+
+  return (
+    <>
+      <NavBar />
+
+      {/* Modal */}
+      {(visibleModal)
+        ? <ModalBasic
+          msg = {(registeredEmail)
+            ? "성공적으로 메일을 보냈습니다!"
+            : "등록되지 않은 이메일입니다."}
+          buttonText="확인"
+          visibleFtn={visibleFtn}
+        />
+        : null}
+
+      <Main>
+        <MainDiv>
+
+          {/* Title */}
+          <Title title="비밀번호 찾기" />
+          <Sub>비밀번호를 분실하셨나요?</Sub>
+          <Sub>이메일로 보낸 링크를 타고 들어와서 비밀번호 변경이 가능합니다.</Sub>
+
         </MainDiv>
       </Main>
     </>
