@@ -216,43 +216,69 @@ function ValidTest({ name, value, password, validUserInfo, handleIsValidHopae })
 // 이메일 판별
 const validEmail = (value) => {
 
-  // 판별식
-  const regex = /[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+/;
-  
+  let output = false;
+
+  // 비어있지 않음
+  if (value !== ""){
+
+    // 판별식
+    const regex = /[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+/;
+
+    output = regex.test(value);
+  }
+
   // 출력
-  return regex.test(value);
+  return output;
 }
 
 // 비밀번호 판별
 const validPwd = (value) => {
 
-  // 판별식
-  const regex = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{6,16}$/;
-  
+  let output = false;
+
+  // 비어있지 않음
+  if (value !== ""){
+
+    // 판별식
+    const regex = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{6,16}$/;
+
+    output = regex.test(value);
+  }
+
   // 출력
-  return regex.test(value);
+  return output;
 }
 
 // 호패 판별
 const validHopae = (value) => {
 
-  // 한글 유효성 검사 기호 정의
-  const regex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  let output = false;
 
-  // 한 글자씩 분해
-  // 한글과 영문이 섞인 호패도 유효하지 않게 분류 위함.
-  let validBool = true;
-  for(let val of value){
-    
-    // 한 글자씩 한글 유효성 검사
-    // 한글이 아닌 경우
-    if (!regex.test(val)){
-      validBool = false;
-      break;
+  // 비어있지 않음
+  if (value !== ""){
+
+    // 한글 유효성 검사 기호 정의
+    const regex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+    // 한 글자씩 분해
+    // 한글과 영문이 섞인 호패도 유효하지 않게 분류 위함.
+    let validBool = true;
+    for(let val of value){
+      
+      // 한 글자씩 한글 유효성 검사
+      // 한글이 아닌 경우
+      if (!regex.test(val)){
+        validBool = false;
+        break;
+      }
     }
+
+    // 출력
+    output = validBool;
   }
 
-  return validBool; 
+  // 출력
+  return output;
 }
 
 const Container = styled.div``;
