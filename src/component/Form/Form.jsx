@@ -1,16 +1,13 @@
 import styled from "styled-components";
 import CheckBox from "../CheckBox/CheckBox";
 import { useCallback, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
+import { makeHopae } from "../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 
-function Form({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
-  validUserInfo,
-}) {
+function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
     userId: "",
@@ -38,6 +35,11 @@ function Form({
     window.location.pathname = "/join";
   };
 
+  // dummy ftn
+  const handleIsValidHopae = (newData) => {
+    console.log(newData);
+  };
+
   return (
     <FormComponent location={location}>
       <Input
@@ -47,6 +49,7 @@ function Form({
         name="userId"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae} // dummy
       />
       <Input
         icon="Password"
@@ -55,11 +58,12 @@ function Form({
         name="password"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae} // dummy
       />
       {location === "/login" && (
         <LoginCheckDiv>
           <CheckBox labelName="이메일, 비밀번호 저장" />
-          <LinkItem to="/find_password">비밀번호 찾기</LinkItem>
+          <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
         </LoginCheckDiv>
       )}
       {location !== "/login" && (
@@ -71,6 +75,7 @@ function Form({
           password={form.password}
           updateForm={updateForm}
           validUserInfo={validUserInfo}
+          handleIsValidHopae={handleIsValidHopae} // dummy
         />
       )}
       <Button
@@ -85,23 +90,12 @@ function Form({
   );
 }
 
-
-function FormMakeHopae({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
-  validUserInfo,
-}) {
+function FormMakeHopae({ validUserInfo }) {
+  const dispatch = useDispatch();
   const location = useLocation().pathname;
-  const [form, setForm] = useState({
-    userId: "",
-    password: "",
-    checkPassword: "",
-  });
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    location === "/login" ? getUserInfo(form) : joinUserInfo(form);
-  }, [form, location, getUserInfo, joinUserInfo]);
+  const [form, setForm] = useState({});
 
   const updateForm = useCallback(
     (name, value) => {
@@ -110,39 +104,110 @@ function FormMakeHopae({
     [form]
   );
 
-  // const onClick = (e) => {
-  //   e.preventDefault();
-  //   onSubmit();
-  // };
+  const handleMakeHopae = () => {
+    // TODO-GOGI : 호패만들기 api 나오면 추가 예정
+    // makeHopae({
+    //   nickname: form.hopae,
+    // }).then((result) => {
+    //   console.log(result);
+    // });
 
-  const linkToJoin = () => {
-    window.location.pathname = "/join";
+    // 위의 과정이 성공했다치고 아래과정 수행
+    // 호패만들기 api 요청 성공시 아래 두줄 추가
+    dispatch(makeHopae(form.hopae));
+    navigate("/makeGiwaHouse");
+  };
+
+  // 호패만들기 '기와집 만들러 가기' 버튼 비활성화 위한 변수
+  const [isValidHopae, setIsValidHopae] = useState(true);
+
+  const handleIsValidHopae = (newData) => {
+    setIsValidHopae(newData);
   };
 
   return (
-    <FormComponent location={location}>
+    <FormComponent2>
       <Input
         icon="User"
         type="text"
-        placeholder="호명을 적어주세요."
+        placeholder="호명을 적어주시오."
         name="hopae"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidHopae}
       />
-  
-      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin}/>
-
-    </FormComponent>
+      <Button
+        buttonText="기와집 만들러 가기"
+        location={location}
+        onClick={handleMakeHopae}
+        disabled={isValidHopae}
+      />
+    </FormComponent2>
   );
 }
 
-export { Form as default, FormMakeHopae };
+function FormFindPwd({ validUserInfo, onClickBtn }) {
+  const location = useLocation().pathname;
 
+  const [form, setForm] = useState({
+    userId: "",
+    password: "",
+    checkPassword: "",
+  });
+
+  const updateForm = useCallback(
+    (name, value) => {
+      setForm({ ...form, [name]: value });
+    },
+    [form]
+  );
+
+  // '메일 보내기' 버튼 비활성화 위한 변수
+  const [isValidFindPwd, setIsValidFindPwd] = useState(true);
+
+  const handleIsValidFindPwd = (newData) => {
+    setIsValidFindPwd(newData);
+  };
+
+  // '메일 보내기' 확인 modal 창 띄우기
+  const onClick = () => {
+    onClickBtn(true);
+  };
+
+  return (
+    <FormComponent2>
+      <Input
+        icon="User"
+        type="text"
+        placeholder="이메일을 적어주세요."
+        name="findPwd"
+        updateForm={updateForm}
+        validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidFindPwd}
+      />
+
+      <Button
+        buttonText="메일 보내기"
+        location={location}
+        onClick={onClick}
+        disabled={isValidFindPwd}
+      />
+    </FormComponent2>
+  );
+}
+
+export { Form as default, FormMakeHopae, FormFindPwd };
 
 const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: ${(props) => (props.location === "/login" ? "40px" : "20px")};
+`;
+
+const FormComponent2 = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 `;
 
 const LoginCheckDiv = styled.div`

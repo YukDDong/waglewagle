@@ -6,6 +6,9 @@ import Main from "./pages/Main/Main";
 import MakeHopae from "./pages/MakeHopae/MakeHopae";
 import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
 import Sample from "./pages/Sample/Sample";
+import FindPwd from "./pages/FindPwd/FindPwd";
+import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
+import StorageGiwa from "./pages/StorageGiwa/StorageGiwa"; 
 
 const routes = [
   {
@@ -29,12 +32,24 @@ const routes = [
     element: <MakeHopae />,
   },
   {
+    path: "/makeGiwaHouse",
+    element: <MakeGiwaHouse />,
+  },
+  {
     path: "/kakao_login",
     element: <KakaoLogin />,
   },
   {
     path: "/sample",
     element: <Sample />,
+  },
+  {
+    path: "/findPwd",
+    element: <FindPwd />,
+  },
+  {
+    path: "/StorageGiwa",
+    element: <StorageGiwa />,
   },
 ];
 
