@@ -14,8 +14,13 @@ import taegeukgi from "../../assets/main/taegeukgi.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
+import { useParams, useSearchParams } from "react-router-dom";
+import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
+import { useSelector } from "react-redux";
 
 const Main = () => {
+  const { url } = useParams();
+  const userInfo = useSelector((state) => state.userReducer);
   const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false); // 기와선택
   const [openNav, setOpenNav] = useState(true); // 네비
@@ -23,6 +28,38 @@ const Main = () => {
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
+  const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
+  const [selectedGiwa, setSelectedGiwa] = useState(null);
+  const [giwaList, setGiwaList] = useState([]);
+
+  // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
+  const mockData = 2;
+  useEffect(() => {
+    // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
+    // const requestData = url ? url : userInfo.broadId;
+    const requestData = url ? url : mockData;
+    getGiwaHouseApi(requestData).then((result) => {
+      if (result.status === 200) {
+        setGiwaHouse(result.data);
+        return;
+      } else {
+        alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        return;
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!giwaHouse.id) return;
+    getGiwaListApi({
+      broadId: giwaHouse.id,
+      reverse: true,
+    }).then((result) => {
+      if (result.status === 200) {
+        setGiwaList(result.data);
+      }
+    });
+  }, [giwaHouse.id]);
 
   /** 😀 juju
     - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
@@ -93,7 +130,11 @@ const Main = () => {
             <Speech setOpenModal={setOpenModal} />
             {/* 말풍선 end */}
             {/* 기와 버튼 start */}
-            <GiwaButton setOpen={openGusetBookModal} />
+            <GiwaButton
+              setOpen={openGusetBookModal}
+              changeGiwa={setSelectedGiwa}
+              giwaList={giwaList.slice(0, 12)}
+            />
             {/* 기와 버튼 end */}
             <img className="heatae" src={haetaeImg} alt="해태" />
             <img className="taegeukgi" src={taegeukgi} alt="태극기" />
@@ -103,11 +144,13 @@ const Main = () => {
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           updateFunction={() => {}}
+          btnText={"기와집 꾸미기 완료"}
         ></RightSide>
         {/* 방명록 start */}
         <GuestBook
           openGusetBook={openGusetBook}
           xBtnClickHandler={closeGusetBookModal}
+          selectedGiwa={selectedGiwa}
         ></GuestBook>
         {/* 방명록 end */}
         <BottomSide
