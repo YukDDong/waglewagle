@@ -12,6 +12,7 @@ import StorageGiwa from "./pages/StorageGiwa/StorageGiwa";
 import Withdrawal from "./pages/Withdrawal/Withdrawal";
 import Setting from "./pages/Setting/Setting";
 import MyPage from "./pages/MyPage/MyPage";
+import ChangePwd from "./pages/ChangePwd/ChangePwd";
 
 const routes = [
   {
@@ -73,6 +74,10 @@ const routes = [
     /* 마이페이지 - 설정 */
     path: "/Setting",
     element: <Setting />,
+  },
+  {
+    path: "/changePwd",
+    element: <ChangePwd />,
   },
 ];
 
