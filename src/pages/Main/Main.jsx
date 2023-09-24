@@ -67,7 +67,7 @@ const Main = () => {
   /** 😀 juju
    * 기와 클릭 시 방명록 오픈
    * 기와집 꾸미기 이벤트와 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
-  */
+   */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
@@ -79,7 +79,12 @@ const Main = () => {
 
   return (
     <>
-      {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} setCompletedGiwa={setCompletedGiwa} /> : null}
+      {openModal ? (
+        <GiwaModal
+          onXBtnClick={() => setOpenModal(false)}
+          setCompletedGiwa={setCompletedGiwa}
+        />
+      ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
         <StyledMain>
@@ -97,7 +102,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
         ></RightSide>
         {/* 방명록 start */}
         <GuestBook
@@ -130,7 +135,7 @@ const Main = () => {
 
 export default Main;
 
-const ExDiv = styled.div`
+export const ExDiv = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
@@ -184,7 +189,7 @@ const HouseBox = styled.div`
 const HaetaeWrap = styled.div`
   width: 120px;
   position: absolute;
-  top: 11%; 
+  top: 11%;
   left: 47%;
   z-index: 2;
   img {
@@ -207,8 +212,9 @@ const Test = styled.div`
 
 const Test2 = styled.button`
   position: absolute;
-  left:0; top:0;
+  left: 0;
+  top: 0;
   font-size: 20px;
-  font-weight: 700; 
+  font-weight: 700;
   z-index: 9999;
 `;

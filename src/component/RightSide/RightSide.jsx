@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as ResetIcon } from "../../assets/common/reset_icon.svg";
 import giwaIndigo from "../../assets/rightSide/giwa_indigo.png";
@@ -14,33 +14,27 @@ import night from "../../assets/rightSide/night.png";
 import haetaeFrame from "../../assets/rightSide/haetae_frame.png";
 import { makeGiwaHouseApi } from "../../apis/giwa";
 import { generateRandomString } from "../../utils/generateRandomString";
+import { changeGiwaHouseStyle } from "../../redux/actions/giwaHouseActions";
 
-const RightSide = ({
-  openMakeup,
-  xBtnClickHandler,
-  updateFunction,
-}) => {
+const RightSide = ({ openMakeup, xBtnClickHandler, updateFunction }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const username = useSelector((state) => state.userReducer.name);
   const isMakeGiwaHouse = location.pathname === "/makeGiwaHouse";
-  const [giwaStyle, setGiwaStyle] = useState({
-    giwaColor: 1,
-    background: 1,
-    friend: 1,
-  });
-
-  useEffect(() => {
-    updateFunction(giwaStyle);
-  }, [giwaStyle]);
+  const { giwaColor, background, friend } = useSelector(
+    (state) => state.giwaHouseReducer
+  );
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
     const value = Number(e.target.value);
-    setGiwaStyle({
-      ...giwaStyle,
-      [name]: value,
-    });
+    dispatch(
+      changeGiwaHouseStyle({
+        name,
+        value,
+      })
+    );
   };
 
   const handleSubmit = () => {
@@ -49,14 +43,15 @@ const RightSide = ({
         version: "v1",
         title: "아무타이틀",
         broadStyle: {
-          colorCode: giwaStyle.giwaColor,
-          backGroundCode: giwaStyle.background,
-          friendCode: giwaStyle.friend,
+          colorCode: giwaColor,
+          backGroundCode: background,
+          friendCode: friend,
         },
         url: generateRandomString(20),
       }).then((result) => {
         if (result.status === 200) {
           navigate("/main");
+          return;
         }
       });
     }
@@ -90,6 +85,7 @@ const RightSide = ({
             name={"giwaColor"}
             value={1}
             id={"giwaIndigo"}
+            checked={giwaColor === 1}
             onChange={handleChangeGiwaStyle}
           />
           <SelectItem
@@ -98,6 +94,7 @@ const RightSide = ({
             name={"giwaColor"}
             value={2}
             id={"giwaBlack"}
+            checked={giwaColor === 2}
             onChange={handleChangeGiwaStyle}
           />
           <SelectItem
@@ -106,6 +103,7 @@ const RightSide = ({
             name={"giwaColor"}
             value={3}
             id={"giwaPink"}
+            checked={giwaColor === 3}
             onChange={handleChangeGiwaStyle}
           />
         </ItemLists>
@@ -116,6 +114,7 @@ const RightSide = ({
             id="day"
             name="background"
             value={1}
+            checked={background === 1}
             onChange={handleChangeGiwaStyle}
             img={daytime}
           />
@@ -124,17 +123,18 @@ const RightSide = ({
             id="night"
             name="background"
             value={2}
+            checked={background === 2}
             onChange={handleChangeGiwaStyle}
             img={night}
           />
         </ItemLists>
         <SelectTitle title="친구 선택" />
         <ItemLists>
-          <SelectItem label="해태" img={haetaeFrame} />
+          <SelectItem label="해태" img={haetaeFrame} checked={friend === 1} />
         </ItemLists>
       </div>
       <div>
-        <Btn onClick={handleSubmit}>모두 선택해 주시오.</Btn>
+        <Btn onClick={handleSubmit}>기와집 만들기 완료</Btn>
         <ResetBox>
           <ResetIcon width={24} height={24} />
         </ResetBox>
@@ -233,7 +233,11 @@ const Btn = styled.button`
   font-weight: 600;
   font-family: var(--font-hunmin);
   font-size: 20px;
-  color: #bbb;
-  background-color: #f2f2f2;
+  color: white;
+  background-color: var(--btn-main-color);
   border-radius: 10px;
+  &:disabled {
+    color: #bbb;
+    background-color: #f2f2f2;
+  }
 `;
