@@ -200,7 +200,7 @@ const JoinRefine = () => {
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
 
 
-          <MainDiv2>
+          <MainDivBottom>
 
             {/* Email */}
             <InputText
@@ -264,7 +264,7 @@ const JoinRefine = () => {
               회원가입
             </ButtonActDeact>
           
-          </MainDiv2>
+          </MainDivBottom>
         
           {/* 하단 설명 */}
           <ToLogin>
@@ -294,17 +294,17 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding-top: 100px; */
   box-sizing: border-box;
+  /* padding-top: 100px; */
+`;
+
+const MainDivBottom = styled.div`
+  margin-top: 20px;
+  display: block;
   button {
     margin: 40px 0 20px;
     width: 100%;
   }
-`;
-
-const MainDiv2 = styled.div`
-  margin-top: 20px;
-  display: block;
 `;
 
 const Sub = styled.h3`

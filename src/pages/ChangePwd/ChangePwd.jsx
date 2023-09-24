@@ -115,6 +115,8 @@ const ChangePwd = () => {
               </CheckInfo>
             )}
 
+            {/* 공백 */}
+            <Blank />
 
             {/* 비밀번호 확인 */}
             <InputPwd 
@@ -135,7 +137,7 @@ const ChangePwd = () => {
             {/* 버튼 */}
             <ButtonActDeact 
               onClick={handleClick}
-              disabled={!data.hopae}
+              disabled={!((isValid.isPwd) && (isValid.isConfirmPwd))}
             >
               비밀번호 변경
             </ButtonActDeact>
@@ -183,11 +185,15 @@ const MainDivBottom = styled.div`
   }
 `;
 
+const Blank = styled.div`
+  margin-top: 20px;
+`;
+
 const Sub = styled.h3`
   margin-top: 14px;
   color: #9e9e9e;
   font-size: 16px;
   font-style: normal;
-  font-weight: 350;
-  line-height: 10px;
+  font-weight: 500;
+  line-height: 20px;
 `;
