@@ -37,9 +37,9 @@ const MakeGiwaHouse = () => {
         </HouseBox>
       </StyledMain>
       <RightSide openMakeup={true}></RightSide>
-      <TreeCustom>
+      {/* <TreeCustom>
         <img src={pineTreeLeft} alt="왼쪽 소나무" />
-      </TreeCustom>
+      </TreeCustom> */}
     </ExDiv>
   );
 };
@@ -85,10 +85,10 @@ const CatImgDiv = styled.div`
   }
 `;
 
-const TreeCustom = styled(Tree)`
-  > img {
-    &:nth-of-type(1) {
-      left: -160px;
-    }
-  }
-`;
+// const TreeCustom = styled(Tree)`
+//   > img {
+//     &:nth-of-type(1) {
+//       left: -160px;
+//     }
+//   }
+// `;
