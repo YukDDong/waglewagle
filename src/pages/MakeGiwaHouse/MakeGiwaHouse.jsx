@@ -6,8 +6,9 @@ import mainHouseIndigo from "../../assets/main/giwa_house_indigo.png";
 import mainHouseBlack from "../../assets/main/giwa_house_black.png";
 import mainHousePink from "../../assets/main/giwa_house_pink.png";
 import pineTreeLeft from "../../assets/main/pine_tree_left.png";
-import { ExDiv, Tree } from "../Main/Main";
 import { useSelector } from "react-redux";
+import { ExDiv } from "../Main/Main";
+import { Tree } from "../../component/MainBg/MainBg";
 
 const MakeGiwaHouse = () => {
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
