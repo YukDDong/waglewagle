@@ -2,7 +2,7 @@ import styled from "styled-components";
 import CheckBox from "../CheckBox/CheckBox";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Input from "../Input/Input";
+import { default as Input, InputText, InputPwd} from "../Input/Input";
 import Button from "../Button/Button";
 import { makeHopae } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
@@ -78,13 +78,18 @@ function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo }) {
           handleIsValidHopae={handleIsValidHopae} // dummy
         />
       )}
+      
       <Button
-        buttonText={location === "/login" ? "로그인" : "회원가입"}
         onClick={onSubmit}
         location={location}
-      />
+      >
+      {location === "/login" ? "로그인" : "회원가입"}
+      </Button>
+
       {location === "/login" && (
-        <Button buttonText="회원가입" onClick={linkToJoin} color="white" />
+        <Button onClick={linkToJoin} color="white">
+          회원가입
+        </Button>
       )}
     </FormComponent>
   );
@@ -136,12 +141,15 @@ function FormMakeHopae({ validUserInfo }) {
         validUserInfo={validUserInfo}
         handleIsValidHopae={handleIsValidHopae}
       />
+
       <Button
-        buttonText="기와집 만들러 가기"
         location={location}
         onClick={handleMakeHopae}
         disabled={isValidHopae}
-      />
+      >
+        기와집 만들러 가기
+      </Button>
+      
     </FormComponent2>
   );
 }
@@ -169,11 +177,6 @@ function FormFindPwd({ validUserInfo, onClickBtn }) {
     setIsValidFindPwd(newData);
   };
 
-  // '메일 보내기' 확인 modal 창 띄우기
-  const onClick = () => {
-    onClickBtn(true);
-  };
-
   return (
     <FormComponent2>
       <Input
@@ -185,13 +188,13 @@ function FormFindPwd({ validUserInfo, onClickBtn }) {
         validUserInfo={validUserInfo}
         handleIsValidHopae={handleIsValidFindPwd}
       />
-
-      <Button
-        buttonText="메일 보내기"
-        location={location}
-        onClick={onClick}
+      <Button 
+        location={location} 
+        onClick={onClickBtn}
         disabled={isValidFindPwd}
-      />
+      >
+        메일 보내기
+      </Button>
     </FormComponent2>
   );
 }
