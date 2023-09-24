@@ -5,12 +5,12 @@ import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as Board } from "../../assets/main/board_img_3.svg";
 import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg";
 
-const GiwaMean = ({ openMakeup, xBtnClickHandler }) => {
+const GuestBook = ({ openGusetBook, xBtnClickHandler }) => {
   return (
-    <Container className={openMakeup ? "show" : null}>
+    <Container className={openGusetBook ? "show" : null}>
       <XBox>
         <XIcon
-          width={"40px"} 
+          width={"40px"}
           height={"40px"}
           fill="#212121"
           onClick={xBtnClickHandler}
@@ -20,14 +20,14 @@ const GiwaMean = ({ openMakeup, xBtnClickHandler }) => {
         <strong><span>홍길동</span>님 에게</strong>
         <Title>
           <GiwaImg>
-            <GiwaMeaning/>
+            <GiwaMeaning />
           </GiwaImg>
           <GiwaText>
             <b>기와의 뜻</b>
             <p>Aliquam vehicula pellentesque id mi quam ipsum. Arcu nisl faucibus mattis etiam.</p>
           </GiwaText>
         </Title>
-        <GuestBook>
+        <GuestBookWrap>
           <Text>
             <Board />
             <p>들어봐 밤이, <br />
@@ -59,15 +59,16 @@ const GiwaMean = ({ openMakeup, xBtnClickHandler }) => {
               <span>심청이</span>가
             </b>
           </div>
-        </GuestBook>
+        </GuestBookWrap>
       </Wrap>
     </Container>
   );
 };
 
-export default GiwaMean;
+export default GuestBook;
 
 const Container = styled.aside`
+  background-color: red;
   width: 680px;
   height: 920px;
   display: flex;
@@ -76,7 +77,7 @@ const Container = styled.aside`
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
   border-radius: 50px 0px 0px 50px;
-  position: absolute;
+  position: fixed;
   right: -730px;
   top: 0;
   bottom: 0; 
@@ -84,18 +85,20 @@ const Container = styled.aside`
   opacity: 0;
   box-sizing: border-box;
   padding: 60px 80px;
-  z-index: 2;
+  z-index: 105;
   transition: all ease-in-out 1s;
   &.show {
     right: 0;
     opacity: 1;
   }
 `;
+
 const XBox = styled.button`
   position: absolute;
   top: 50px; 
   right: 48px;
 `;
+
 const Wrap = styled.div`
   > strong {
     display: block;
@@ -110,6 +113,7 @@ const Wrap = styled.div`
     }
   }
 `;
+
 const Title = styled.div`
   margin: 40px 0 10px;
   display: flex;
@@ -118,6 +122,7 @@ const Title = styled.div`
     background-color: red;
   }
 `;
+
 const GiwaImg = styled.div`
   min-width: 110px;
   min-height: 110px;
@@ -131,6 +136,7 @@ const GiwaImg = styled.div`
     left: 0; right: 0; bottom: 0; top: 0;
   }
 `;
+
 const GiwaText = styled.div`
   padding: 5px 0 0;
   b {
@@ -150,7 +156,8 @@ const GiwaText = styled.div`
     letter-spacing: 0.2px;
   }
 `;
-const GuestBook = styled.div`
+
+const GuestBookWrap = styled.div`
   > div {
     margin: 5px 0 0;
     float: right;

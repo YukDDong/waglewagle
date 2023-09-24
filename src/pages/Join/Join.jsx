@@ -53,7 +53,6 @@ const Join = () => {
       joinApi({
         email: userId,
         password: password,
-        username: "닉네임2",
       }).then((result) => {
         if (result.status === 200) {
           setIsModalOpen(true);

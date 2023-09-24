@@ -5,7 +5,7 @@ import { getItem } from "../utils/localStorage.js";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const client = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}/api/v1`,
 });
 
 // 요청보내기 전에 localstorage에 토큰이 있는지 판단 후
@@ -18,3 +18,16 @@ client.interceptors.request.use(async (config) => {
 
   return config;
 });
+
+// axios.post(`${BASE_URL}/api/v1/posts`, {
+//   broadId: 1,
+//   version: "v1",
+//   message: "",
+//   nickName: str,
+//   postStyle: {
+//     fontColorCode: int,
+//     sortCode: int,
+//     shapeCode: int,
+//     fontSize: int,
+//   },
+// });

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
+import GuestBook from "../../component/RightSide/GuestBook";
 import giwaFrame from "../../assets/stroage/giwa_frame_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Badge } from "../../assets/stroage/latest_badge.svg";
@@ -35,10 +36,19 @@ let data = ['기와 목록 최신순', '기와 목록 과거순'];
 const StorageGiwa = () => {
   const [giwaStorage, setGiwaStorage] = useState(giwaData); // 기와 보관함 데이터
   const [showOptions, setShowOptions] = useState(false); // 셀렉트 boolean
+  const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [selectData, setSelectData] = useState({
     select: '기와 목록 최신순',
     option: '기와 목록 과거순'
   });
+
+
+  const openGusetBookModal = () => {
+    setOpenGusetBook(true);
+  };
+  const closeGusetBookModal = () => {
+    setOpenGusetBook(false);
+  };
 
   /* 셀렉트 선택 */
   const handleOnChangeSelectValue = (e) => {
@@ -53,7 +63,7 @@ const StorageGiwa = () => {
   return (
     <>
       <NavBar />
-      <Container>
+      <Container open={openGusetBook}>
         <AsideTtile>
           <Title>
             <span>홍길동</span>님, <br />
@@ -80,12 +90,12 @@ const StorageGiwa = () => {
             {
               giwaStorage.map(item => (
                 <GiwaLi key={item.id}>
-                  <button type="button">
+                  <button type="button" onClick={openGusetBookModal}>
                     <img src={giwaFrame} alt="" />
                     {
                       item.id < 13 && <em><Badge /></em>
                     }
-                    <GiwaMean1/>
+                    <GiwaMean1 />
                   </button>
                   <span>{item.date}</span>
                 </GiwaLi>
@@ -94,6 +104,15 @@ const StorageGiwa = () => {
           </GiwaWrap>
         </StorageContain>
       </Container>
+
+      {/* 방명록 start */}
+      <GuestBook
+        openGusetBook={openGusetBook}
+        xBtnClickHandler={closeGusetBookModal}
+      ></GuestBook>
+      {/* 방명록 end */}
+
+      <Dimmed open={openGusetBook}></Dimmed>
     </>
   );
 };
@@ -102,13 +121,18 @@ export default StorageGiwa;
 
 const Container = styled.div`
   max-width: 980px;
-  margin: 240px auto 0;
+  margin: 0 auto;
+  padding: 240px 0 0 50px;
+  position: relative;
+  transition: all ease-in-out 1s;
+  left: ${({ open }) => open ? '-350px' : '0'};
   &:after {
     content: "";
     display: block;
     clear: both;
   }
 `;
+
 const AsideTtile = styled.div`
   width: 38%;
   float: left;
@@ -125,6 +149,7 @@ const AsideTtile = styled.div`
     }
   }
 `;
+
 const Title = styled.strong`
   color: #222;
   font-family: var(--font-hunmin);
@@ -135,15 +160,18 @@ const Title = styled.strong`
     color: #E75852;
   }
 `;
+
 const StorageContain = styled.div`
   width: 60%;
   float: right;
 `;
+
 const Nav = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 0 30px;
 `;
+
 const NavCont = styled.div`
   display: flex;
   align-items: center; 
@@ -168,6 +196,7 @@ const Select = styled.div`
   width: 198px; height: 50px;
   position: relative;
   margin: 0 -3% 0 0;
+  /* z-index: 104; // test 후 삭제하기 */
   &:before {
       width: 73%;
       height: 1px;
@@ -194,7 +223,7 @@ const Select = styled.div`
   }
   li {    
     height: 50px;
-    padding: 0 0 0 30px;    
+    padding: 0 0 0 30px; 
     position: relative;
     display: flex;
     align-items: center;
@@ -236,18 +265,31 @@ const Select = styled.div`
   }
 `;
 
-const Option = styled.div``;
-
 const GiwaWrap = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 5.6122%;
 `;
+
 const GiwaLi = styled.li`
   width: 29.5918%; 
   margin: 0 0 5.6122%;
   position: relative; 
+  /* z-index: 103; // 테스트 후 지우기 */
+  &.active {
+    > span {
+      color: #fff;
+    }
+    button {
+      &:hover {
+        &:after {        
+          background-color: transparent;
+        }
+      }
+    }
+  }
   > span {
+    color: red;
     margin: 5% 0 0;
     float: right;
     color: #757575;
@@ -270,6 +312,7 @@ const GiwaLi = styled.li`
       top: 0; left: 0;
       background-color: transparent;
       transition: background-color, .3s ease-in-out;
+      pointer-events: none;
     }
     &:hover {
       &:after {        
@@ -278,6 +321,7 @@ const GiwaLi = styled.li`
     } 
     > svg {
       position: absolute;
+      width: 38%;
       left: 12%;
       top: 26%; 
       bottom: 0;
@@ -302,4 +346,17 @@ const GiwaLi = styled.li`
   img {
     width: 100%;
   }  
+`;
+
+const Dimmed = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(32, 32, 32, 0.6);
+  transition: all ease-in-out 1s;
+  /* display: ${({ open }) => open ? 'block' : 'none'}; */
+  opacity: ${({ open }) => open ? '1' : '0'};
+  z-index: ${({ open }) => open ? '100' : '-1'};
+  top: 0;
+  left: 0;
 `;
