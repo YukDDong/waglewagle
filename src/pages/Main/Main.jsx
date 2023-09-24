@@ -22,7 +22,7 @@ const Main = () => {
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
-  const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창  
+  const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
 
   /** 😀 juju
     - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
@@ -140,9 +140,8 @@ export const ExDiv = styled.div`
   height: 100vh;
   background: linear-gradient(
     158deg,
-    ${({ $bgColor }) => $bgColor
-    ? "#FFFEF9 0%, #FFF8DC 100%"
-    : " #868DCC 20%, #313557 95%"}
+    ${({ $bgColor }) =>
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
