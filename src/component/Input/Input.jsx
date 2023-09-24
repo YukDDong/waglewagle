@@ -8,81 +8,6 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ValidTest from "../ValidTest/ValidTest";
 
-function Input({
-  icon,
-  updateForm,
-  name,
-  type,
-  password,
-  validUserInfo,
-  handleIsValidHopae,
-  ...rest
-}) {
-  const location = useLocation().pathname;
-  const [input, setInput] = useInput("");
-  const [isFocus, setIsFocus] = useState(false);
-  const [passwordShowing, setPasswordShowing] = useState(false);
-  const onFocusChange = () => {
-    setIsFocus(true);
-  };
-  const onBlurChange = () => {
-    input === "" && setIsFocus(false);
-  };
-
-  useEffect(() => {
-    updateForm(name, input);
-  }, [name, input]);
-
-  return (
-    <Container>
-      <InputDiv location={location} isFocus={isFocus}>
-        {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
-        {(() => {
-          switch (icon) {
-            case "User":
-              return <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            case "Password":
-              return <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            default:
-              break;
-          }
-        })()}
-        <input
-          {...rest}
-          type={
-            type !== "password" ? type : passwordShowing ? "text" : "password"
-          }
-          value={input}
-          onFocus={onFocusChange}
-          onBlur={onBlurChange}
-          onChange={setInput}
-          name={name}
-          required
-        />
-        {location === "/join" && icon === "Password" ? (
-          <EyeIconBtn
-            onClick={() =>
-              setPasswordShowing((passwordShowing) => !passwordShowing)
-            }
-          >
-            {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
-          </EyeIconBtn>
-        ) : null}
-      </InputDiv>
-      {location !== "/login" && (
-        <ValidTest
-          name={name}
-          value={input}
-          location={location}
-          password={password}
-          validUserInfo={validUserInfo}
-          handleIsValidHopae={handleIsValidHopae}
-        />
-      )}
-    </Container>
-  );
-}
-
 // InputText
 function InputText({
   placeholder,
@@ -244,4 +169,4 @@ const EyeIconBtn = styled.div`
 `;
 
 
-export {Input as default, InputText, InputPwd};
+export {InputText, InputPwd};

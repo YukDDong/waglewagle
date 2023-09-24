@@ -7,37 +7,8 @@ import { InputText } from "../../component/Input/Input";
 import { validHopae, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
 import { ButtonActDeact } from "../../component/Button/Button";
 
+
 const MakeHopae = () => {
-  const [isValid, setIsValid] = useState({
-    isEmail: false,
-    isPassword: false,
-    isPasswordConfirm: false,
-    isHopae: false,
-  });
-
-  const validUserInfo = useCallback(
-    (name, value) => {
-      setIsValid({ ...isValid, [name]: value });
-    },
-    [isValid]
-  );
-
-  return (
-    <>
-      <NavBar />
-      <Main>
-        <MainDiv>
-          <Title title="호패만들기" />
-          <Sub>자네, 이곳은 처음이요?</Sub>
-          <Sub>이곳은 호패가 없으면 들어갈 수가 없다네.</Sub>
-          <FormMakeHopae validUserInfo={validUserInfo} />
-        </MainDiv>
-      </Main>
-    </>
-  );
-};
-
-const MakeHopaeRefine = () => {
 
   // 변수
   const [data, setData] = useState({
@@ -159,7 +130,7 @@ const MakeHopaeRefine = () => {
   );
 };
 
-export default MakeHopaeRefine;
+export default MakeHopae;
 
 const Main = styled.main`
   width: 100%;
