@@ -9,6 +9,7 @@ import Sample from "./pages/Sample/Sample";
 import FindPwd from "./pages/FindPwd/FindPwd";
 import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
 import StorageGiwa from "./pages/StorageGiwa/StorageGiwa"; 
+import ChangePwd from "./pages/ChangePwd/ChangePwd"; 
 
 const routes = [
   {
@@ -50,6 +51,10 @@ const routes = [
   {
     path: "/StorageGiwa",
     element: <StorageGiwa />,
+  },
+  {
+    path: "/changePwd",
+    element: <ChangePwd />,
   },
 ];
 
