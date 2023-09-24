@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Form from "../../component/Form/Form";
 import SocialLogin from "../../component/SocialLogin/SocialLogin";
 import { useCallback, useState, useEffect } from "react";
 import NavBar from "../../component/NavBar/NavBar";
