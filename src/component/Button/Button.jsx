@@ -1,20 +1,7 @@
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 
-export default function Button({ onClick, buttonText, color, location, disabled }) {
-  
-  const onClickBtn = (e) => {
-    e.preventDefault();
-    onClick();
-  };
-
-  return (
-    <ButtonComponent onClick={onClickBtn} color={color} location={location} disabled={disabled}>
-      {buttonText}
-    </ButtonComponent>
-  );
-}
-
-const ButtonComponent = styled.button`
+// 기본 버튼 style
+const ButtonBasic = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,21 +10,63 @@ const ButtonComponent = styled.button`
   box-sizing: border-box;
   font-family: var(--font-hunmin);
   font-size: 20px;
-  font-weight: 400;
-  border: ${(props) => (props.disabled ? null : "1px solid #e75852")};
+  font-weight: 600;
   border-radius: 6px;
   margin-bottom: 12px;
-  margin-top: ${(props) => (props.location === "/join" ? "40px" : null)};
-  margin-top: ${(props) => (props.location === "/makeHopae" ? "40px" : null)};
+  margin-top: 40px;
   box-sizing: border-box;
-  cursor: pointer;
-  color: ${(props) => (props.color ? "#e75852" : "white")};
-  color: ${(props) => (props.disabled ? "#bbbbbb" : null)};
-  background-color: ${(props) => (props.color ? "white" : "#e75852")};
-  background-color: ${(props) => (props.disabled ? "#f2f2f2" : null)};
   transition: all ease-in-out 0.3s;
+  
   &:hover {
-    // 비활성화 시, 버튼 위에 마우스 올렸을 때 글자 확대 안 되도록
-    font-size: ${(props) => (props.disabled ? null : "26px")};
+    background-color: #D24640;
+  }
+  color: white;
+  background-color: #e75852;
+  border: 1px solid #e75852;
+  cursor: pointer;
+
+  // props 적용
+  ${(props) =>
+    
+    // color 가 존재할 경우
+    // 하얀 바탕 버튼
+    (props.color &&
+      (css`
+        color: #e75852;
+        background-color: white;
+        &:hover {
+          background-color: #FFF1F1;
+        }
+      `)
+    )
   }
 `;
+
+
+// Disabled 기능 들어간 버튼 style
+const ButtonActDeact = styled(ButtonBasic)`
+
+  ${(props) => 
+    
+    // props.disabled 적용
+    (props.disabled)
+
+      // 비활성화
+      ? (css`
+        color: #bbbbbb;
+        background-color: #f2f2f2;
+        border: 0px;
+        cursor: default;  // 어떤 차이??
+        &:hover {
+          background-color: #f2f2f2;
+        }
+      `)
+
+      // 활성화
+      // 기본값 사용
+      : null
+  }
+`;
+
+
+export {ButtonBasic as default, ButtonActDeact};

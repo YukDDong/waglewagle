@@ -1,27 +1,23 @@
 import { styled } from "styled-components";
 import useInput from "../../hooks/useInput";
-import { ReactComponent as UserIcon } from "../../assets/octicon-person-24.svg";
-import { ReactComponent as PasswordIcon } from "../../assets/icons-8-lock-2.svg";
-import { ReactComponent as ClosedEyeIcon } from "../../assets/humbleicons-eye-close.svg";
-import { ReactComponent as OpendEyeIcon } from "../../assets/fluent-eye-12-filled.svg";
+import { ReactComponent as UserIcon } from "../../assets/login/octicon-person-24.svg";
+import { ReactComponent as PasswordIcon } from "../../assets/login/icons-8-lock-2.svg";
+import { ReactComponent as ClosedEyeIcon } from "../../assets/login/humbleicons-eye-close.svg";
+import { ReactComponent as OpendEyeIcon } from "../../assets/login/fluent-eye-12-filled.svg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ValidTest from "../ValidTest/ValidTest";
 
-export default function Input({
-  icon,
-  updateForm,
-  name,
-  type,
-  password,
-  validUserInfo,
-  handleIsValidHopae,
-  ...rest
+// InputText
+function InputText({
+  placeholder,
+  dataName,
+  updateData
 }) {
+
   const location = useLocation().pathname;
   const [input, setInput] = useInput("");
   const [isFocus, setIsFocus] = useState(false);
-  const [passwordShowing, setPasswordShowing] = useState(false);
   const onFocusChange = () => {
     setIsFocus(true);
   };
@@ -30,56 +26,86 @@ export default function Input({
   };
 
   useEffect(() => {
-    updateForm(name, input);
-  }, [name, input]);
+    updateData(dataName, input);
+  }, [dataName, input]);
 
   return (
-    <Container>
-      <InputDiv location={location} isFocus={isFocus}>
-        {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
-        {(() => {
-          switch (icon) {
-            case "User":
-              return <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            case "Password":
-              return <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            default:
-              break;
+      
+    // Overlap
+    <InputDiv location={location} isFocus={isFocus}>
+      
+      {/* icon */}
+      <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
+      
+      {/* input */}
+      <input
+        type="text"
+        value={input}
+        placeholder={placeholder}
+        onFocus={onFocusChange}
+        onBlur={onBlurChange}
+        onChange={setInput}
+        required
+      />
+
+    </InputDiv>
+  );
+}
+
+// InputPwd
+function InputPwd({
+  placeholder,
+  dataName,
+  updateData
+}) {
+
+  const location = useLocation().pathname;
+  const [input, setInput] = useInput("");
+  const [isFocus, setIsFocus] = useState(false);
+  const [passwordShowing, setPasswordShowing] = useState(false);
+
+  const onFocusChange = () => {
+    setIsFocus(true);
+  };
+  const onBlurChange = () => {
+    input === "" && setIsFocus(false);
+  };
+
+  useEffect(() => {
+    updateData(dataName, input);
+  }, [dataName, input]);
+
+  return (
+      
+    // Overlap
+    <InputDiv location={location} isFocus={isFocus}>
+      
+      {/* icon */}
+      <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
+      
+      {/* input */}
+      <input
+        type={passwordShowing ? "text" : "password"}
+        value={input}
+        placeholder={placeholder}
+        onFocus={onFocusChange}
+        onBlur={onBlurChange}
+        onChange={setInput}
+        required
+      />
+
+      {/* EyeIconBtn */}
+      {location === "/join" ? (
+        <EyeIconBtn
+          onClick={() =>
+            setPasswordShowing((passwordShowing) => !passwordShowing)
           }
-        })()}
-        <input
-          {...rest}
-          type={
-            type !== "password" ? type : passwordShowing ? "text" : "password"
-          }
-          value={input}
-          onFocus={onFocusChange}
-          onBlur={onBlurChange}
-          onChange={setInput}
-          name={name}
-          required
-        />
-        {location === "/join" && icon === "Password" ? (
-          <EyeIconBtn
-            onClick={() =>
-              setPasswordShowing((passwordShowing) => !passwordShowing)
-            }
-          >
-            {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
-          </EyeIconBtn>
-        ) : null}
-      </InputDiv>
-      {location !== "/login" && (
-        <ValidTest
-          name={name}
-          value={input}
-          location={location}
-          password={password}
-          validUserInfo={validUserInfo}
-          handleIsValidHopae={handleIsValidHopae}
-        />
-      )}
-    </Container>
+        >
+          {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
+        </EyeIconBtn>
+      ) : null}
+
+    </InputDiv>
   );
 }
 
@@ -138,6 +164,9 @@ const EyeIconBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 `;
+
+
+export {InputText, InputPwd};

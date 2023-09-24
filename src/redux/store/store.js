@@ -1,23 +1,29 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import { userCheckReducer } from "../reducers/userReducer";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import { userReducer } from "../reducers/userReducer";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import thunk from "redux-thunk";
 import persistStore from "redux-persist/es/persistStore";
+import { giwaReducer } from "../reducers/giwaReducer";
+import { giwaHouseReducer } from "../reducers/giwaHouseReducer";
 
 const rootReducer = combineReducers({
-  userCheckReducer: userCheckReducer,
+  userReducer,
+  giwaReducer,
+  giwaHouseReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userCheckReducer"],
+  whitelist: ["userReducer"],
 };
+
+const enhancers = compose(applyMiddleware(thunk));
 
 const store = createStore(
   persistReducer(persistConfig, rootReducer),
-  applyMiddleware(thunk)
+  enhancers
 );
 
 export const persistor = persistStore(store);
