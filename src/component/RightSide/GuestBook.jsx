@@ -114,15 +114,14 @@ const GuestBook = ({ openGusetBook, xBtnClickHandler, selectedGiwa }) => {
 export default GuestBook;
 
 const Container = styled.aside`
-  background-color: red;
   width: 680px;
-  height: 920px;
+  height: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
-  border-radius: 50px 0px 0px 50px;
+  border-radius: 50px 0px 0px 50px; 
   position: fixed;
   right: -730px;
   top: 0;
@@ -142,7 +141,7 @@ const Container = styled.aside`
 const XBox = styled.button`
   position: absolute;
   top: 50px;
-  right: 48px;
+  right: 50px;
 `;
 
 const Wrap = styled.div`
