@@ -113,6 +113,7 @@ function FormMakeHopae({ validUserInfo }) {
     // });
 
     // 위의 과정이 성공했다치고 아래과정 수행
+    // 호패만들기 api 요청 성공시 아래 두줄 추가
     dispatch(makeHopae(form.hopae));
     navigate("/makeGiwaHouse");
   };
