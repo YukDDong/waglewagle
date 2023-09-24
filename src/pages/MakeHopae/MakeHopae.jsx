@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
 import { InputText } from "../../component/Input/Input";
 import { validHopae, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
-import ButtonActDeact from "../../component/Button/Button";
+import { ButtonActDeact } from "../../component/Button/Button";
 
 const MakeHopae = () => {
   const [isValid, setIsValid] = useState({
@@ -147,7 +147,7 @@ const MakeHopaeRefine = () => {
             {/* 버튼 */}
             <ButtonActDeact 
               onClick={handleClick}
-              disabled={true}
+              disabled={!data.hopae}
             >
               기와집 만들러 가기
             </ButtonActDeact>

@@ -6,7 +6,7 @@ import Title from "../../component/Title/Title";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText } from "../../component/Input/Input";
 import { validEmail, IsTrue, IsFalse } from "../../component/ValidTest/ValidTest";
-import ButtonActDeact from "../../component/Button/Button";
+import { ButtonActDeact } from "../../component/Button/Button";
 
 const FindPwd = () => {
 

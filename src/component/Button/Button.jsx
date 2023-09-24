@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 
 // 공통 style
 const ButtonCommon = styled.button`
@@ -16,14 +16,24 @@ const ButtonCommon = styled.button`
   margin-top: 40px;
   box-sizing: border-box;
   transition: all ease-in-out 0.3s;
-  color: ${(props) => (props.color ? "#e75852" : "white")};
-  background-color: ${(props) => (props.color || "#e75852")};
+
+  color: white;
+  background-color: #e75852;
+  border: 1px solid #e75852;
+  cursor: pointer;
+
+  // props.color 적용
+  ${(props) =>
+    props.color && //color 가 존재할 경우
+    css`
+      color: #e75852;
+      background-color: white;
+    `
+  }
 `;
 
 // 기본 버튼 style
 const ButtonBasic = styled(ButtonCommon)`
-  border: 1px solid #e75852;
-  cursor: pointer;
   &:hover {
     font-size: 26px;
   }
@@ -34,16 +44,24 @@ const ButtonBasic = styled(ButtonCommon)`
 
 // Disabled 기능 들어간 버튼 style
 const ButtonActDeact = styled(ButtonCommon)`
-border: ${(props) => (props.disabled ? null : "1px solid #e75852")};
-cursor: ${(props) => (props.disabled ? "default" : "pointer")};
-color: ${(props) => (props.disabled ? "#bbbbbb" : null)};
-background-color: ${(props) => (props.disabled ? "#f2f2f2" : null)};
-&:hover {
-  font-size: ${(props) => (props.disabled ? null : "26px")};
-}
-&:active{
-  background-color: ${(props) => (props.disabled ? null : "#D24640")};
-}
+
+  // props.disabled 적용
+  ${(props) => (props.disabled)
+    ? (css`
+      color: #bbbbbb;
+      background-color: #f2f2f2;
+      border: 0px;
+      cursor: default;  // 어떤 차이??
+    `)
+    : (css`
+      &:hover {
+        font-size: 26px;
+      }
+      &:active{
+        background-color: "#D24640";
+      }
+    `)
+  }
 `;
 
 

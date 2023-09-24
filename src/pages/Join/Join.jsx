@@ -7,7 +7,7 @@ import Title from "../../component/Title/Title";
 import { joinApi } from "../../apis/user";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText, InputPwd } from "../../component/Input/Input";
-import ButtonActDeact from "../../component/Button/Button";
+import { ButtonActDeact } from "../../component/Button/Button";
 import { validEmail, validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
 
 const Join = () => {
