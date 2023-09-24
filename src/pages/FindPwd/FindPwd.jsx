@@ -187,7 +187,7 @@ const FindPwdRefine = () => {
             {/* 버튼 */}
             <ButtonActDeact 
               onClick={handleClick}
-              disabled={data.isEmail}
+              disabled={!data.isEmail}
             >
               메일 보내기
             </ButtonActDeact>
