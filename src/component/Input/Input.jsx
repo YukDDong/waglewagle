@@ -6,6 +6,7 @@ import { ReactComponent as ClosedEyeIcon } from "../../assets/login/humbleicons-
 import { ReactComponent as OpendEyeIcon } from "../../assets/login/fluent-eye-12-filled.svg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import ValidTest from "../ValidTest/ValidTest";
 
 function Input({
   icon,
@@ -109,7 +110,7 @@ function InputText({
     // Overlap
     <InputDiv $location={location} $isFocus={isFocus}>
 
-      {location === "/join" && <span className="check" onClick={onEmailCheck}>중복확인</span>}
+      {/* {location === "/join" && <span className="check" onClick={onEmailCheck}>중복확인</span>} */}
 
       {/* icon */}
       <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
@@ -256,4 +257,4 @@ const EyeIconBtn = styled.div`
 `;
 
 
-export {Input as default, InputText, InputPwd};
+export { Input as default, InputText, InputPwd };

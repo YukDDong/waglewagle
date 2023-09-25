@@ -53,8 +53,6 @@ const Join = () => {
 
 
 
-  //// 회원가입
-
   // 회원가입 가능 판단
   const onJoinSubmit = (e) => {
     e.preventDefault();
@@ -67,24 +65,22 @@ const Join = () => {
       }).then((result) => {
         console.log(result.status)
         if (result.status === 200) {
-
           // modal 열기
           setIsModalOpen(true);
-
           // 로그인 화면으로 이동
-          handleClick();
+          // handleClick();
         }
         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
         if (result.status === 500) {
           console.log("error500");
         }
       });
-
       // 로그인 화면으로 이동
       // handleClick();
     }
   };
 
+  /* 회원가입 test */
   const getUser = async () => {
     console.log(data.userId, data.pwd)
     try {
@@ -99,11 +95,13 @@ const Join = () => {
     }
   }
 
+  /* 중복확인 test */
   const checkJoin = async () => {
+    console.log(data.userId)
     try {
       const response = await axios.get('https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/duplicate-check', {
         params: {
-          email: 'juju@naver.com',
+          email: data.userId
         },
       })
       console.log(response);
@@ -158,13 +156,14 @@ const Join = () => {
 
       <Main>
         <MainDiv>
+          {/* 회원가입 test */}
           <span onClick={getUser} style={{ color: '#fff', fontSize: '20px' }}>회원가입</span>
+          {/* 중복확인 test */}
           <span onClick={checkJoin} style={{ color: '#fff', fontSize: '20px' }}>중복확인</span>
 
           {/* Title */}
           <Title title="회원가입" />
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-
 
           <MainDivBottom>
 
