@@ -54,11 +54,18 @@ const Main = () => {
     getGiwaListApi({
       broadId: giwaHouse.id,
       reverse: true,
-    }).then((result) => {
-      if (result.status === 200) {
-        setGiwaList(result.data);
-      }
-    });
+    })
+      .then((result) => {
+        console.log(result);
+        if (result.status === 200) {
+          setGiwaList(result.data);
+        } else {
+          throw new Error("서버에서 데이터를 가져오는 데 문제가 발생했습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("오류:", error);
+      });
   }, [giwaHouse.id]);
 
   /** 😀 juju
@@ -114,6 +121,8 @@ const Main = () => {
     setOpenGusetBook(false);
   };
 
+  console.log("url", url);
+
   return (
     <>
       {openModal ? (
@@ -127,7 +136,11 @@ const Main = () => {
         <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             {/* 말풍선 start */}
-            <Speech setOpenModal={setOpenModal} />
+            <Speech
+              setOpenModal={setOpenModal}
+              url={url} //url이 있는 경우(방문자), url이 없는 경우(주인)
+              giwaLength={giwaList.length} //기와의 개수
+            />
             {/* 말풍선 end */}
             {/* 기와 버튼 start */}
             <GiwaButton

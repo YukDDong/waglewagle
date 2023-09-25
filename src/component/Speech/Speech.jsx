@@ -4,17 +4,40 @@ import styled from "styled-components";
 import speechBubble from "../../assets/main/speech_bubble.svg";
 import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 
-const Speech = ({ setOpenModal }) => {
+const Speech = ({ setOpenModal, url, giwaLength }) => {
   const speechRef = useRef();
 
   useEffect(() => {
-    gsap.to(speechRef.current.querySelectorAll("span"), .5, { stagger: .1, display: "inline", delay: .3, ease: "Power1.easeInOut" })
+    gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
+      stagger: 0.1,
+      display: "inline",
+      delay: 0.3,
+      ease: "Power1.easeInOut",
+    });
   }, []);
 
   return (
     <Container>
-      {/* {
-        // 집주인 : 기와 12개 미만일 때
+      {url ? (
+        // 방문자
+        <>
+          <p ref={speechRef}>
+            <span>기</span>
+            <span>와</span>
+            <span>를</span>
+            <span className="space">남</span>
+            <span>겨</span>
+            <span>주</span>
+            <span>시</span>
+            <span>오</span>
+            <span>!</span>
+          </p>
+          <button className="giwa_plus" onClick={() => setOpenModal(true)}>
+            <GiwaPlus />
+          </button>
+        </>
+      ) : giwaLength < 12 ? (
+        // 기와 12개 미만일때
         <p ref={speechRef}>
           <span>환</span>
           <span>영</span>
@@ -22,9 +45,8 @@ const Speech = ({ setOpenModal }) => {
           <span>오</span>
           <span>!</span>
         </p>
-      } */}
-      {/* {
-        // 집주인 : 기와 12개 이상일 때
+      ) : (
+        // 기와 12개 이상일때
         <>
           <p ref={speechRef}>
             <span>기</span>
@@ -43,26 +65,8 @@ const Speech = ({ setOpenModal }) => {
             <span>10</span>
           </button>
         </>
-      } */}
-      { // 방문자
-        <>
-          <p ref={speechRef}>
-            <span>기</span>
-            <span>와</span>
-            <span>를</span>
-            <span className="space">남</span>
-            <span>겨</span>
-            <span>주</span>
-            <span>시</span>
-            <span>오</span>
-            <span>!</span>
-          </p>
-          <button className="giwa_plus" onClick={() => setOpenModal(true)}>
-            <GiwaPlus />
-          </button>
-        </>
-      }
-    </Container >
+      )}
+    </Container>
   );
 };
 
@@ -89,7 +93,7 @@ const Container = styled.div`
     &.giwa_number {
       position: absolute;
       padding: 0 14px 3px;
-      background-color: #6C5847;
+      background-color: #6c5847;
       border-radius: 50px;
       right: 10%;
       top: -15%;
