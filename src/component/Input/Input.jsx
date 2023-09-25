@@ -6,7 +6,6 @@ import { ReactComponent as ClosedEyeIcon } from "../../assets/login/humbleicons-
 import { ReactComponent as OpendEyeIcon } from "../../assets/login/fluent-eye-12-filled.svg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ValidTest from "../ValidTest/ValidTest";
 
 // InputText
 function InputText({
