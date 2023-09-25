@@ -54,7 +54,8 @@ const RightSide = ({
         },
         url: generateRandomString(20),
       }).then((result) => {
-        if (result.status === 200) {
+        // api 수정될지 모르겠지만 일단 이렇게 진행
+        if (result.data === "good") {
           navigate("/main");
           return;
         }
@@ -246,7 +247,7 @@ const ResetBox = styled.button`
   border-radius: 50%;
   box-shadow: 0px 4px 16px rgba(13, 32, 57, 0.06);
   position: absolute;
-  top: 0; 
+  top: 0;
   margin: auto;
   bottom: 0;
   right: 0;
@@ -259,4 +260,3 @@ const ResetBox = styled.button`
     transition: all, 0.4s ease-in-out;
   }
 `;
-
