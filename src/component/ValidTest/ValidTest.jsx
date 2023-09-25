@@ -101,6 +101,6 @@ const CheckInfo = styled.span`
 
 
 export {
-  ValidTest as default, validEmail, validPwd, validHopae, 
+  validEmail, validPwd, validHopae, 
   IsTrue, IsFalse, CheckInfo
 };
