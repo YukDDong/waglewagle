@@ -46,12 +46,19 @@ const Join = () => {
   useEffect(() => {
     setIsValid({
       ...isValid,
-      isEmail: validEmail(data.userId),
       isPassword: validPwd(data.pwd),
       isPasswordConfirm: (data.pwd === data.confirmPwd),
-      isEmeilCheck: false
+      // isEmeilCheck: false,
     });
   }, [data]);
+
+  useEffect(() => {
+    setIsValid({
+      ...isValid,
+      isEmail: validEmail(data.userId),
+      isEmeilCheck: false,
+    });
+  }, [data.userId]);
 
 
   // 회원가입 가능 판단
@@ -79,7 +86,8 @@ const Join = () => {
   };
 
   /* 이메일 중복확인 */
-  const onEmailCheck = () => {
+  const onEmailCheck = (e) => {
+    e.preventDefault();
     checkEmailApi(data.userId)
       .then((result) => {
         if (result.data.status === "SUCCESS") {
@@ -109,7 +117,6 @@ const Join = () => {
   return (
     <>
       <NavBar />
-
       {/* Modal */}
       {(isModalOpen)
         ? <ModalBasic
@@ -127,13 +134,13 @@ const Join = () => {
             msg="사용가능한 이메일입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-            // visibleFtn={visibleFtn}
+          // visibleFtn={visibleFtn}
           />
           : <ModalBasic
             msg="이미 가입된 회원 입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-            // visibleFtn={visibleFtn}
+          // visibleFtn={visibleFtn}
           />
       ) : null}
       {/* 이메일 중복확인 팝업창 end */}
