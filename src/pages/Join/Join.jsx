@@ -118,6 +118,10 @@ const Join = () => {
     <>
       <NavBar />
       {/* Modal */}
+
+      {
+        console.log(data)
+      }
       {(isModalOpen)
         ? <ModalBasic
           msg="회원가입이 완료되었습니다."
@@ -239,6 +243,7 @@ const Main = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #222;
 `;
 
 const MainDiv = styled.div`
