@@ -2,19 +2,19 @@ import { useCallback, useState, useEffect } from "react";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
-import ModalBasic from "../../component/Modal/ModalBasic";
-import { validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
+import { IsTrue, IsFalse } from "../../component/ValidTest/ValidTest";
 import { InputPwd } from "../../component/Input/Input";
-import { ButtonActDeact } from "../../component/Button/Button";
+import Button from "../../component/Button/Button";
 
 const ConfirmPwd = () => {
 
   //// data
 
   // 변수
+  const [isConfirmPwd, setIsConfirmPwd] = useState(true);
+
   const [data, setData] = useState({
     confirmPwd: "",
-    isConfirmPwd: false,
   });
 
   // 함수
@@ -28,33 +28,33 @@ const ConfirmPwd = () => {
 
   // 함수
   // 실시간 변수 업데이트
+  // 값이 바뀌는 동안은 true 유지
+  // 값이 써지는 동안 에러 메시지 출력 없애기 위함
   useEffect(() => {
-    setIsValid({...isValid, 
-      isPwd: validPwd(data.pwd),
-      isConfirmPwd: (data.pwd === data.confirmPwd)
-    });
-  }, [data]);
-
-  
-  //// visibleModal
-
-  // 변수
-  const [visibleModal, setVisibleModal] = useState(false);
-
-  // 함수
-  const visibleFtn = (value) => {
-    setVisibleModal(value);
-  };
+    setIsConfirmPwd(true);
+    console.log(data);
+  }, [data.confirmPwd]);
 
 
   // '비밀번호 변경' 버튼 클릭 시 이벤트
   const handleClick = ()=>{
     
-    // 비밀번호 변경 요청
-    // 백엔드 처리
+    // 기존 비밀번호 가져오기
+    let pwd = "123";
+
+    // 비밀번호 일치할 때
+    if (pwd === data.confirmPwd){
     
-    // 비밀번호 변경 후 로그인 화면 이동
-    window.location.href = "/login"
+        // 비밀번호 변경 화면 이동
+        window.location.href = "/changePwd"
+    }
+
+    // 비밀번호 다를 때
+    else{
+
+        // 에러 메시지 출력
+        setIsConfirmPwd(false);
+    }
   }
 
 
@@ -77,27 +77,24 @@ const ConfirmPwd = () => {
 
             {/* 비밀번호 확인 */}
             <InputPwd 
-              placeholder="비밀번호를 적어주세요."
+              placeholder="기존 비밀번호를 적어주세요."
               dataName="confirmPwd"
               updateData={updateData}
             />
 
             {/* 비밀번호 확인 판별 */}
             {(data.confirmPwd !== "") ? (
-              (isValid.isConfirmPwd) ? (
+              (isConfirmPwd) ? (
                 <IsTrue></IsTrue>
               ) : (
                 <IsFalse>비밀번호를 잘못 입력했습니다.</IsFalse>
               )
-            ) : null}
+            ) : <IsFalse>비밀번호를 입력해 주세요.</IsFalse>}
 
             {/* 버튼 */}
-            <ButtonActDeact 
-              onClick={handleClick}
-              disabled={!((isValid.isConfirmPwd))}
-            >
+            <Button onClick={handleClick}>
               비밀번호 변경하기
-            </ButtonActDeact>
+            </Button>
 
           </MainDivBottom>
 
@@ -142,10 +139,6 @@ const MainDivBottom = styled.div`
   }
 `;
 
-const Blank = styled.div`
-  margin-top: 20px;
-`;
-
 const Sub = styled.h3`
   margin-top: 14px;
   color: #9e9e9e;
@@ -153,4 +146,7 @@ const Sub = styled.h3`
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
+
+  text-align: center;
+  white-space: pre-line;  // 문자열에서 \n 명령어 인식되도록
 `;
