@@ -146,7 +146,7 @@ const MakeHopaeRefine = () => {
             {/* 버튼 */}
             <ButtonActDeact 
               onClick={handleClick}
-              disabled={!data.hopae}
+              disabled={!data.isHopae}
             >
               기와집 만들러 가기
             </ButtonActDeact>
