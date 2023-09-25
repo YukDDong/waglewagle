@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Form from "../../component/Form/Form";
 import SocialLogin from "../../component/SocialLogin/SocialLogin";
 import { useCallback, useState, useEffect } from "react";
 import NavBar from "../../component/NavBar/NavBar";
@@ -20,31 +19,25 @@ const Login = () => {
   const navigate = useNavigate();
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
-  const [{ loginId, loginPassword }, setLoginInfo] = useState({
-    loginId: "test1111@naver.com",
-    loginPassword: "qwer1234",
+  // 변수
+  const [loginInfo, setLoginInfo] = useState({
+    id: "",
+    pwd: "",
   });
-  const getUserInfo = useCallback((form) => {
-    setLoginInfo({
-      loginId: form.userId,
-      loginPassword: form.password,
-    });
-  }, []);
 
+  // 함수
+  const updateData = useCallback(
+    (name, value) => {
+      setLoginInfo({ ...loginInfo, [name]: value });
+    },
+    [loginInfo]
+  );
+  
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
-  const onSubmit = async () => {
-    // api통신 예시
-    // const response = await axios.post(
-    //   "https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/login",
-    //   {
-    //     email: loginId,
-    //     password: loginPassword,
-    //   }
-    // );
-
+  const onSubmit = () => {
     loginApi({
-      email: loginId,
-      password: loginPassword,
+      email: loginInfo.id,
+      password: loginInfo.pwd,
     }).then((result) => {
       if (result.status === 200) {
         setItem("AUTH", result.data.data.accessToken);
@@ -64,76 +57,6 @@ const Login = () => {
     });
   };
 
-  return (
-    <>
-      <NavBar />
-      <Main>
-        <MainDiv>
-          <Title title="로그인" />
-          <Form getUserInfo={getUserInfo} onSubmit={onSubmit} />
-          <LineDiv />
-          <SocialLoginText>SNS 계정으로 로그인</SocialLoginText>
-          <SocialLogin />
-        </MainDiv>
-      </Main>
-    </>
-  );
-};
-
-
-const LoginRefine = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
-  // 변수
-  const [loginInfo, setLoginInfo] = useState({
-    id: "",
-    pwd: "",
-  });
-
-  // 함수
-  const updateData = useCallback(
-    (name, value) => {
-      setLoginInfo({ ...loginInfo, [name]: value });
-    },
-    [loginInfo]
-  );
-
-  // // monitoring
-  // useEffect(() => {
-
-  //   console.log(loginInfo);
-
-  // }, [loginInfo]);
-  
-  // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
-  const onSubmit = () => {
-    loginApi({
-      email: loginInfo.id,
-      password: loginInfo.pwd,
-    }).then((result) => {
-      if (result.status === 200) {
-        // 테스트용 api에서는 jwt토큰 값만 내려오고 있음.
-        // 유저정보(name)이 필요해서 찐api나오면 요청해야함
-        setItem("AUTH", result.data);
-        dispatch(
-          login({
-            id: "아이디",
-            name: "",
-            data: {},
-          })
-        );
-        navigate("/makeHopae");
-
-        // TODO-GOGI : api나오면 redux상태관리 로직도 추가
-        // TODO-GOGI : 유저 로그인 후 호패정보도 내려오면 있는지 확인 후 없다면
-        // navigate("/makeHopae")
-        // 호패정보가 있다면
-        // navigate("/main")
-      }
-    });
-  };
 
   // 회원가입 후 로그인 화면 이동
   const handleClickJoin = ()=>{
@@ -201,7 +124,7 @@ const LoginRefine = () => {
 };
 
 
-export default LoginRefine;
+export default Login;
 
 const Main = styled.main`
   width: 100%;
