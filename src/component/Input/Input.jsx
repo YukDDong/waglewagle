@@ -35,7 +35,7 @@ function Input({
 
   return (
     <Container>
-      <InputDiv $location={location} $isFocus={isFocus}>
+      <InputDiv location={location} isFocus={isFocus}>
         {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
         {(() => {
           switch (icon) {
@@ -257,4 +257,4 @@ const EyeIconBtn = styled.div`
 `;
 
 
-export { Input as default, InputText, InputPwd };
+export {Input as default, InputText, InputPwd};

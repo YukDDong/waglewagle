@@ -1,6 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
@@ -12,95 +11,8 @@ import { ButtonActDeact } from "../../component/Button/Button";
 import { validEmail, validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
 import axios from 'axios';
 
-// const Join = () => {
-//   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
-//     userId: "",
-//     password: "",
-//     checkPassword: "",
-//   });
-
-//   const [isValid, setIsValid] = useState({
-//     isEmail: false,
-//     isPassword: false,
-//     isPasswordConfirm: false,
-//   });
-
-//   //// visibleModal
-
-//   // 변수
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-
-//   // 함수
-//   const visibleFtn = (value) => {
-//     setIsModalOpen(value);
-//   };
-
-//   const joinUserInfo = useCallback((form) => {
-//     setJoinInfo({
-//       userId: form.userId,
-//       password: form.password,
-//       checkPassword: form.checkPassword,
-//     });
-//   }, []);
-
-//   const validUserInfo = useCallback(
-//     (name, value) => {
-//       setIsValid({ ...isValid, [name]: value });
-//     },
-//     [isValid]
-//   );
-
-//   const onJoinSubmit = () => {
-//     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-//       joinApi({
-//         email: userId,
-//         password: password,
-//       }).then((result) => {
-//         if (result.status === 200) {
-//           setIsModalOpen(true);
-//         }
-//         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
-//         if (result.status === 500) {
-//           console.log("error500");
-//         }
-//       });
-//     }
-//   }; 
-
-//   return (
-//     <>
-//       {/* Modal */}
-//       {(isModalOpen)
-//         ? <ModalBasic
-//           msg="회원가입이 완료되었습니다."
-//           buttonText="확인"
-//           linkPath="/login"
-//           visibleFtn={visibleFtn}
-//         />
-//         : null}
-
-//       <NavBar />
-//       <Main>
-//         <MainDiv>
-//           <Title title="회원가입" />
-//           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-//           <Form
-//             joinUserInfo={joinUserInfo}
-//             onSubmit={onJoinSubmit}
-//             validUserInfo={validUserInfo}
-//           />
-//           <ToLogin>
-//             이미 와글와글 계정이 있으신가요? <Link to="/login">로그인하기</Link>
-//           </ToLogin>
-//         </MainDiv>
-//       </Main>
-//     </>
-//   );
-// };
-
-const JoinRefine = () => {
+const Join = () => {
   const navigate = useNavigate();
-
   //// data
 
   // 변수
@@ -152,11 +64,15 @@ const JoinRefine = () => {
       joinApi({
         email: data.userId,
         password: data.pwd,
-        username: "닉네임2",
       }).then((result) => {
         console.log(result.status)
         if (result.status === 200) {
+
+          // modal 열기
           setIsModalOpen(true);
+
+          // 로그인 화면으로 이동
+          handleClick();
         }
         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
         if (result.status === 500) {
@@ -170,7 +86,7 @@ const JoinRefine = () => {
   };
 
   const getUser = async () => {
-    console.log(data.userId,data.pwd)
+    console.log(data.userId, data.pwd)
     try {
       const response = await axios.post('https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/signup', {
         email: data.userId,
@@ -328,7 +244,7 @@ const JoinRefine = () => {
   );
 };
 
-export default JoinRefine;
+export default Join;
 
 
 const Main = styled.main`
