@@ -113,7 +113,7 @@ function InputText({
       {
         (location === "/join" && isValid.isEmail) ? (
           (!isValid.isEmeilCheck)
-            ? (<button className="check" onClick={onEmailCheck}>중복확인</button>)
+            ? (<button className="check" onClick={(e) => onEmailCheck(e)}>중복확인</button>)
             : (<button className="check available">사용가능</button>)
         ) : null
       }
