@@ -88,19 +88,21 @@ const Join = () => {
   /* 이메일 중복확인 */
   const onEmailCheck = (e) => {
     e.preventDefault();
-    checkEmailApi(data.userId)
-      .then((result) => {
-        if (result.data.status === "SUCCESS") {
-          setEmailCheckModal(true);
-          setIsValid({
-            ...isValid,
-            isEmeilCheck: true,
-          });
-        }
-        if (result.data.status === "FAIL") {
-          setEmailCheckModal(true);
-        }
-      });
+    if (!e.target.classList.contains("available")) {
+      checkEmailApi(data.userId)
+        .then((result) => {
+          if (result.data.status === "SUCCESS") {
+            setEmailCheckModal(true);
+            setIsValid({
+              ...isValid,
+              isEmeilCheck: true,
+            });
+          }
+          if (result.data.status === "FAIL") {
+            setEmailCheckModal(true);
+          }
+        });
+    }
   }
 
   // 회원가입 후 로그인 화면 이동
