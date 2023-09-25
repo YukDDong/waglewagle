@@ -5,12 +5,22 @@ import Title from "../../component/Title/Title";
 import { InputText } from "../../component/Input/Input";
 import { validHopae, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
 import { ButtonActDeact } from "../../component/Button/Button";
+import { makeHopae } from "../../redux/actions/userActions";
+import { makeHopaeApi } from "../../apis/user";
+import { setItem } from "../../utils/localStorage";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 
 const MakeHopae = () => {
 
+  // 백엔드 통신 변수 선언
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   // 변수
   const [data, setData] = useState({
+    userId: -1,
     hopae: "",
     isHopae: false,
   });
@@ -30,7 +40,6 @@ const MakeHopae = () => {
   // 변수가 업데이트 되지 않는 문제 발생.
   // 변수 분리로 문제 해결
   const [hopaeWarn, setHopaeWarn] = useState("");
-
 
   // 조건에 따른 호패 경고 메시지
   useEffect(() => {
@@ -67,10 +76,25 @@ const MakeHopae = () => {
   }, [data.hopae]); // 호패명 변동될 경우에만
 
 
-  // 메인 화면 이동 함수
-  const handleClick = ()=>{
-    window.location.href = "/login"
-  }
+  // '기와집 만들러 가기' 버튼 클릭 이벤트
+  const onSubmit = () => {
+    makeHopaeApi({
+      userId: data.userId,
+      userName: data.hopae,
+    }).then((result) => {
+      if (result.status === 200) {
+        setItem("AUTH", result.data.data.accessToken);
+        dispatch(
+          makeHopae({
+            userId: result.data.data.userId,
+            userName: result.data.data.userName,
+          })
+        );
+        navigate("/main");
+        return;
+      }
+    });
+  };
 
   return (
     <>
@@ -115,7 +139,7 @@ const MakeHopae = () => {
 
             {/* 버튼 */}
             <ButtonActDeact 
-              onClick={handleClick}
+              onClick={onSubmit}
               disabled={!data.isHopae}
             >
               기와집 만들러 가기
