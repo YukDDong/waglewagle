@@ -110,7 +110,7 @@ function InputText({
     // Overlap
     <InputDiv $location={location} $isFocus={isFocus}>
 
-      {location === "/join" && <button className="check" onClick={onEmailCheck}>중복확인</button>}
+      {location === "/join" && <span className="check" onClick={onEmailCheck}>중복확인</span>}
 
       {/* icon */}
       <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />

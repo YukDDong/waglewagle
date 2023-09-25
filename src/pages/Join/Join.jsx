@@ -10,6 +10,7 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText, InputPwd } from "../../component/Input/Input";
 import { ButtonActDeact } from "../../component/Button/Button";
 import { validEmail, validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
+import axios from 'axios';
 
 // const Join = () => {
 //   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
@@ -148,7 +149,6 @@ const JoinRefine = () => {
 
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
       console.log(data.userId)
-
       joinApi({
         email: data.userId,
         password: data.pwd,
@@ -169,14 +169,39 @@ const JoinRefine = () => {
     }
   };
 
+  const getUser = async () => {
+    console.log(data.userId,data.pwd)
+    try {
+      const response = await axios.post('https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/signup', {
+        email: data.userId,
+        password: data.pwd,
+      })
+      console.log(response);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const checkJoin = async () => {
+    try {
+      const response = await axios.get('https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/duplicate-check', {
+        params: {
+          email: 'juju@naver.com',
+        },
+      })
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // 회원가입 후 로그인 화면 이동
   const handleClick = () => {
-    navigate("/Login"); 
+    navigate("/Login");
   }
 
   //// visibleModal
-
-  // 변수
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 함수
@@ -186,14 +211,17 @@ const JoinRefine = () => {
 
   /* 이메일 중복확인 */
   const onEmailCheck = () => {
-    checkEmailApi(data.userId).then((result) => {
-      console.log(result)
-      // if (result.status === 200) {
-      // }
-      // if (result.status === 500) {
-      //   console.log("500");
-      // }
-    });
+    const params = { email: data.userId };
+    console.log(data.userId)
+
+    // checkEmailApi(data.userId).then((result) => {
+    //   console.log(result)
+    //   // if (result.status === 200) {
+    //   // }
+    //   // if (result.status === 500) {
+    //   //   console.log("500");
+    //   // }
+    // });
   }
 
 
@@ -214,6 +242,8 @@ const JoinRefine = () => {
 
       <Main>
         <MainDiv>
+          <span onClick={getUser} style={{ color: '#fff', fontSize: '20px' }}>회원가입</span>
+          <span onClick={checkJoin} style={{ color: '#fff', fontSize: '20px' }}>중복확인</span>
 
           {/* Title */}
           <Title title="회원가입" />
@@ -302,6 +332,7 @@ export default JoinRefine;
 
 
 const Main = styled.main`
+  background-color: #222;
   width: 100%;
   height: 100vh;
   display: flex;
