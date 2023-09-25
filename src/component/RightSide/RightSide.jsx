@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as ResetIcon } from "../../assets/common/reset_icon.svg";
@@ -56,11 +56,15 @@ const RightSide = ({
       }).then((result) => {
         // api 수정될지 모르겠지만 일단 이렇게 진행
         if (result.data === "good") {
-          navigate("/main");
+          navigate("/main", { state: { from: "/makeGiwaHouse" } });
           return;
         }
       });
     }
+  };
+
+  const navigateTest = () => {
+    navigate("/main", { state: { from: "/makeGiwaHouse" } });
   };
 
   return (
@@ -147,6 +151,7 @@ const RightSide = ({
           </ResetBox>
         </ButtonWrap>
       </div>
+      <button onClick={navigateTest}>테스트용도</button>
     </Container>
   );
 };

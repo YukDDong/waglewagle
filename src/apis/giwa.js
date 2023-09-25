@@ -12,12 +12,12 @@ export const getGiwaHouseApi = async (payload) => {
 
 export const getGiwaListApi = async (payload) => {
   const response = await client.get(
-    `/posts/all/${payload.broadId}?reverse=${payload.reverse}`
+    `/api/v1/posts/all/${payload.broadId}?reverse=${payload.reverse}`
   );
   return response;
 };
 
 export const getGiwaDetailApi = async (payload) => {
-  const response = await client.get(`/posts/detail/${payload}`);
+  const response = await client.get(`/api/v1/posts/detail/${payload}`);
   return response;
 };

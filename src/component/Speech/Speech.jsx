@@ -16,6 +16,8 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
     });
   }, []);
 
+  console.log("speaech", giwaLength);
+
   return (
     <Container>
       {url ? (
@@ -62,7 +64,7 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
             <span>소</span>
           </p>
           <button className="giwa_number">
-            <span>10</span>
+            <span>{giwaLength}</span>
           </button>
         </>
       )}

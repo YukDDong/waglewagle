@@ -14,11 +14,14 @@ import taegeukgi from "../../assets/main/taegeukgi.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector } from "react-redux";
+import ModalBasic from "../../component/Modal/ModalBasic";
+import Modal from "../../component/Modal/Modal";
 
 const Main = () => {
+  const location = useLocation();
   const { url } = useParams();
   const userInfo = useSelector((state) => state.userReducer);
   const { bgColor, changeBgColor } = useBgColor(); // BG Color context
@@ -31,6 +34,8 @@ const Main = () => {
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
+
+  const previousPath = location.state ? location.state.from : null;
 
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   const mockData = 2;
@@ -67,22 +72,6 @@ const Main = () => {
         console.error("오류:", error);
       });
   }, [giwaHouse.id]);
-
-  /** 😀 juju
-    - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
-      Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
-
-    // 테스트용 - 수정예정 
-    // const [background, setBackground] = useState(true);
-    // const changeBackground = (e) => {
-    //   setBackground(e.target.value);
-    // };
-  */
-
-  useEffect(() => {
-    // main페이지에서는 기와집을 불러오는 get요청을 해야함
-    // 해당 api 확인되면 추가 예정
-  }, []);
 
   const openMakeupHouse = () => {
     setOpenNav(false);
@@ -121,10 +110,17 @@ const Main = () => {
     setOpenGusetBook(false);
   };
 
-  console.log("url", url);
-
+  console.log(giwaList.length);
   return (
     <>
+      {previousPath === "/makeGiwaHouse" ? (
+        <Modal>
+          {/* 수정해야함 임시 */}
+          <ModalContent>
+            <Link to="/main">널리 알리기</Link>
+          </ModalContent>
+        </Modal>
+      ) : null}
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -190,6 +186,17 @@ const Main = () => {
 };
 
 export default Main;
+
+const ModalContent = styled.div`
+  width: 388px;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  > img {
+    position: absolute;
+    top: -50px;
+  }
+`;
 
 export const ExDiv = styled.div`
   width: 100vw;
