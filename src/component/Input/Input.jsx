@@ -88,7 +88,8 @@ function InputText({
   placeholder,
   dataName,
   updateData,
-  onEmailCheck
+  onEmailCheck,
+  isValid
 }) {
 
   const location = useLocation().pathname;
@@ -106,11 +107,17 @@ function InputText({
   }, [dataName, input]);
 
   return (
-
     // Overlap
     <InputDiv $location={location} $isFocus={isFocus}>
-
-      {/* {location === "/join" && <span className="check" onClick={onEmailCheck}>중복확인</span>} */}
+      {/* 이메일 중복확인 버튼 start */}
+      {
+        (location === "/join" && isValid.isEmail) ? (
+          (!isValid.isEmeilCheck)
+            ? (<button className="check" onClick={onEmailCheck}>중복확인</button>)
+            : (<button className="check available">사용가능</button>)
+        ) : null
+      }
+      {/* 이메일 중복확인 버튼 end */}
 
       {/* icon */}
       <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
@@ -127,7 +134,7 @@ function InputText({
         required
       />
 
-    </InputDiv>
+    </InputDiv >
   );
 }
 
@@ -243,8 +250,23 @@ const InputDiv = styled.div`
     width: fit-content;
     display: block;
     position: absolute; 
-    right: 0; 
-    background-color: red;
+    right: 20px; 
+    padding: 8px 13px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 4px;
+    margin: auto;
+    font-weight: 700;
+    background-color: var(--btn-main-color);    
+    transition: all ease-in-out 0.3s;
+    &:hover {
+      background-color: #D24640;
+    }
+    &.available {
+      background-color: #FDEFEE;
+      color: var(--btn-main-color); 
+      cursor: initial;
+    }
   }
 `;
 
