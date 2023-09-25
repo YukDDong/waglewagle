@@ -4,47 +4,24 @@ import styled from "styled-components";
 import speechBubble from "../../assets/main/speech_bubble.svg";
 import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 
-const Speech = ({ setOpenModal }) => {
+const Speech = ({ setOpenModal, url, giwaLength }) => {
   const speechRef = useRef();
 
   useEffect(() => {
-    gsap.to(speechRef.current.querySelectorAll("span"), .5, { stagger: .1, display: "inline", delay: .3, ease: "Power1.easeInOut" })
+    gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
+      stagger: 0.1,
+      display: "inline",
+      delay: 0.3,
+      ease: "Power1.easeInOut",
+    });
   }, []);
+
+  console.log("speaech", giwaLength);
 
   return (
     <Container>
-      {/* {
-        // 집주인 : 기와 12개 미만일 때
-        <p ref={speechRef}>
-          <span>환</span>
-          <span>영</span>
-          <span>하</span>
-          <span>오</span>
-          <span>!</span>
-        </p>
-      } */}
-      {/* {
-        // 집주인 : 기와 12개 이상일 때
-        <>
-          <p ref={speechRef}>
-            <span>기</span>
-            <span>와</span>
-            <span>는</span>
-            <span className="space">내</span>
-            <span>가</span>
-            <span className="space">보</span>
-            <span>관</span>
-            <span>하</span>
-            <span>고</span>
-            <span className="space">있</span>
-            <span>소</span>
-          </p>
-          <button className="giwa_number">
-            <span>10</span>
-          </button>
-        </>
-      } */}
-      { // 방문자
+      {url ? (
+        // 방문자
         <>
           <p ref={speechRef}>
             <span>기</span>
@@ -61,8 +38,37 @@ const Speech = ({ setOpenModal }) => {
             <GiwaPlus />
           </button>
         </>
-      }
-    </Container >
+      ) : giwaLength < 12 ? (
+        // 기와 12개 미만일때
+        <p ref={speechRef}>
+          <span>환</span>
+          <span>영</span>
+          <span>하</span>
+          <span>오</span>
+          <span>!</span>
+        </p>
+      ) : (
+        // 기와 12개 이상일때
+        <>
+          <p ref={speechRef}>
+            <span>기</span>
+            <span>와</span>
+            <span>는</span>
+            <span className="space">내</span>
+            <span>가</span>
+            <span className="space">보</span>
+            <span>관</span>
+            <span>하</span>
+            <span>고</span>
+            <span className="space">있</span>
+            <span>소</span>
+          </p>
+          <button className="giwa_number">
+            <span>{giwaLength}</span>
+          </button>
+        </>
+      )}
+    </Container>
   );
 };
 
@@ -89,7 +95,7 @@ const Container = styled.div`
     &.giwa_number {
       position: absolute;
       padding: 0 14px 3px;
-      background-color: #6C5847;
+      background-color: #6c5847;
       border-radius: 50px;
       right: 10%;
       top: -15%;

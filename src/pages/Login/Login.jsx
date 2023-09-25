@@ -17,6 +17,7 @@ import CheckBox from "../../component/CheckBox/CheckBox";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
   // 변수
@@ -32,14 +33,18 @@ const Login = () => {
     },
     [loginInfo]
   );
-  
+
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = () => {
     loginApi({
       email: loginInfo.id,
       password: loginInfo.pwd,
     }).then((result) => {
-      if (result.status === 200) {
+      if (result.data.status === "FAIL") {
+        setErrorMessage(result.data.message);
+      }
+
+      if (result.data.status === "SUCCESS") {
         setItem("AUTH", result.data.data.accessToken);
         dispatch(
           login({
@@ -57,24 +62,21 @@ const Login = () => {
     });
   };
 
-
   // 회원가입 후 로그인 화면 이동
-  const handleClickJoin = ()=>{
-    window.location.href = "/join"
-  }
+  const handleClickJoin = () => {
+    window.location.href = "/join";
+  };
 
   return (
     <>
       <NavBar />
-      
+
       <Main>
         <MainDiv>
-
           {/* Title */}
           <Title title="로그인" />
 
           <MainDiv2>
-
             {/* Email */}
             <InputText
               placeholder="이메일을 적어주세요."
@@ -83,7 +85,7 @@ const Login = () => {
             />
 
             {/* 비밀번호 */}
-            <InputPwd 
+            <InputPwd
               placeholder="비밀번호를 적어주세요."
               dataName="pwd"
               updateData={updateData}
@@ -95,34 +97,26 @@ const Login = () => {
               <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
             </LoginCheckDiv>
 
+            {errorMessage ? <p>{errorMessage}</p> : null}
+
             {/* 로그인 버튼 */}
-            <Button 
-              onClick={onSubmit}
-            >
-              로그인
-            </Button>
+            <Button onClick={onSubmit}>로그인</Button>
 
             {/* 회원가입 페이지 이동 버튼 */}
-            <Button 
-              onClick={handleClickJoin}
-              color="white"
-            >
+            <Button onClick={handleClickJoin} color="white">
               회원가입
             </Button>
-
           </MainDiv2>
-          
+
           {/* SNS 계정 연결 */}
           <LineDiv />
           <SocialLoginText>SNS 계정으로 로그인</SocialLoginText>
           <SocialLogin />
-
         </MainDiv>
       </Main>
     </>
   );
 };
-
 
 export default Login;
 

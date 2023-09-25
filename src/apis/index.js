@@ -5,7 +5,6 @@ import { getItem } from "../utils/localStorage.js";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const client = axios.create({
-  // baseURL: `${BASE_URL}/api/v1`,
   baseURL: `${BASE_URL}`,
 });
 
