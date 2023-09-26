@@ -13,6 +13,7 @@ import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
+// import CopyLink from "../../component/Popup/CopyLink";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
@@ -29,7 +30,8 @@ const Main = () => {
   const [openNav, setOpenNav] = useState(true); // 네비
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
-  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
+  const [copyLinkPop, setCopyLinkPop] = useState(false); // 링크복사 팝업창
+  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업창
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
   const [selectedGiwa, setSelectedGiwa] = useState(null);
@@ -181,6 +183,10 @@ const Main = () => {
       {/* 기와 등록 완료 팝업창 start */}
       {completedGiwa && <Completed setCompletedGiwa={setCompletedGiwa} />}
       {/* 기와 등록 완료 팝업창 end */}
+
+      {/* 링크 복사 팝업창 start */}
+      {/* {copyLinkPop && <CopyLink />} */}
+      {/* 링크 복사 팝업창 end */}
     </>
   );
 };
