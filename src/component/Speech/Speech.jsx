@@ -8,13 +8,15 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
   const speechRef = useRef();
 
   useEffect(() => {
-    gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
-      stagger: 0.1,
-      display: "inline",
-      delay: 0.3,
-      ease: "Power1.easeInOut",
-    });
-  }, []);
+    if (giwaLength > 0) {
+      gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
+        stagger: 0.1,
+        display: "inline",
+        delay: 0.3,
+        ease: "Power1.easeInOut",
+      });
+    }
+  }, [giwaLength]);
 
   console.log("speaech", giwaLength);
 
