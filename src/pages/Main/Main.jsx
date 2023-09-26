@@ -44,8 +44,8 @@ const Main = () => {
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : mockData;
     getGiwaHouseApi(requestData).then((result) => {
-      if (result.status === 200) {
-        setGiwaHouse(result.data);
+      if (result.data.status === "SUCCESS") {
+        setGiwaHouse(result.data.data);
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
@@ -55,15 +55,15 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
+    console.log(giwaHouse);
     if (!giwaHouse.id) return;
     getGiwaListApi({
       broadId: giwaHouse.id,
       reverse: true,
     })
       .then((result) => {
-        console.log(result);
-        if (result.status === 200) {
-          setGiwaList(result.data);
+        if (result.data.status === "SUCCESS") {
+          setGiwaList(result.data.data);
         } else {
           throw new Error("서버에서 데이터를 가져오는 데 문제가 발생했습니다.");
         }
@@ -71,7 +71,7 @@ const Main = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse.id]);
+  }, [giwaHouse]);
 
   const openMakeupHouse = () => {
     setOpenNav(false);
@@ -111,6 +111,7 @@ const Main = () => {
   };
 
   console.log(giwaList.length);
+  console.log("giwaList", giwaList);
   return (
     <>
       {previousPath === "/makeGiwaHouse" ? (
