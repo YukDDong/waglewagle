@@ -75,6 +75,14 @@ const Main = () => {
       });
   }, [giwaHouse]);
 
+  useEffect(() => {
+    if (!isVisitorClick) return;
+
+    setTimeout(() => {
+      setIsVisitorClick(false);
+    }, 3000);
+  }, [isVisitorClick]);
+
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
