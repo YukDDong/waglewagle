@@ -36,6 +36,7 @@ const Main = () => {
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
+  const [isVisitorClick, setIsVisitorClick] = useState(false);
 
   const previousPath = location.state ? location.state.from : null;
 
@@ -46,8 +47,8 @@ const Main = () => {
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : mockData;
     getGiwaHouseApi(requestData).then((result) => {
-      if (result.status === 200) {
-        setGiwaHouse(result.data);
+      if (result.data.status === "SUCCESS") {
+        setGiwaHouse(result.data.data);
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
@@ -63,9 +64,8 @@ const Main = () => {
       reverse: true,
     })
       .then((result) => {
-        console.log(result);
-        if (result.status === 200) {
-          setGiwaList(result.data);
+        if (result.data.status === "SUCCESS") {
+          setGiwaList(result.data.data);
         } else {
           throw new Error("서버에서 데이터를 가져오는 데 문제가 발생했습니다.");
         }
@@ -73,7 +73,15 @@ const Main = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse.id]);
+  }, [giwaHouse]);
+
+  useEffect(() => {
+    if (!isVisitorClick) return;
+
+    setTimeout(() => {
+      setIsVisitorClick(false);
+    }, 3000);
+  }, [isVisitorClick]);
 
   const openMakeupHouse = () => {
     setOpenNav(false);
@@ -111,8 +119,6 @@ const Main = () => {
     setOpenNav(true);
     setOpenGusetBook(false);
   };
-
-  console.log(giwaList.length);
   return (
     <>
       {previousPath === "/makeGiwaHouse" ? (
@@ -133,6 +139,9 @@ const Main = () => {
       <ExDiv $bgColor={bgColor}>
         <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
+            {isVisitorClick ? (
+              <WarnMessage>다른 사람이 받은 기와는 볼 수 없다네.</WarnMessage>
+            ) : null}
             {/* 말풍선 start */}
             <Speech
               setOpenModal={setOpenModal}
@@ -145,6 +154,8 @@ const Main = () => {
               setOpen={openGusetBookModal}
               changeGiwa={setSelectedGiwa}
               giwaList={giwaList.slice(0, 12)}
+              setIsVisitorClick={setIsVisitorClick}
+              url={url}
             />
             {/* 기와 버튼 end */}
             <img className="heatae" src={haetaeImg} alt="해태" />
@@ -162,6 +173,7 @@ const Main = () => {
           openGusetBook={openGusetBook}
           xBtnClickHandler={closeGusetBookModal}
           selectedGiwa={selectedGiwa}
+          username={userInfo.username}
         ></GuestBook>
         {/* 방명록 end */}
         <BottomSide
@@ -252,6 +264,25 @@ const HouseBox = styled.div`
   &.left {
     left: -500px;
   }
+`;
+
+const WarnMessage = styled.div`
+  width: 378px;
+  height: 54px;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: -70px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ece0b9;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px rgba(244, 233, 203, 0.5);
+  backdrop-filter: blur(5px);
+  font-family: var(--font-hunmin);
+  color: #222;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 54px;
+  text-align: center;
 `;
 
 const HaetaeWrap = styled.div`
