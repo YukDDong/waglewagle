@@ -45,16 +45,16 @@ const Login = () => {
       }
 
       if (result.data.status === "SUCCESS") {
+        console.log("result", result);
         setItem("AUTH", result.data.data.accessToken);
         dispatch(
           login({
             userId: result.data.data.userId,
-            username: result.data.data.username,
+            username: result.data.data.userName,
           })
         );
         if (!result.data.data.isExistHopae) {
           navigate("/makeHopae");
-          return;
         } else {
           navigate("/main");
         }
