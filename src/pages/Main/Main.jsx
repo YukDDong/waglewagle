@@ -13,7 +13,7 @@ import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
-// import CopyLink from "../../component/Popup/CopyLink";
+import CopyLink from "../../component/Popup/CopyLink";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
@@ -30,7 +30,7 @@ const Main = () => {
   const [openNav, setOpenNav] = useState(true); // 네비
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
-  const [copyLinkPop, setCopyLinkPop] = useState(false); // 링크복사 팝업창
+  const [copyLinkPop, setCopyLinkPop] = useState(true); // 링크복사 팝업창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업창
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
@@ -154,7 +154,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
         ></RightSide>
         {/* 방명록 start */}
@@ -169,6 +169,7 @@ const Main = () => {
           openGusetBook={openGusetBook}
           openMakeupHouse={openMakeupHouse}
           setCapturePopBol={setCapturePopBol}
+          setPopup={setCopyLinkPop}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
@@ -185,7 +186,7 @@ const Main = () => {
       {/* 기와 등록 완료 팝업창 end */}
 
       {/* 링크 복사 팝업창 start */}
-      {/* {copyLinkPop && <CopyLink />} */}
+      {copyLinkPop && <CopyLink setCopyLinkPop={setCopyLinkPop} />}
       {/* 링크 복사 팝업창 end */}
     </>
   );
@@ -210,7 +211,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
