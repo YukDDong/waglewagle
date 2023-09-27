@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 import Modal from "../Modal";
 import SelectGiwa from "./SelectGiwa";
 import { ButtonActDeact } from "../../Button/Button";
-import WriteGuestText from "./WriteGuestText";
+import WriteGuestText, { englishRegex } from "./WriteGuestText";
 import NameContain from "./NameMade";
 import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
 import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
@@ -59,7 +59,10 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
                 </GiwaBox>
               </GoBackBox>
               <ButtonActDeact
-                disabled={selectedGiwa.text === ""}
+                disabled={
+                  selectedGiwa.text === "" ||
+                  englishRegex.test(selectedGiwa.text)
+                }
                 onClick={() => {
                   setPageNum(3);
                 }}
