@@ -13,13 +13,14 @@ import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
-// import CopyLink from "../../component/Popup/CopyLink";
+import CopyLink from "../../component/Popup/CopyLink";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector } from "react-redux";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import Modal from "../../component/Modal/Modal";
+import Warning from "../../component/Warning/Warning";
 
 const Main = () => {
   const location = useLocation();
@@ -83,34 +84,18 @@ const Main = () => {
     }, 3000);
   }, [isVisitorClick]);
 
+  /* 기와집 꾸미기 모달창 */
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
-    /** 😀 juju
-      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
-      
-      // setTimeout(() => {
-      //   setOpenMakeup(true);
-      // }, 300);
-    */
   };
 
   const closeMakeupHouse = () => {
     setOpenNav(true);
     setOpenMakeup(false);
-    /** 😀 juju
-      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
-
-      // setTimeout(() => {
-      //   setOpenNav(true);
-      // }, 300);
-    */
   };
 
-  /** 😀 juju
-   * 기와 클릭 시 방명록 오픈
-   * 기와집 꾸미기 이벤트와 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
-   */
+  /* 방명록 모달창 */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
@@ -137,8 +122,9 @@ const Main = () => {
       ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
-        <StyledMain>
+        <StyledMain>          
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
+            <Warning/>
             {isVisitorClick ? (
               <WarnMessage>다른 사람이 받은 기와는 볼 수 없다네.</WarnMessage>
             ) : null}
@@ -165,7 +151,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
         ></RightSide>
         {/* 방명록 start */}
@@ -181,6 +167,7 @@ const Main = () => {
           openGusetBook={openGusetBook}
           openMakeupHouse={openMakeupHouse}
           setCapturePopBol={setCapturePopBol}
+          setPopup={setCopyLinkPop}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
@@ -197,7 +184,7 @@ const Main = () => {
       {/* 기와 등록 완료 팝업창 end */}
 
       {/* 링크 복사 팝업창 start */}
-      {/* {copyLinkPop && <CopyLink />} */}
+      {copyLinkPop && <CopyLink setCopyLinkPop={setCopyLinkPop} />}
       {/* 링크 복사 팝업창 end */}
     </>
   );
@@ -222,7 +209,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
