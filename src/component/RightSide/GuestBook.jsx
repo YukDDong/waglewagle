@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
-import { ReactComponent as Board } from "../../assets/main/board_img_3.svg";
+import bookletTop from "../../assets/modal/booklet_top.svg";
 import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg";
 import { getGiwaDetailApi } from "../../apis/giwa";
 import { fontColor, textSort } from "../../data/giwaData";
@@ -57,10 +57,10 @@ const GuestBook = ({
           // $fontColor={giwaFontColor}
           // $sort={giwaTextSort}
           >
-            <Board />
+            {/* <Board /> */}
             <p>
-              {giwa.message}
-              {/* 들어봐 밤이, <br />
+              {/* {giwa.message} */}
+              들어봐 밤이, <br />
               봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
               <br />
               등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
@@ -97,7 +97,7 @@ const GuestBook = ({
               <br />
               끓는 구수한 보리차 냄새가지들 마른 울음
               <br />
-              그치고 저리던 뿌리들도 축축히 잠드는이런 봄, 밤 */}
+              그치고 저리던 뿌리들도 축축히 잠드는이런 봄, 밤
             </p>
           </Text>
           <div>
@@ -210,9 +210,9 @@ const GiwaText = styled.div`
 `;
 
 const GuestBookWrap = styled.div`
-  > div {
-    margin: 5px 0 0;
-    float: right;
+  padding: 40px 0 0;
+  > div:nth-of-type(2) {
+    margin: 40px 0 0;
     > span {
       color: #222;
       text-align: right;
@@ -239,15 +239,36 @@ const GuestBookWrap = styled.div`
 
 const Text = styled.div`
   width: 100%;
+  min-height: 150px;
+  max-height: 400px;
+  height: calc(100vh - 500px);
   position: relative;
-  svg {
-    width: 100%;
+  background-color: #F8EFE7;
+  &:after, &:before {
+    width: 530px;
+    height: 20px;
+    content: "";
+    display: block;
+    left:50%; 
+    transform: translate(-50%,0);
+    position: absolute;
+    background:url(${bookletTop}) 50% 50% no-repeat;
+    background-color: cover;
   }
+  &:before {
+    top:-20px;
+  }
+  &:after {
+    bottom:-20px;
+  }
+  /* svg {
+    width: 100%;
+  } */
   p {
     width: 88%;
-    height: 74%;
+    height: 90%;
     position: absolute;
-    top: 13%;
+    top: 5%;
     padding: 0 2% 0 0;
     box-sizing: border-box;
     left: 0;
