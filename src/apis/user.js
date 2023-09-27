@@ -2,12 +2,12 @@ import { client } from "./index";
 
 // 로그인 시 post 요청
 export const loginApi = async (payload) => {
-  const response = await client.post("/authenticate", payload);
+  const response = await client.post("/users/login", payload);
   return response;
 };
 
 export const checkEmailApi = async (payload) => {
-  const response = await client.get("/user", {
+  const response = await client.get("/users/duplicate-check", {
     params: {
       email: payload,
     },
@@ -21,8 +21,8 @@ export const joinApi = async (payload) => {
   return response;
 };
 
-// TODO-GOGI : 호패api 나오면 추가
-// export const makeHopaeApi = async () => {
-//   const response = await client.post("/");
-//   return response;
-// };
+// 호패 만들면 post 요청
+export const makeHopaeApi = async (payload) => {
+  const response = await client.post("/users/hopae", payload);
+  return response;
+};
