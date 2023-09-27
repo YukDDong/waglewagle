@@ -25,7 +25,7 @@ let selectData = {
   color: "#6A8AF7",
 };
 
-const profanity = [/씨발/g, /개새끼/g, /놈/g, /년/g, /닥쳐/g, /애미/g];
+export const profanity = [/씨발/g, /개새끼/g, /놈/g, /년/g, /닥쳐/g, /애미/g];
 
 export const englishRegex = /[a-zA-z]/;
 

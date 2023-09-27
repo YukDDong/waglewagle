@@ -18,8 +18,6 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
     }
   }, [giwaLength]);
 
-  console.log("speaech", giwaLength);
-
   return (
     <Container>
       {url ? (

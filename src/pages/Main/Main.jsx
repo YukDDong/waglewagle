@@ -133,6 +133,7 @@ const Main = () => {
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
           setCompletedGiwa={setCompletedGiwa}
+          giwaHouseId={giwaHouse.id}
         />
       ) : null}
       <NavBar isShowing={openNav} />
