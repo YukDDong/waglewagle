@@ -8,20 +8,24 @@ import { getGiwaDetailApi } from "../../apis/giwa";
 import { fontColor, textSort } from "../../data/giwaData";
 import { koreaDate } from "../../utils/koreaDate";
 
-const GuestBook = ({ openGusetBook, xBtnClickHandler, selectedGiwa }) => {
+const GuestBook = ({
+  openGusetBook,
+  xBtnClickHandler,
+  selectedGiwa,
+  username,
+}) => {
   const [giwa, setGiwa] = useState({});
   useEffect(() => {
     if (!selectedGiwa) return;
     getGiwaDetailApi(selectedGiwa).then((result) => {
-      if (result.status === 200) {
-        setGiwa(result.data);
+      if (result.data.status === "SUCCESS") {
+        setGiwa(result.data.data);
       }
     });
   }, [selectedGiwa]);
   // const giwaFontColor = fontColor[giwa.postStyle.fontColorCode - 1];
   // const giwaTextSort = textSort[giwa.postStyle.sortCode - 1];
   const giwaCreatedDate = koreaDate(giwa.createdTime);
-  console.log(giwaCreatedDate);
   return (
     <Container className={openGusetBook ? "show" : null}>
       <XBox>
@@ -34,7 +38,7 @@ const GuestBook = ({ openGusetBook, xBtnClickHandler, selectedGiwa }) => {
       </XBox>
       <Wrap>
         <strong>
-          <span>홍길동</span>님에게
+          <span>{username}</span>님에게
         </strong>
         <Title>
           <GiwaImg>
@@ -121,7 +125,7 @@ const Container = styled.aside`
   flex-direction: column;
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
-  border-radius: 50px 0px 0px 50px; 
+  border-radius: 50px 0px 0px 50px;
   position: fixed;
   right: -730px;
   top: 0;
