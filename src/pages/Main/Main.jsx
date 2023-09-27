@@ -118,16 +118,14 @@ const Main = () => {
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
           setCompletedGiwa={setCompletedGiwa}
+          giwaHouseId={giwaHouse.id}
         />
       ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
-        <StyledMain>          
+        <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
-            <Warning/>
-            {isVisitorClick ? (
-              <WarnMessage>다른 사람이 받은 기와는 볼 수 없다네.</WarnMessage>
-            ) : null}
+            <Warning testActive={isVisitorClick} />
             {/* 말풍선 start */}
             <Speech
               setOpenModal={setOpenModal}
@@ -151,7 +149,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
         ></RightSide>
         {/* 방명록 start */}
@@ -209,7 +207,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
