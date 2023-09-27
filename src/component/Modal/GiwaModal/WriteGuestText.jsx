@@ -73,6 +73,13 @@ const WriteGuestText = () => {
     });
 
     setText(censoredText);
+    if (text !== censoredText) {
+      setCheckText(
+        <span className="profanity">
+          욕은 좋지 않다네, 욕은 임의로 아리랑으로 변경된다네.
+        </span>
+      );
+    }
     return censoredText;
   };
 
@@ -87,9 +94,9 @@ const WriteGuestText = () => {
       setCheckText(
         <span className="english">외국어보다는 한글은 어떠시오?</span>
       );
+      return;
     }
   };
-  console.log("text", text);
   return (
     <Container>
       <GuestBook>
@@ -153,7 +160,13 @@ const WriteGuestText = () => {
       </GuestBook>
       <TextNotification>
         <Hat width={25} height={23} />
-        {!checkText ? <span>함 당당하게 써보구려!</span> : checkText}
+        {checkText ? (
+          checkText
+        ) : text === "" ? (
+          <span>함 당당하게 써보구려!</span>
+        ) : (
+          <span>한글을 굉장히 잘 쓰시는구려.</span>
+        )}
       </TextNotification>
     </Container>
   );
@@ -194,6 +207,9 @@ const TextNotification = styled.div`
     font-weight: 300;
     &.english {
       color: red;
+    }
+    &.profanity {
+      color: #1748c0;
     }
   }
 `;

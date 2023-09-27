@@ -14,6 +14,8 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
 
+  console.log("selectedGiwa", selectedGiwa);
+
   return (
     <Modal>
       <ChooseBox>
@@ -68,7 +70,8 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
                 }}
                 style={{ width: "300px", height: "54px", marginTop: "0" }}
               >
-                {selectedGiwa.text === ""
+                {selectedGiwa.text === "" ||
+                englishRegex.test(selectedGiwa.text)
                   ? "방명록 작성하기"
                   : "기와 등록 하러가기"}
               </ButtonActDeact>
