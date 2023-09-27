@@ -20,6 +20,7 @@ import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector } from "react-redux";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import Modal from "../../component/Modal/Modal";
+import Warning from "../../component/Warning/Warning";
 
 const Main = () => {
   const location = useLocation();
@@ -30,7 +31,7 @@ const Main = () => {
   const [openNav, setOpenNav] = useState(true); // 네비
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
-  const [copyLinkPop, setCopyLinkPop] = useState(true); // 링크복사 팝업창
+  const [copyLinkPop, setCopyLinkPop] = useState(false); // 링크복사 팝업창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업창
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
@@ -83,34 +84,18 @@ const Main = () => {
     }, 3000);
   }, [isVisitorClick]);
 
+  /* 기와집 꾸미기 모달창 */
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
-    /** 😀 juju
-      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
-      
-      // setTimeout(() => {
-      //   setOpenMakeup(true);
-      // }, 300);
-    */
   };
 
   const closeMakeupHouse = () => {
     setOpenNav(true);
     setOpenMakeup(false);
-    /** 😀 juju
-      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
-
-      // setTimeout(() => {
-      //   setOpenNav(true);
-      // }, 300);
-    */
   };
 
-  /** 😀 juju
-   * 기와 클릭 시 방명록 오픈
-   * 기와집 꾸미기 이벤트와 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
-   */
+  /* 방명록 모달창 */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
@@ -137,8 +122,9 @@ const Main = () => {
       ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
-        <StyledMain>
+        <StyledMain>          
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
+            <Warning/>
             {isVisitorClick ? (
               <WarnMessage>다른 사람이 받은 기와는 볼 수 없다네.</WarnMessage>
             ) : null}
