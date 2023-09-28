@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import Modal from "../../component/Modal/Modal";
 import Warning from "../../component/Warning/Warning";
+import html2canvas from "html2canvas";
 
 const Main = () => {
   const location = useLocation();
@@ -38,6 +39,8 @@ const Main = () => {
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
   const [isVisitorClick, setIsVisitorClick] = useState(false);
+  const captureDivRef = useRef();
+  const [img, setImg] = useState();
 
   const previousPath = location.state ? location.state.from : null;
 
@@ -87,6 +90,25 @@ const Main = () => {
     }, 3000);
   }, [isVisitorClick]);
 
+  // 캡쳐
+  const handleDownload = async () => {
+    if (!captureDivRef.current) return;
+
+    try {
+      const div = captureDivRef.current;
+      const canvas = await html2canvas(div, { scale: 2 });
+      console.log(canvas);
+      setImg(canvas.toDataURL("image/png"));
+      // canvas.toBlob((blob) => {
+      //   if (blob !== null) {
+      //     setImg(blob);
+      //   }
+      // });
+    } catch (error) {
+      console.error("Error converting div to image:", error);
+    }
+  };
+
   /* 기와집 꾸미기 모달창 */
   const openMakeupHouse = () => {
     setOpenNav(false);
@@ -125,8 +147,22 @@ const Main = () => {
         />
       ) : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={bgColor}>
+      <ExDiv $bgColor={bgColor} ref={captureDivRef}>
         <StyledMain>
+          <div
+            style={{
+              width: "600px",
+              height: "300px",
+              position: "absolute",
+              left: "600px",
+              top: "200px",
+              backgroundColor: "white",
+              zIndex: "200",
+              border: "1px solid black",
+            }}
+          >
+            <img src={img} alt="" style={{ width: "100%", height: "100%" }} />
+          </div>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             <Warning testActive={isVisitorClick} />
             {/* 말풍선 start */}
@@ -147,6 +183,7 @@ const Main = () => {
             {/* 기와 버튼 end */}
             <img className="heatae" src={haetaeImg} alt="해태" />
             <img className="taegeukgi" src={taegeukgi} alt="태극기" />
+            <button onClick={handleDownload}>캡쳐</button>
           </HouseBox>
         </StyledMain>
         <RightSide
