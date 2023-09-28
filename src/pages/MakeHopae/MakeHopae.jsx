@@ -12,7 +12,6 @@ import {
 import { ButtonActDeact } from "../../component/Button/Button";
 import { makeHopae } from "../../redux/actions/userActions";
 import { makeHopaeApi } from "../../apis/user";
-import { setItem } from "../../utils/localStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -43,8 +42,6 @@ const MakeHopae = () => {
   // 변수 분리로 문제 해결
   const [hopaeWarn, setHopaeWarn] = useState("");
 
-  console.log(userInfo);
-
   // 조건에 따른 호패 경고 메시지
   useEffect(() => {
     // 호패명이 없는 경우
@@ -72,8 +69,6 @@ const MakeHopae = () => {
         }
       }
     }
-
-    console.log(data);
   }, [data.hopae]); // 호패명 변동될 경우에만
 
   // '기와집 만들러 가기' 버튼 클릭 이벤트
@@ -82,7 +77,6 @@ const MakeHopae = () => {
       userId: data.userId,
       userName: data.hopae,
     }).then((result) => {
-      console.log(result);
       if (result.data.status === "SUCCESS") {
         dispatch(
           makeHopae({
