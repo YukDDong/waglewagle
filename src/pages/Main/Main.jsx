@@ -91,19 +91,13 @@ const Main = () => {
   }, [isVisitorClick]);
 
   // 캡쳐
-  const handleDownload = async () => {
+  const handleCapture = async () => {
     if (!captureDivRef.current) return;
 
     try {
       const div = captureDivRef.current;
       const canvas = await html2canvas(div, { scale: 2 });
-      console.log(canvas);
       setImg(canvas.toDataURL("image/png"));
-      // canvas.toBlob((blob) => {
-      //   if (blob !== null) {
-      //     setImg(blob);
-      //   }
-      // });
     } catch (error) {
       console.error("Error converting div to image:", error);
     }
@@ -129,6 +123,11 @@ const Main = () => {
     setOpenNav(true);
     setOpenGusetBook(false);
   };
+
+  const handleCaptureBtn = async () => {
+    await handleCapture();
+    setCapturePopBol(true);
+  };
   return (
     <>
       {previousPath === "/makeGiwaHouse" ? (
@@ -149,20 +148,6 @@ const Main = () => {
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor} ref={captureDivRef}>
         <StyledMain>
-          <div
-            style={{
-              width: "600px",
-              height: "300px",
-              position: "absolute",
-              left: "600px",
-              top: "200px",
-              backgroundColor: "white",
-              zIndex: "200",
-              border: "1px solid black",
-            }}
-          >
-            <img src={img} alt="" style={{ width: "100%", height: "100%" }} />
-          </div>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             <Warning testActive={isVisitorClick} />
             {/* 말풍선 start */}
@@ -183,7 +168,6 @@ const Main = () => {
             {/* 기와 버튼 end */}
             <img className="heatae" src={haetaeImg} alt="해태" />
             <img className="taegeukgi" src={taegeukgi} alt="태극기" />
-            <button onClick={handleDownload}>캡쳐</button>
           </HouseBox>
         </StyledMain>
         <RightSide
@@ -204,7 +188,7 @@ const Main = () => {
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
           openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={setCapturePopBol}
+          setCapturePopBol={handleCaptureBtn}
           setPopup={setCopyLinkPop}
         />
         {/* 배경 start */}
@@ -214,7 +198,9 @@ const Main = () => {
       </ExDiv>
 
       {/* 캡쳐 팝업 start */}
-      {capturePopBol && <Capture setCapturePopBol={setCapturePopBol} />}
+      {capturePopBol && (
+        <Capture setCapturePopBol={setCapturePopBol} img={img} />
+      )}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}

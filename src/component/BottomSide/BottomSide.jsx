@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import styled from 'styled-components';
+import styled from "styled-components";
 import IssueNews from "./IconPopup/IssueNews";
 import Sharing from "./IconPopup/Sharing";
 import KigImg from "../../assets/bottomSide/kig_img.png";
@@ -16,47 +16,73 @@ import { ReactComponent as GiwaSetting } from "../../assets/bottomSide/giwa_sett
 import { useBgColor } from "../../contexts/BackgroundColor";
 
 const boleand = [
-  { type: 'issue', boolean: false },
-  { type: 'capture', boolean: false },
-  { type: 'sharing', boolean: false },
-]
+  { type: "issue", boolean: false },
+  { type: "capture", boolean: false },
+  { type: "sharing", boolean: false },
+];
 
-const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopBol, setPopup }) => {
+const BottomSide = ({
+  openMakeup,
+  openGusetBook,
+  openMakeupHouse,
+  setCapturePopBol,
+  setPopup,
+}) => {
   const { bgColor } = useBgColor(); // BG Color context
   const [iconIsOpen, setIconIsOpen] = useState(true);
   const ContainRef = useRef();
 
   useEffect(() => {
     openMakeup
-      ? gsap.to(ContainRef.current, 1, { y: '100px', opacity: 0, display: 'none', ease: 'Power1.easeInOut' })
-      : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
-  }, [openMakeup])
+      ? gsap.to(ContainRef.current, 1, {
+          y: "100px",
+          opacity: 0,
+          display: "none",
+          ease: "Power1.easeInOut",
+        })
+      : gsap.to(ContainRef.current, 1, {
+          y: 0,
+          opacity: 1,
+          display: "flex",
+          ease: "Power1.easeInOut",
+        });
+  }, [openMakeup]);
 
   useEffect(() => {
     openGusetBook
-      ? gsap.to(ContainRef.current, 1, { y: '100px', opacity: 0, display: 'none', ease: 'Power1.easeInOut' })
-      : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
-  }, [openGusetBook])
+      ? gsap.to(ContainRef.current, 1, {
+          y: "100px",
+          opacity: 0,
+          display: "none",
+          ease: "Power1.easeInOut",
+        })
+      : gsap.to(ContainRef.current, 1, {
+          y: 0,
+          opacity: 1,
+          display: "flex",
+          ease: "Power1.easeInOut",
+        });
+  }, [openGusetBook]);
 
   const [iconToggle, setIconToggle] = useState(boleand);
 
   const clickToggleOpen = (e) => {
-    const currentType = e.target.closest('li').getAttribute('type');
-    const changeBoolean = iconToggle.map(item => {
+    const currentType = e.target.closest("li").getAttribute("type");
+    const changeBoolean = iconToggle.map((item) => {
       if (item.type === currentType) {
         return {
           ...item,
-          boolean: !item.boolean
-        }
+          boolean: !item.boolean,
+        };
       } else {
         return {
           ...item,
-          boolean: false
-        }
+          boolean: false,
+        };
       }
-    })
+    });
     setIconToggle(changeBoolean);
-  }
+  };
 
   return (
     <Contain ref={ContainRef} $bgColor={bgColor}>
@@ -66,7 +92,10 @@ const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopB
           <strong>내가 아는 한글의 역사는 어디까지?</strong>
           <p>풀면서 배우는 한국 역사능력 고사</p>
         </div>
-        <VisitLink href="https://hangeul.naver.com/hangeulmattteutquiz" target="_blank">
+        <VisitLink
+          href="https://hangeul.naver.com/hangeulmattteutquiz"
+          target="_blank"
+        >
           <span>방문하기</span>
           <VisitIcon />
         </VisitLink>
@@ -75,10 +104,7 @@ const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopB
         <Name>
           <SideBoard className="side1" />
           <div>
-            <strong>
-              {<span>홍길동</span>}
-              의 집이오~
-            </strong>
+            <strong>{<span>홍길동</span>}의 집이오~</strong>
             <Board className="borad" />
           </div>
           <SideBoard className="side2" />
@@ -91,10 +117,12 @@ const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopB
             {iconToggle[0].boolean && <IssueNews />}
           </li>
           <li type="capture">
-            <button onClick={(e) => {
-              clickToggleOpen(e)
-              setCapturePopBol(true)
-            }}>
+            <button
+              onClick={(e) => {
+                clickToggleOpen(e);
+                setCapturePopBol();
+              }}
+            >
               <Capture width={29} height={30} />
             </button>
           </li>
@@ -105,10 +133,12 @@ const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopB
             {iconToggle[2].boolean && <Sharing setPopup={setPopup} />}
           </li>
           <li>
-            <button onClick={(e) => {
-              openMakeupHouse(true)
-              clickToggleOpen(e)
-            }}>
+            <button
+              onClick={(e) => {
+                openMakeupHouse(true);
+                clickToggleOpen(e);
+              }}
+            >
               <GiwaSetting width={29} height={30} />
             </button>
           </li>
@@ -119,8 +149,8 @@ const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopB
             <ToggleOutline />
           </ToggleBtn>
         }
-      </IconBar >
-    </Contain >
+      </IconBar>
+    </Contain>
   );
 };
 
@@ -128,12 +158,12 @@ export default BottomSide;
 
 const Contain = styled.div`
   width: 1250px;
-  position: absolute; 
+  position: absolute;
   bottom: 50px;
-  left: 50%; 
+  left: 50%;
   margin: auto;
   box-sizing: border-box;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   display: flex;
   justify-content: space-between;
   opacity: 1;
@@ -141,25 +171,29 @@ const Contain = styled.div`
   /* bgColor 조건 가르기 */
   > div {
     &:nth-of-type(1) {
-      border: ${({ $bgColor }) => $bgColor ? '1px solid #ECE0B9' : '1px solid #171A32'};
-      box-shadow: ${({ $bgColor }) => $bgColor ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
+      border: ${({ $bgColor }) =>
+        $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
+      box-shadow: ${({ $bgColor }) =>
+        $bgColor
+          ? "5px 5px 10px #ECE0B9"
+          : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
       > a {
         &:hover {
           span {
-            color: ${({ $bgColor }) => $bgColor ? '#72543f' : '#080a16'};
+            color: ${({ $bgColor }) => ($bgColor ? "#72543f" : "#080a16")};
           }
           svg {
             path {
-              stroke: ${({ $bgColor }) => $bgColor ? '#72543f' : '#080a16'};
+              stroke: ${({ $bgColor }) => ($bgColor ? "#72543f" : "#080a16")};
             }
           }
         }
         span {
-          color: ${({ $bgColor }) => $bgColor ? '#8B715F' : '#171A32'};
+          color: ${({ $bgColor }) => ($bgColor ? "#8B715F" : "#171A32")};
         }
         svg {
           path {
-            stroke: ${({ $bgColor }) => $bgColor ? '#8B715F' : '#171A32'};
+            stroke: ${({ $bgColor }) => ($bgColor ? "#8B715F" : "#171A32")};
           }
         }
       }
@@ -173,9 +207,11 @@ const Contain = styled.div`
             }
           }
           > button {
-            border: ${({ $bgColor }) => $bgColor ? '1px solid #C09B73;' : '1px solid #fff'};
+            border: ${({ $bgColor }) =>
+              $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
             &:hover {
-              background-color: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#171A32'};
+              background-color: ${({ $bgColor }) =>
+                $bgColor ? "#AE8960" : "#171A32"};
               svg {
                 path {
                   stroke: #fff;
@@ -183,9 +219,9 @@ const Contain = styled.div`
               }
             }
             > svg {
-              left: ${({ type }) => type === 'sharing' ? '-1px' : '0'};
+              left: ${({ type }) => (type === "sharing" ? "-1px" : "0")};
               path {
-                stroke: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#fff'};
+                stroke: ${({ $bgColor }) => ($bgColor ? "#AE8960" : "#fff")};
               }
             }
           }
@@ -196,14 +232,14 @@ const Contain = styled.div`
       &:hover {
         svg {
           path {
-            stroke: ${(props) => props.$bgColor ? '#FFEAC2' : '#fff'};
-            fill: ${(props) => props.$bgColor ? '#BC9267' : '#171A32'};
+            stroke: ${(props) => (props.$bgColor ? "#FFEAC2" : "#fff")};
+            fill: ${(props) => (props.$bgColor ? "#BC9267" : "#171A32")};
           }
         }
       }
       svg {
         path {
-          stroke: ${(props) => props.$bgColor ? '#BC9267' : '#fff'};
+          stroke: ${(props) => (props.$bgColor ? "#BC9267" : "#fff")};
         }
       }
     }
@@ -212,70 +248,72 @@ const Contain = styled.div`
 
 /* 히스토리 사이드 바 */
 const History = styled.div`
-  width: 582px; 
+  width: 582px;
   position: relative;
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.65);
   padding: 20px 30px;
   border-radius: 20px;
-  box-sizing: border-box;   
+  box-sizing: border-box;
   > div {
     margin: 0 0 0 20px;
   }
   strong {
     color: #222;
-    font-size: 18px; 
+    font-size: 18px;
     font-weight: 700;
-    line-height: 24px; 
+    line-height: 24px;
   }
   p {
     margin: 5px 0 0;
     color: #666;
     font-size: 12px;
     font-weight: 400;
-    line-height: 20px; 
+    line-height: 20px;
   }
 `;
 
 const VisitLink = styled.a`
   width: fit-content;
   height: fit-content;
-  position: absolute; 
-  right: 50px; 
-  top: 0; 
-  bottom: 0; 
-  margin: auto;  
+  position: absolute;
+  right: 50px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   padding: 0 17px 0 0;
-  span {    
+  span {
     font-family: var(--font-hunmin);
     font-size: 18px;
     font-weight: 600;
-    line-height: 26px;  
-    transition: color, .2s;
+    line-height: 26px;
+    transition: color, 0.2s;
   }
   &:hover {
     span {
       color: #72543f;
     }
     svg {
-      transform: translate(5px,0);
+      transform: translate(5px, 0);
       path {
         stroke: #72543f;
       }
     }
   }
   svg {
-    width: 8px; height: 12px;
+    width: 8px;
+    height: 12px;
     content: "";
     display: block;
     margin: auto;
-    position: absolute; 
-    top: 0; bottom: 0; 
+    position: absolute;
+    top: 0;
+    bottom: 0;
     right: 0;
-    transition: transform, .2s;
+    transition: transform, 0.2s;
     path {
-      transition: stroke, .2s;
+      transition: stroke, 0.2s;
     }
   }
 `;
@@ -287,19 +325,20 @@ const IconBar = styled.div`
   align-items: center;
   justify-content: space-between;
   > div {
-    width: ${(props) => props.$isOpen ? '1px' : '368px'};
-    visibility: ${(props) => props.$isOpen ? 'hidden' : 'visible'};
-    opacity: ${(props) => props.$isOpen ? '0' : '1'};
+    width: ${(props) => (props.$isOpen ? "1px" : "368px")};
+    visibility: ${(props) => (props.$isOpen ? "hidden" : "visible")};
+    opacity: ${(props) => (props.$isOpen ? "0" : "1")};
   }
   > ul {
-    visibility: ${(props) => props.$isOpen ? 'visible' : 'hidden'};
-    opacity: ${(props) => props.$isOpen ? '1' : '0'};
+    visibility: ${(props) => (props.$isOpen ? "visible" : "hidden")};
+    opacity: ${(props) => (props.$isOpen ? "1" : "0")};
   }
   > button {
     svg {
       &.inline {
-        left: ${(props) => props.$isOpen ? '2px' : '-1px'};
-        transform: ${(props) => props.$isOpen ? 'rotate(0)' : 'rotate(180deg)'};
+        left: ${(props) => (props.$isOpen ? "2px" : "-1px")};
+        transform: ${(props) =>
+          props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
       }
     }
   }
@@ -307,21 +346,21 @@ const IconBar = styled.div`
 
 const Name = styled.div`
   position: relative;
-  transition: width, .4s ease-in;  
+  transition: width, 0.4s ease-in;
   > svg {
     position: absolute;
-    top: 0; 
-    bottom: 0; 
+    top: 0;
+    bottom: 0;
     margin: auto;
     z-index: 1;
     &.borad {
       position: static;
     }
     &.side1 {
-      left:-10px;
+      left: -10px;
     }
     &.side2 {
-      right:-10px;
+      right: -10px;
     }
   }
   > div {
@@ -334,7 +373,7 @@ const Name = styled.div`
     width: 368px;
     position: absolute;
     text-align: center;
-    color: #231F20;
+    color: #231f20;
     font-family: var(--font-hunmin);
     font-size: 28px;
     font-style: normal;
@@ -343,7 +382,7 @@ const Name = styled.div`
     padding: 0 12px;
     box-sizing: border-box;
     span {
-      color: #E75852;
+      color: #e75852;
     }
   }
 `;
@@ -351,39 +390,40 @@ const Name = styled.div`
 const Various = styled.ul`
   height: min-content;
   gap: 30px;
-  padding:0 0 0 40px;
+  padding: 0 0 0 40px;
   position: absolute;
-  top: 0; bottom: 0; 
+  top: 0;
+  bottom: 0;
   margin: auto;
-  display: flex;  
-  transition: width, .4s ease-in;  
+  display: flex;
+  transition: width, 0.4s ease-in;
   li {
     position: relative;
     > button {
-    width: 60px; 
-    height: 60px;
-    position: relative;
-    border-radius: 60px;
-    transition: background-color, .2s;
-    &:hover {
-      svg {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      border-radius: 60px;
+      transition: background-color, 0.2s;
+      &:hover {
+        svg {
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+      > svg {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
         path {
-          stroke: #fff;
+          transition: stroke, 0.2s;
         }
       }
     }
-    > svg {
-      position: absolute; 
-      margin: auto;
-      top: 0;  
-      right: 0; 
-      bottom: 0;
-      path {
-        transition: stroke, .2s;
-      }
-    }
   }
-}
 `;
 
 const ToggleBtn = styled.button`
@@ -392,14 +432,14 @@ const ToggleBtn = styled.button`
   position: absolute;
   right: 0;
   svg {
-    position: absolute; 
-    left: 0; 
-    right: 0; 
-    bottom: 0; 
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     top: 0;
-    margin:auto;
+    margin: auto;
     path {
-      transition: all, .2s;
+      transition: all, 0.2s;
     }
     &.inline {
       /* top: -3px; */
@@ -408,4 +448,3 @@ const ToggleBtn = styled.button`
     }
   }
 `;
-

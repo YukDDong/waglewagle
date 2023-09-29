@@ -1,5 +1,5 @@
-import Modal from "../Modal/Modal"
-import styled from 'styled-components';
+import Modal from "../Modal/Modal";
+import styled from "styled-components";
 import captureImg from "../../assets/popup/capture_img.png";
 import { ReactComponent as CloseBtn } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as Board } from "../../assets/popup/board_img_2.svg";
@@ -8,7 +8,8 @@ import { ReactComponent as InstarLogo } from "../../assets/popup/instar_logo.svg
 import { ReactComponent as InstarStory } from "../../assets/popup/instar_story.svg";
 import { ReactComponent as Kakao } from "../../assets/popup/kakao.svg";
 
-const Captrue = ({ setCapturePopBol }) => {
+const Captrue = ({ setCapturePopBol, img }) => {
+  console.log(img);
   return (
     <Modal>
       <Contain>
@@ -19,7 +20,7 @@ const Captrue = ({ setCapturePopBol }) => {
           <strong>아주 멋진 풍경이군~</strong>
           <div>
             <Board />
-            <img src={captureImg} alt="사진" />
+            <img src={img} alt="사진" />
           </div>
         </BoradWrap>
         <ul>
@@ -55,9 +56,9 @@ const Captrue = ({ setCapturePopBol }) => {
 
 export default Captrue;
 
-const Contain = styled.div`  
+const Contain = styled.div`
   position: relative;
-  border-radius: 30px;  
+  border-radius: 30px;
   background-color: #fff;
   padding: 60px 60px 50px;
   box-sizing: border-box;
@@ -100,9 +101,13 @@ const BoradWrap = styled.div`
     > img {
       display: block;
       position: absolute;
-      left: 0; right: 0; 
-      bottom: 0; top: 0;
-      margin: auto; 
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      margin: auto;
+      width: 90%;
+      height: 90%;
     }
   }
 `;
@@ -112,7 +117,6 @@ const XBtnBox = styled.button`
   height: 36px;
   position: absolute;
   right: 30px;
-  top: 30px;  
+  top: 30px;
   z-index: 1;
 `;
-
