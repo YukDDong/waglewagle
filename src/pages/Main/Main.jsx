@@ -44,17 +44,14 @@ const Main = () => {
 
   const previousPath = location.state ? location.state.from : null;
 
-  console.log("userInfo", userInfo);
-
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
-  const mockData = 2;
   useEffect(() => {
     if (previousPath === "/makeGiwaHouse") {
       setCopyLinkPop(true);
     }
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
-    const requestData = url ? url : mockData;
+    const requestData = url ? url : userInfo.boardId;
     getGiwaHouseApi(requestData).then((result) => {
       if (result.data.status === "SUCCESS") {
         setGiwaHouse(result.data.data);
@@ -75,14 +72,16 @@ const Main = () => {
       .then((result) => {
         if (result.data.status === "SUCCESS") {
           setGiwaList(result.data.data);
-        } else {
-          throw new Error("서버에서 데이터를 가져오는 데 문제가 발생했습니다.");
+        }
+
+        if (result.data.status === "FAIL") {
+          setGiwaList([]);
         }
       })
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse]);
+  }, [giwaHouse, completedGiwa]);
 
   useEffect(() => {
     if (!isVisitorClick) return;
