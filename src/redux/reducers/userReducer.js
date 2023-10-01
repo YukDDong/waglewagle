@@ -6,7 +6,7 @@ const initialState = {
   username: "",
   loggedIn: false,
   memberType: "",
-  broadId: 0,
+  boardId: 0,
 };
 
 // user의 로그인 유지와 로그아웃을 위한 Reducer
@@ -17,6 +17,9 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userId: action.payload.userId,
         username: action.payload.username,
+        boardId: action.payload.boardId,
+        email: action.payload.email,
+        memberType: action.payload.memberType,
         loggedIn: true,
       };
     case LOGOUT_USER:
@@ -26,7 +29,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         email: action.payload.email,
         memberType: action.payload.memberType,
-        broadId: action.payload.broadId,
+        boardId: action.payload.boardId,
         username: action.payload.userName,
       };
     default:

@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import Modal from "../../component/Modal/Modal";
 import Warning from "../../component/Warning/Warning";
+import html2canvas from "html2canvas";
 
 const Main = () => {
   const location = useLocation();
@@ -38,18 +39,19 @@ const Main = () => {
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
   const [isVisitorClick, setIsVisitorClick] = useState(false);
+  const captureDivRef = useRef();
+  const [img, setImg] = useState();
 
   const previousPath = location.state ? location.state.from : null;
 
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
-  const mockData = 2;
   useEffect(() => {
     if (previousPath === "/makeGiwaHouse") {
       setCopyLinkPop(true);
     }
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
-    const requestData = url ? url : mockData;
+    const requestData = url ? url : userInfo.boardId;
     getGiwaHouseApi(requestData).then((result) => {
       if (result.data.status === "SUCCESS") {
         setGiwaHouse(result.data.data);
@@ -70,14 +72,16 @@ const Main = () => {
       .then((result) => {
         if (result.data.status === "SUCCESS") {
           setGiwaList(result.data.data);
-        } else {
-          throw new Error("서버에서 데이터를 가져오는 데 문제가 발생했습니다.");
+        }
+
+        if (result.data.status === "FAIL") {
+          setGiwaList([]);
         }
       })
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse]);
+  }, [giwaHouse, completedGiwa]);
 
   useEffect(() => {
     if (!isVisitorClick) return;
@@ -86,6 +90,19 @@ const Main = () => {
       setIsVisitorClick(false);
     }, 3000);
   }, [isVisitorClick]);
+
+  // 캡쳐
+  const handleCapture = async () => {
+    if (!captureDivRef.current) return;
+
+    try {
+      const div = captureDivRef.current;
+      const canvas = await html2canvas(div);
+      setImg(canvas);
+    } catch (error) {
+      console.error("Error converting div to image:", error);
+    }
+  };
 
   /* 기와집 꾸미기 모달창 */
   const openMakeupHouse = () => {
@@ -107,8 +124,13 @@ const Main = () => {
     setOpenNav(true);
     setOpenGusetBook(false);
   };
+
+  const handleCaptureBtn = async () => {
+    await handleCapture();
+    setCapturePopBol(true);
+  };
   return (
-    <>
+    <CaptureBox ref={captureDivRef}>
       {previousPath === "/makeGiwaHouse" ? (
         <Modal>
           {/* 수정해야함 임시 */}
@@ -167,8 +189,9 @@ const Main = () => {
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
           openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={setCapturePopBol}
+          setCapturePopBol={handleCaptureBtn}
           setPopup={setCopyLinkPop}
+          url={url}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
@@ -177,7 +200,13 @@ const Main = () => {
       </ExDiv>
 
       {/* 캡쳐 팝업 start */}
-      {capturePopBol && <Capture setCapturePopBol={setCapturePopBol} />}
+      {capturePopBol && (
+        <Capture
+          setCapturePopBol={setCapturePopBol}
+          canvas={img}
+          url={giwaHouse.url}
+        />
+      )}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
@@ -187,11 +216,16 @@ const Main = () => {
       {/* 링크 복사 팝업창 start */}
       {copyLinkPop && <CopyLink setCopyLinkPop={setCopyLinkPop} />}
       {/* 링크 복사 팝업창 end */}
-    </>
+    </CaptureBox>
   );
 };
 
 export default Main;
+
+const CaptureBox = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
 
 const ModalContent = styled.div`
   width: 388px;
