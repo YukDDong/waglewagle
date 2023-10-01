@@ -199,7 +199,11 @@ const Main = () => {
 
       {/* 캡쳐 팝업 start */}
       {capturePopBol && (
-        <Capture setCapturePopBol={setCapturePopBol} canvas={img} />
+        <Capture
+          setCapturePopBol={setCapturePopBol}
+          canvas={img}
+          url={giwaHouse.url}
+        />
       )}
       {/* 캡쳐 팝업 end */}
 
