@@ -14,6 +14,7 @@ import { ReactComponent as Capture } from "../../assets/bottomSide/capture_icon.
 import { ReactComponent as SharingIcon } from "../../assets/bottomSide/sharing_icon.svg";
 import { ReactComponent as GiwaSetting } from "../../assets/bottomSide/giwa_setting_icon.svg";
 import { useBgColor } from "../../contexts/BackgroundColor";
+import { useSelector } from "react-redux";
 
 const boleand = [
   { type: "issue", boolean: false },
@@ -29,6 +30,7 @@ const BottomSide = ({
   setPopup,
   url,
 }) => {
+  const userInfo = useSelector((state) => state.userReducer);
   const { bgColor } = useBgColor(); // BG Color context
   const [iconIsOpen, setIconIsOpen] = useState(false);
   const ContainRef = useRef();
@@ -105,7 +107,9 @@ const BottomSide = ({
         <Name>
           <SideBoard className="side1" />
           <div>
-            <strong>{<span>홍길동</span>}의 집이오~</strong>
+            <strong>
+              <span>{userInfo.username}</span>의 집이오~
+            </strong>
             <Board className="borad" />
           </div>
           <SideBoard className="side2" />
