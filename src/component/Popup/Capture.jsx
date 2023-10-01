@@ -7,9 +7,26 @@ import { ReactComponent as SaveImg } from "../../assets/popup/save_img.svg";
 import { ReactComponent as InstarLogo } from "../../assets/popup/instar_logo.svg";
 import { ReactComponent as InstarStory } from "../../assets/popup/instar_story.svg";
 import { ReactComponent as Kakao } from "../../assets/popup/kakao.svg";
+import { useEffect, useState } from "react";
+import saveAs from "file-saver";
 
-const Captrue = ({ setCapturePopBol, img }) => {
-  console.log(img);
+const Captrue = ({ setCapturePopBol, canvas }) => {
+  const [img, setImg] = useState();
+
+  useEffect(() => {
+    if (!canvas) return;
+    setImg(canvas.toDataURL("image/png"));
+  }, [canvas]);
+
+  const handleSaveCapture = () => {
+    if (!canvas) return;
+
+    canvas.toBlob((blob) => {
+      if (blob !== null) {
+        saveAs(blob, "WagleWagleGiwa.png");
+      }
+    });
+  };
   return (
     <Modal>
       <Contain>
@@ -25,7 +42,7 @@ const Captrue = ({ setCapturePopBol, img }) => {
         </BoradWrap>
         <ul>
           <li>
-            <button type="button">
+            <button type="button" onClick={handleSaveCapture}>
               <SaveImg />
               <span>풍경 저장</span>
             </button>
@@ -105,9 +122,9 @@ const BoradWrap = styled.div`
       right: 0;
       bottom: 0;
       top: 0;
+      width: 570px;
       margin: auto;
-      width: 90%;
-      height: 90%;
+      object-fit: cover;
     }
   }
 `;

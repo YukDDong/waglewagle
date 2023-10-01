@@ -96,8 +96,8 @@ const Main = () => {
 
     try {
       const div = captureDivRef.current;
-      const canvas = await html2canvas(div, { scale: 2 });
-      setImg(canvas.toDataURL("image/png"));
+      const canvas = await html2canvas(div);
+      setImg(canvas);
     } catch (error) {
       console.error("Error converting div to image:", error);
     }
@@ -129,7 +129,7 @@ const Main = () => {
     setCapturePopBol(true);
   };
   return (
-    <>
+    <CaptureBox ref={captureDivRef}>
       {previousPath === "/makeGiwaHouse" ? (
         <Modal>
           {/* 수정해야함 임시 */}
@@ -146,7 +146,7 @@ const Main = () => {
         />
       ) : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={bgColor} ref={captureDivRef}>
+      <ExDiv $bgColor={bgColor}>
         <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             <Warning testActive={isVisitorClick} />
@@ -199,7 +199,7 @@ const Main = () => {
 
       {/* 캡쳐 팝업 start */}
       {capturePopBol && (
-        <Capture setCapturePopBol={setCapturePopBol} img={img} />
+        <Capture setCapturePopBol={setCapturePopBol} canvas={img} />
       )}
       {/* 캡쳐 팝업 end */}
 
@@ -210,11 +210,16 @@ const Main = () => {
       {/* 링크 복사 팝업창 start */}
       {copyLinkPop && <CopyLink setCopyLinkPop={setCopyLinkPop} />}
       {/* 링크 복사 팝업창 end */}
-    </>
+    </CaptureBox>
   );
 };
 
 export default Main;
+
+const CaptureBox = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
 
 const ModalContent = styled.div`
   width: 388px;
