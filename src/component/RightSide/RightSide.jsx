@@ -192,7 +192,21 @@ const HeaderBox = styled.div`
 `;
 
 const SelectWrap = styled.div`
-  margin: 40px 0 0;
+  overflow-x: hidden;
+  min-height: 150px;
+  /* max-height: 400px; */
+  height: calc(100vh - 323px);
+  margin: 15px 0 0;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #dbdbdb5a;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background-color: #dbd6d6;
+  }
 `;
 
 const TextField = styled.p`
@@ -215,7 +229,7 @@ const ItemLists = styled.div`
 
 const ButtonWrap = styled.div`
   position: relative;
-  margin: 40px 0 0;
+  margin: 20px 0 0;
 `;
 
 const Btn = styled.button`
