@@ -45,18 +45,25 @@ const Login = () => {
       }
 
       if (result.data.status === "SUCCESS") {
-        console.log("result", result);
         setItem("AUTH", result.data.data.accessToken);
         dispatch(
           login({
+            email: loginInfo.id,
             userId: result.data.data.userId,
             username: result.data.data.userName,
+            boardId: result.data.data.boardId,
+            memberType: "GENERAL",
           })
         );
         if (!result.data.data.isExistHopae) {
           navigate("/makeHopae");
+          return;
+        } else if (!result.data.data.boardId) {
+          navigate("/makeGiwaHouse");
+          return;
         } else {
           navigate("/main");
+          return;
         }
       }
     });

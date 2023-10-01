@@ -44,6 +44,8 @@ const Main = () => {
 
   const previousPath = location.state ? location.state.from : null;
 
+  console.log("userInfo", userInfo);
+
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   const mockData = 2;
   useEffect(() => {
