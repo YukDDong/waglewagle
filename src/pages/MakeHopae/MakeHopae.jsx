@@ -81,12 +81,12 @@ const MakeHopae = () => {
         dispatch(
           makeHopae({
             userName: result.data.data.userName,
-            broadId: result.data.data.broadId,
+            boardId: result.data.data.boardId,
             memberType: result.data.data.memberType,
             email: result.data.data.email,
           })
         );
-        if (result.data.data.broadId) {
+        if (result.data.data.boardId) {
           navigate("/main");
           return;
         }
