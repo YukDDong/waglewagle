@@ -27,9 +27,10 @@ const BottomSide = ({
   openMakeupHouse,
   setCapturePopBol,
   setPopup,
+  url,
 }) => {
   const { bgColor } = useBgColor(); // BG Color context
-  const [iconIsOpen, setIconIsOpen] = useState(true);
+  const [iconIsOpen, setIconIsOpen] = useState(false);
   const ContainRef = useRef();
 
   useEffect(() => {
@@ -143,12 +144,12 @@ const BottomSide = ({
             </button>
           </li>
         </Various>
-        {
+        {!url && (
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
           </ToggleBtn>
-        }
+        )}
       </IconBar>
     </Contain>
   );

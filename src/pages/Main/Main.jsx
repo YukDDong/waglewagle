@@ -190,6 +190,7 @@ const Main = () => {
           openMakeupHouse={openMakeupHouse}
           setCapturePopBol={handleCaptureBtn}
           setPopup={setCopyLinkPop}
+          url={url}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
