@@ -15,6 +15,11 @@ const Captrue = ({ setCapturePopBol, canvas, url }) => {
   const [img, setImg] = useState();
 
   useEffect(() => {
+    Kakao.cleanup();
+    Kakao.init("4eeeca34fb6f2e14d966ae11afeaaa2c");
+  }, []);
+
+  useEffect(() => {
     if (!canvas) return;
     setImg(canvas.toDataURL("image/png"));
   }, [canvas]);
