@@ -51,8 +51,8 @@ export default function NavBar({ isShowing = true }) {
             <StyledMenuXBtn
               onClick={menuBtnClick}
               fill="white"
-              width={42}
-              height={42}
+              width={32}
+              height={32}
             />
           ) : (
             <StyledMenuBtn onClick={menuBtnClick} />
@@ -116,7 +116,7 @@ const Nav = styled.nav`
 const NavLogo = styled.p`
   width: 180px;
   height: 55px;
-  font-size: 36px;
+  font-size: 30px;
   text-align: center;
   font-family: var(--font-hunmin);
   line-height: 55px;
@@ -130,13 +130,13 @@ const NavMenu = styled.div`
   position: absolute;
   top: 0;
   right: 19vw;
-  width: 180px;
+  width: 160px;
   height: auto;
 `;
 
 const NavMenuTop = styled.div`
   width: 100%;
-  height: 120px;
+  height: 100px;
   background-color: #071b34;
   display: flex;
   align-items: center;
@@ -163,7 +163,7 @@ const NavMenuMiddle = styled.div`
 const MyInfo = styled.ul`
   width: 100%;
   height: auto;
-  padding: 0px 20px;
+  padding: 0px 15px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -176,9 +176,22 @@ const MyInfoItem = styled.li`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px 0 20px 10px;
+  padding: 20px 5px;
+  /* position: relative; */
   box-sizing: border-box;
   border-top: 1px solid #304055;
+  /* &:after {
+    width: 100%;
+    height: 1px;
+    content: "";
+    left: 0; 
+    right: 0;
+    top: 0;
+    margin: auto;
+    display: block;  
+    position: absolute;      
+    background-color: red;
+  } */
 `;
 
 const MyInfoItemFirst = styled(MyInfoItem)`
@@ -187,7 +200,7 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     color: #fff;
     line-height: 26px;
     font-size: 22px;
-    padding-left: 0;
+    /* padding-left: 0; */
     > span {
       color: #e75852;
     }
@@ -200,7 +213,7 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     font-weight: 400;
     font-size: 18px;    
     svg {
-      margin: 0 0 0 6px;
+      margin: 0 0 0 3px;
       transition: transform, .2s ease-in-out;
       path {
         stroke: #fff;        

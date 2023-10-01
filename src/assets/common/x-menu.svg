@@ -1,14 +1,6 @@
-<svg width="current" height="current" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="ic:baseline-menu">
-<g id="Group 2805">
-<g id="Vector">
-<path d="M11.4766 9L9.00169 11.4749L31.2756 33.7487L33.7504 31.2739L11.4766 9Z" fill="current"/>
-<path d="M9.00169 11.4749L11.4766 9L33.7504 31.2739L31.2756 33.7487L9.00169 11.4749Z" fill="current"/>
-</g>
-<g id="Vector_2">
-<path d="M9 31.2739L11.4749 33.7488L33.7487 11.4749L31.2739 9.00006L9 31.2739Z" fill="current"/>
-<path d="M11.4749 33.7488L9 31.2739L31.2739 9.00006L33.7487 11.4749L11.4749 33.7488Z" fill="current"/>
-</g>
-</g>
-</g>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.74414 6.85742L6.85852 8.74304L23.8291 25.7136L25.7147 23.828L8.74414 6.85742Z" fill="white"/>
+<path d="M6.85852 8.74304L8.74414 6.85742L25.7147 23.828L23.8291 25.7136L6.85852 8.74304Z" fill="white"/>
+<path d="M6.85718 23.8281L8.7428 25.7137L25.7134 8.74318L23.8277 6.85756L6.85718 23.8281Z" fill="white"/>
+<path d="M8.7428 25.7137L6.85718 23.8281L23.8277 6.85756L25.7134 8.74318L8.7428 25.7137Z" fill="white"/>
 </svg>

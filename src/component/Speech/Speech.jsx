@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import speechBubble from "../../assets/main/speech_bubble.svg";
 import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 
@@ -16,7 +16,7 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
     });
   }, [giwaLength]);
 
-  return (
+  return (    
     <Container>
       {url ? (
         // 방문자
@@ -74,6 +74,11 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
 
 export default Speech;
 
+const animation = keyframes`
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(5px); }
+`;
+
 const Container = styled.div`
   width: 242px;
   height: 64px;
@@ -88,9 +93,10 @@ const Container = styled.div`
   > button {     
     &.giwa_plus {
       position: absolute;
-      top: -35%;
       right: 15%;
-      margin: auto;
+      top: -35%;
+      margin: auto;      
+      animation: ${animation} 1s ease-in-out alternate infinite;
     }
   }
   > p {
