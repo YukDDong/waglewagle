@@ -13,10 +13,12 @@ import { Link } from "react-router-dom";
 import { InputText, InputPwd } from "../../component/Input/Input";
 import Button from "../../component/Button/Button";
 import CheckBox from "../../component/CheckBox/CheckBox";
+import { IsFalse } from "../../component/ValidTest/ValidTest";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
@@ -34,6 +36,11 @@ const Login = () => {
     [loginInfo]
   );
 
+  // 에러 출력 후 이메일 or 비밀번호 입력 시 초기화
+  useEffect(() => {
+    setIsError(false);
+  }, [loginInfo]);
+
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = () => {
     loginApi({
@@ -41,6 +48,7 @@ const Login = () => {
       password: loginInfo.pwd,
     }).then((result) => {
       if (result.data.status === "FAIL") {
+        setIsError(true);
         setErrorMessage(result.data.message);
       }
 
@@ -104,7 +112,8 @@ const Login = () => {
               <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
             </LoginCheckDiv>
 
-            {errorMessage ? <p>{errorMessage}</p> : null}
+            {/* 에러 출력 */}
+            {isError ? <ErrorStyled>{errorMessage}</ErrorStyled> : null}
 
             {/* 로그인 버튼 */}
             <Button onClick={onSubmit}>로그인</Button>
@@ -186,4 +195,8 @@ const LinkItem = styled(Link)`
   text-decoration-line: none;
   padding-bottom: 1px;
   border-bottom: 1px solid #9e9e9e;
+`;
+
+const ErrorStyled = styled(IsFalse)`
+  margin-bottom: 30px;
 `;
