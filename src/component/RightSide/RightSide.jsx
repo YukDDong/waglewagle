@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
@@ -14,13 +14,17 @@ import night from "../../assets/rightSide/night.png";
 import haetaeFrame from "../../assets/rightSide/haetae_frame.png";
 import { makeGiwaHouseApi } from "../../apis/giwa";
 import { generateRandomString } from "../../utils/generateRandomString";
-import { changeGiwaHouseStyle } from "../../redux/actions/giwaHouseActions";
+import {
+  changeGiwaHouseStyle,
+  getGiwaHouse,
+} from "../../redux/actions/giwaHouseActions";
 
 const RightSide = ({
   openMakeup,
   xBtnClickHandler,
   updateFunction,
   btnText,
+  initGiwaHouse,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -71,7 +75,10 @@ const RightSide = ({
             width={"32px"}
             height={"32px"}
             fill="#212121"
-            onClick={xBtnClickHandler}
+            onClick={() => {
+              xBtnClickHandler();
+              dispatch(getGiwaHouse(initGiwaHouse));
+            }}
           />
         </XBox>
       )}
@@ -143,7 +150,13 @@ const RightSide = ({
         <ButtonWrap>
           <Btn onClick={handleSubmit}>{btnText}</Btn>
           <ResetBox>
-            <ResetIcon width={24} height={24} />
+            <ResetIcon
+              width={24}
+              height={24}
+              onClick={() => {
+                dispatch(getGiwaHouse(initGiwaHouse));
+              }}
+            />
           </ResetBox>
         </ButtonWrap>
       </div>
