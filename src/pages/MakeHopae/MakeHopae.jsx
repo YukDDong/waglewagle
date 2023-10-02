@@ -78,15 +78,16 @@ const MakeHopae = () => {
       userName: data.hopae,
     }).then((result) => {
       if (result.data.status === "SUCCESS") {
+        console.log(result.data.data);
         dispatch(
           makeHopae({
-            userName: result.data.data.userName,
-            boardId: result.data.data.boardId,
+            username: result.data.data.userName,
+            boardId: result.data.data.broadId,
             memberType: result.data.data.memberType,
             email: result.data.data.email,
           })
         );
-        if (result.data.data.boardId) {
+        if (result.data.data.broadId) {
           navigate("/main");
           return;
         }

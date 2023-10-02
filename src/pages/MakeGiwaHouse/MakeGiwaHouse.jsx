@@ -14,8 +14,6 @@ const MakeGiwaHouse = () => {
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
   const userInfo = useSelector((state) => state.userReducer);
 
-  console.log("giwaHouseStyle", giwaHouseStyle);
-
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
       case 1:

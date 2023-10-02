@@ -22,11 +22,13 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import Modal from "../../component/Modal/Modal";
 import Warning from "../../component/Warning/Warning";
 import html2canvas from "html2canvas";
+import { getGiwaHouse } from "../../redux/actions/giwaHouseActions";
 
 const Main = () => {
   const location = useLocation();
   const { url } = useParams();
   const userInfo = useSelector((state) => state.userReducer);
+  const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
   const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false); // 기와선택
   const [openNav, setOpenNav] = useState(true); // 네비
@@ -54,7 +56,13 @@ const Main = () => {
     const requestData = url ? url : userInfo.boardId;
     getGiwaHouseApi(requestData).then((result) => {
       if (result.data.status === "SUCCESS") {
-        setGiwaHouse(result.data.data);
+        const giwaHouseData = result.data.data;
+        setGiwaHouse(giwaHouseData);
+        getGiwaHouse({
+          giwaColor: giwaHouseData.colorCode,
+          background: giwaHouseData.backGroundCode,
+          friend: giwaHouseData.friendCode,
+        });
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
@@ -62,6 +70,8 @@ const Main = () => {
       }
     });
   }, []);
+
+  console.log("giwaHouse", giwaHouse);
 
   useEffect(() => {
     if (!giwaHouse.id) return;
@@ -147,7 +157,7 @@ const Main = () => {
         />
       ) : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={bgColor}>
+      <ExDiv $bgColor={giwaHouseStyle.background === 1 ? true : false}>
         <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             <Warning testActive={isVisitorClick} />
