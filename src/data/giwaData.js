@@ -15,5 +15,4 @@ export const fontStyle = [];
 export const textSort = ["left", "center", "right"];
 
 // 기와스타일 부분 추가 예정
-// 쥬쥬님이 작성하신 giwaPath.js에 있는 데이터를 쓰긴했는데 고민중!
 export const giwaStyle = [];
