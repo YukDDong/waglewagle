@@ -213,6 +213,8 @@ const Main = () => {
           updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
+          giwaStyle={giwaHouse}
+          setInitGiwaHouse={setInitGiwaHouse}
         ></RightSide>
 
         {/* 방명록 start */}

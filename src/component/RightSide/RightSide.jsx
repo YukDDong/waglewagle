@@ -12,7 +12,7 @@ import giwaPink from "../../assets/rightSide/giwa_pink.png";
 import daytime from "../../assets/rightSide/daytime.png";
 import night from "../../assets/rightSide/night.png";
 import haetaeFrame from "../../assets/rightSide/haetae_frame.png";
-import { makeGiwaHouseApi } from "../../apis/giwa";
+import { editGiwaHouseApi, makeGiwaHouseApi } from "../../apis/giwa";
 import { generateRandomString } from "../../utils/generateRandomString";
 import {
   changeGiwaHouseStyle,
@@ -25,6 +25,8 @@ const RightSide = ({
   updateFunction,
   btnText,
   initGiwaHouse,
+  giwaStyle,
+  setInitGiwaHouse,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -61,6 +63,22 @@ const RightSide = ({
         // broadId 가 안내려옴.. 내려와야 적용가능
         if (result.data.status === "SUCCESS") {
           navigate("/main", { state: { from: "/makeGiwaHouse" } });
+          return;
+        }
+      });
+    } else {
+      editGiwaHouseApi(giwaStyle.broadStyle.id, {
+        color: giwaColor,
+        background: background,
+        friend: friend,
+      }).then((result) => {
+        if (result.data.status === "SUCCESS") {
+          xBtnClickHandler();
+          setInitGiwaHouse({
+            giwaColor,
+            background,
+            friend,
+          });
           return;
         }
       });
