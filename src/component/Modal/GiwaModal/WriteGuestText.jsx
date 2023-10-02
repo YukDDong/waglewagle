@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SelectTitle from "./../../SelectTitle/SelectTitle";
 import { ReactComponent as FontsArrow } from "./../../../assets/common/fonts_arrow.svg";
 import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { writeGuestText } from "../../../redux/actions/giwaActions";
 
 // 기본 데이터
@@ -36,10 +36,17 @@ export const englishRegex = /[a-zA-z]/;
 
 const WriteGuestText = () => {
   const dispatch = useDispatch();
+  const giwaInfo = useSelector((state) => state.giwaReducer);
   const [show, setShow] = useState(false); // 셀렉트
   const [select, setSelect] = useState(selectData);
   const [text, setText] = useState("");
   const [checkText, setCheckText] = useState(false);
+
+  useEffect(() => {
+    if (!giwaInfo.text) return;
+
+    setText(giwaInfo.text);
+  }, []);
 
   /* 폰트 변경 */
   const handleOnChangeSelectValue = (e) => {

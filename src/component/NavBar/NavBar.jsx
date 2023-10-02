@@ -19,7 +19,7 @@ export default function NavBar({ isShowing = true }) {
   // const userName = !(userInfo === null) ? userInfo.name : "";
   // 위 코드를 리덕스로 바꾼 부분이 아래부분입니다.
   const userInfo = useSelector((state) => state.userReducer);
-  const userName = userInfo.name;
+  const userName = userInfo.username;
 
   const menuBtnClick = () => {
     setMenuOpen((menuOpen) => !menuOpen);
@@ -211,12 +211,12 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     line-height: 26px;
     color: #fff;
     font-weight: 400;
-    font-size: 18px;    
+    font-size: 18px;
     svg {
       margin: 0 0 0 3px;
-      transition: transform, .2s ease-in-out;
+      transition: transform, 0.2s ease-in-out;
       path {
-        stroke: #fff;        
+        stroke: #fff;
       }
     }
   }

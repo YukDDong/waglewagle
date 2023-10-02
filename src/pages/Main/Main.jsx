@@ -11,22 +11,28 @@ import MainBg from "../../component/MainBg/MainBg";
 import mainHouse from "../../assets/main/giwa_house_indigo.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
+import mainHouseIndigo from "../../assets/main/giwa_house_indigo.png";
+import mainHouseBlack from "../../assets/main/giwa_house_black.png";
+import mainHousePink from "../../assets/main/giwa_house_pink.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
 import CopyLink from "../../component/Popup/CopyLink";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import Modal from "../../component/Modal/Modal";
 import Warning from "../../component/Warning/Warning";
 import html2canvas from "html2canvas";
+import { getGiwaHouse } from "../../redux/actions/giwaHouseActions";
 
 const Main = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const { url } = useParams();
   const userInfo = useSelector((state) => state.userReducer);
+  const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
   const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false); // 기와선택
   const [openNav, setOpenNav] = useState(true); // 네비
@@ -41,6 +47,7 @@ const Main = () => {
   const [isVisitorClick, setIsVisitorClick] = useState(false);
   const captureDivRef = useRef();
   const [img, setImg] = useState();
+  const [initGiwaHouse, setInitGiwaHouse] = useState();
 
   const previousPath = location.state ? location.state.from : null;
 
@@ -54,7 +61,20 @@ const Main = () => {
     const requestData = url ? url : userInfo.boardId;
     getGiwaHouseApi(requestData).then((result) => {
       if (result.data.status === "SUCCESS") {
-        setGiwaHouse(result.data.data);
+        const giwaHouseData = result.data.data;
+        setGiwaHouse(giwaHouseData);
+        dispatch(
+          getGiwaHouse({
+            giwaColor: giwaHouseData.broadStyle.colorCode,
+            background: giwaHouseData.broadStyle.backGroundCode,
+            friend: giwaHouseData.broadStyle.friendCode,
+          })
+        );
+        setInitGiwaHouse({
+          giwaColor: giwaHouseData.broadStyle.colorCode,
+          background: giwaHouseData.broadStyle.backGroundCode,
+          friend: giwaHouseData.broadStyle.friendCode,
+        });
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
@@ -62,6 +82,19 @@ const Main = () => {
       }
     });
   }, []);
+
+  const mainHousePath = () => {
+    switch (giwaHouseStyle.giwaColor) {
+      case 1:
+        return mainHouseIndigo;
+      case 2:
+        return mainHouseBlack;
+      case 3:
+        return mainHousePink;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     if (!giwaHouse.id) return;
@@ -147,9 +180,12 @@ const Main = () => {
         />
       ) : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={bgColor}>
+      <ExDiv $bgColor={giwaHouseStyle.background === 1 ? true : false}>
         <StyledMain>
-          <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
+          <HouseBox
+            className={openMakeup || openGusetBook ? "left" : null}
+            $houseImg={mainHousePath()}
+          >
             <Warning testActive={isVisitorClick} />
             {/* 말풍선 start */}
             <Speech
@@ -176,7 +212,11 @@ const Main = () => {
           xBtnClickHandler={closeMakeupHouse}
           updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
+          initGiwaHouse={initGiwaHouse}
+          giwaStyle={giwaHouse}
+          setInitGiwaHouse={setInitGiwaHouse}
         ></RightSide>
+
         {/* 방명록 start */}
         <GuestBook
           openGusetBook={openGusetBook}
@@ -262,7 +302,8 @@ const StyledMain = styled.main`
 const HouseBox = styled.div`
   width: 770px;
   height: 679px;
-  background: url(${mainHouse}) no-repeat;
+  /* background: url(${mainHouse}) no-repeat; */
+  background: ${({ $houseImg }) => `url(${$houseImg})`};
   background-size: cover;
   position: absolute;
   left: 120px;
