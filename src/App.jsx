@@ -14,6 +14,7 @@ import Setting from "./pages/Setting/Setting";
 import MyPage from "./pages/MyPage/MyPage";
 import ChangePwd from "./pages/ChangePwd/ChangePwd";
 import ConfirmPwd from "./pages/ChangePwd/ConfirmPwd";
+import Error from "./pages/Error/Error";
 
 const routes = [
   {
@@ -58,22 +59,22 @@ const routes = [
   },
   {
     /* 마이페이지 - 보관함 */
-    path: "/StorageGiwa",
+    path: "/storageGiwa",
     element: <StorageGiwa />,
   },
   {
     /* 회원탈퇴 */
-    path: "/Withdrawal",
+    path: "/withdrawal",
     element: <Withdrawal />,
   },
   {
     /* 마이페이지 */
-    path: "/MyPage",
+    path: "/myPage",
     element: <MyPage />,
   },
   {
     /* 마이페이지 - 설정 */
-    path: "/Setting",
+    path: "/setting",
     element: <Setting />,
   },
   {
@@ -83,6 +84,11 @@ const routes = [
   {
     path: "/confirmPwd",
     element: <ConfirmPwd />,
+  },
+  /* 404 에러 */
+  {
+    path: "/error",
+    element: <Error />,
   },
 ];
 
