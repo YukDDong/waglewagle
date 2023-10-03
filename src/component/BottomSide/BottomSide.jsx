@@ -120,6 +120,7 @@ const BottomSide = ({
               <Issue width={23} height={25} />
             </button>
             {iconToggle[0].boolean && <IssueNews />}
+            <NewsNumber>{15}</NewsNumber>
           </li>
           <li type="capture">
             <button
@@ -152,6 +153,7 @@ const BottomSide = ({
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
+            <NewsNumber>{15}</NewsNumber>
           </ToggleBtn>
         )}
       </IconBar>
@@ -404,6 +406,11 @@ const Various = styled.ul`
   transition: width, 0.4s ease-in;
   li {
     position: relative;
+    &:nth-of-type(1) {
+      > em { 
+        left: 45px; top: 2px;
+      }
+    }
     > button {
       width: 60px;
       height: 60px;
@@ -452,4 +459,21 @@ const ToggleBtn = styled.button`
       /* transition: all, .2s; */
     }
   }
+  > em { 
+    left: 27px; top: -23px;
+  }
+`;
+
+const NewsNumber = styled.em`
+  position: absolute;
+  left: 25px; top: -25px;
+  padding: 5px 9px;
+  background-color: #F4361E;
+  border-radius: 13px;
+  color: #fff;
+  font-family: var(--font-Inter);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  box-shadow: 2px 2px 3px #96969647;
 `;
