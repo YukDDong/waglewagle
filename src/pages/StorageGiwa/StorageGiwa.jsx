@@ -10,7 +10,7 @@ import { ReactComponent as ToggleArrow } from "../../assets/common/toggle_arrow.
 import giwaData from "../../data/giwaStorage";
 
 /* 비교데이터 */
-let data = ['기와 목록 최신순', '기와 목록 과거순'];
+let data = ["기와 목록 최신순", "기와 목록 과거순"];
 const root = document.querySelector("#root");
 
 const StorageGiwa = () => {
@@ -18,16 +18,18 @@ const StorageGiwa = () => {
   const [showOptions, setShowOptions] = useState(false); // 셀렉트 boolean
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [selectData, setSelectData] = useState({
-    select: '기와 목록 최신순',
-    option: '기와 목록 과거순'
+    select: "기와 목록 최신순",
+    option: "기와 목록 과거순"
   });
 
   const openGusetBookModal = (e) => {
-    e.target.closest("li").classList.add('active');
+    document.querySelector("html,body").style.cssText = "overflow: hidden; padding: 0 17px 0 0";
+    e.target.closest("li").classList.add("active");
     setOpenGusetBook(true);
   };
   const closeGusetBookModal = () => {
-    document.querySelectorAll('.giwa_wrap li').forEach(element => {
+    document.querySelector("html,body").style.cssText = "overflow: auto; padding: 0";
+    document.querySelectorAll(".giwa_wrap li").forEach(element => {
       element.classList.remove("active");
     })
     setOpenGusetBook(false);
@@ -107,7 +109,7 @@ const Container = styled.div`
   padding: 240px 0 0 50px;
   position: relative;
   transition: all ease-in-out 1s;
-  left: ${({ open }) => open ? '-350px' : '0'};
+  left: ${({ open }) => open ? "-350px" : "0"};
   &:after {
     content: "";
     display: block;
@@ -192,16 +194,16 @@ const Select = styled.div`
     }
   ul {
     overflow: hidden;
-    height:${({ $show }) => $show ? 'auto' : '50px'}; 
+    height:${({ $show }) => $show ? "auto" : "50px"}; 
     position: absolute;
     width: 100%;
     top: 0; left: 0;
     background-color: #fff;
     z-index: 1;    
     border-radius: 14px;
-    box-shadow: ${({ $show }) => $show ? '3px 3px 10px #e4e1e15a' : 'none'}; 
+    box-shadow: ${({ $show }) => $show ? "3px 3px 10px #e4e1e15a" : "none"}; 
     box-sizing: border-box;
-    border: ${({ $show }) => $show ? '1px solid #EAEAEA' : '1px solid transparent'}; 
+    border: ${({ $show }) => $show ? "1px solid #EAEAEA" : "1px solid transparent"}; 
   }
   li {    
     height: 50px;
@@ -229,7 +231,7 @@ const Select = styled.div`
       width: 100%;
       height: 100%;
       display: block;
-      color: ${({ $show }) => $show ? '#B3B3B3' : 'B3B3B3'}; 
+      color: ${({ $show }) => $show ? "#B3B3B3" : "B3B3B3"}; 
       font-size: 14px;
       font-weight: 400;
       line-height: 28px; 
@@ -238,7 +240,7 @@ const Select = styled.div`
         position: absolute; right: 17%; 
         margin: auto; bottom: 0; top: 0;
         /* transition: transform, all .25s ease-in-out; */
-        transform: ${({ $show }) => $show ? 'rotate(0)' : 'rotate(-180deg)'}; 
+        transform: ${({ $show }) => $show ? "rotate(0)" : "rotate(-180deg)"}; 
       }
       &:hover {
         color: #535353;
@@ -337,9 +339,9 @@ const Dimmed = styled.div`
   height: 100%;
   background-color: rgba(32, 32, 32, 0.6);
   transition: all ease-in-out 1s;
-  /* display: ${({ open }) => open ? 'block' : 'none'}; */
-  opacity: ${({ open }) => open ? '1' : '0'};
-  z-index: ${({ open }) => open ? '100' : '-1'};
+  /* display: ${({ open }) => open ? "block" : "none"}; */
+  opacity: ${({ open }) => open ? "1" : "0"};
+  z-index: ${({ open }) => open ? "100" : "-1"};
   top: 0;
   left: 0;
 `;
