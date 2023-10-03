@@ -40,7 +40,7 @@ const Main = () => {
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [copyLinkPop, setCopyLinkPop] = useState(false); // 링크복사 팝업창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업창
-  const [completedGiwa, setCompletedGiwa] = useState(true); // 기와 등록 팝업창
+  const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
