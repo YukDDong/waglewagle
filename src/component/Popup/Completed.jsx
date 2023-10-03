@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import styled from 'styled-components';
 import { ReactComponent as CloseBtn } from "../../assets/common/closeBtn.svg";
@@ -32,8 +32,8 @@ const Completed = ({ setCompletedGiwa }) => {
           <img className="partten" src={Pattern} alt="패턴" />
         </Wrap>
         <Button>
-          <button type="button" onMouseOver={existMouseOver} onMouseLeave={mouseOut} >이미 있습니다</button>
-          <button type="button" onMouseOver={okayMouseOver} onMouseLeave={mouseOut}>좋습니다!</button>
+          <Link  onClick={() => setCompletedGiwa(false)} onMouseOver={existMouseOver} onMouseLeave={mouseOut} >이미 있습니다</Link>
+          <Link to="/join" onMouseOver={okayMouseOver} onMouseLeave={mouseOut}>좋습니다!</Link>
         </Button>
       </Contain>
     </Modal>
@@ -108,7 +108,7 @@ const Button = styled.div`
   transition: background-color, .2s;
   &.first {
     background-color: #18316F;
-    button {
+    a {
       &:nth-of-type(1) { color:#fff; }
       &:nth-of-type(2) { color:rgba(255, 255, 255, .3); }
       &:after { background-color: rgba(208, 215, 232, .2); }
@@ -116,13 +116,13 @@ const Button = styled.div`
   }
   &.two {
     background-color: #E75852;
-    button {
+    a {
       &:nth-of-type(1) { color:rgba(255, 255, 255, .3); }
       &:nth-of-type(2) { color:#fff; }
       &:after { background-color: rgba(208, 215, 232, .2); }
     }
   }
-  button {
+  a {
     width: 50%;
     padding: 30px 0;
     text-align: center;   
