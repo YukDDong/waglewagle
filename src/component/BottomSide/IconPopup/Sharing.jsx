@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as SharingIcon } from "../../../assets/bottomSide/out_sharing_icon.svg";
 import { useBgColor } from "../../../contexts/BackgroundColor";
 
-const Sharing = ({ setPopup }) => {
+const Sharing = ({ setPopup, setIconToggle, boleand }) => {
   const { bgColor } = useBgColor(); // BG Color context
   return (
     <Contain $bgColor={bgColor}>
@@ -10,7 +10,10 @@ const Sharing = ({ setPopup }) => {
         기와집을 널리 알리면, <br />
         기와를 더 받을수 있다네
       </p>
-      <button type="button" onClick={() => setPopup(true)}>
+      <button type="button" onClick={() => {
+        setPopup(true)
+        setIconToggle(boleand)
+      }}>
         <SharingIcon />
       </button>
     </Contain>

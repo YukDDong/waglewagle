@@ -16,7 +16,7 @@ import mainHouseBlack from "../../assets/main/giwa_house_black.png";
 import mainHousePink from "../../assets/main/giwa_house_pink.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
-import CopyLink from "../../component/Popup/CopyLink";
+// import CopyLink from "../../component/Popup/CopyLink";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
@@ -51,6 +51,20 @@ const Main = () => {
 
   const previousPath = location.state ? location.state.from : null;
 
+  /* 널리알리기 - URL 클립보드 복사하기 */
+  useEffect(() => {
+    let LinkCopy;
+    if (copyLinkPop) {
+      let textarea = document.createElement("textarea");
+      document.body.appendChild(textarea);
+      LinkCopy = window.location.href;
+      textarea.value = LinkCopy;
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+  }, [copyLinkPop])
+
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   useEffect(() => {
     if (previousPath === "/makeGiwaHouse") {
@@ -77,7 +91,7 @@ const Main = () => {
         });
         return;
       } else {
-        alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        // alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
         return;
       }
     });
@@ -210,7 +224,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -254,7 +268,15 @@ const Main = () => {
       {/* 기와 등록 완료 팝업창 end */}
 
       {/* 링크 복사 팝업창 start */}
-      {copyLinkPop && <CopyLink setCopyLinkPop={setCopyLinkPop} />}
+      {copyLinkPop &&
+        <ModalBasic
+          msg={"주소가 복사되었습니다.\n소중한 사람들에게 공유해주세요!"}
+          buttonText="확인"
+          onClickBtn={() => {
+            setCopyLinkPop(false)
+          }}
+        />
+      }
       {/* 링크 복사 팝업창 end */}
     </CaptureBox>
   );
@@ -284,7 +306,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;

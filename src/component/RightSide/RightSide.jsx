@@ -192,7 +192,7 @@ const Container = styled.aside`
   justify-content: center;
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
-  border-radius: 50px 0px 0px 50px;
+  border-radius: 30px 0px 0px 30px;
   position: absolute;
   right: -730px;
   top: 0;

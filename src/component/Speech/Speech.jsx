@@ -27,8 +27,8 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
             <span>를</span>
             <span className="space">남</span>
             <span>겨</span>
-            <span>주</span>
-            <span>시</span>
+            <span className="space">주</span>
+            <span>시</span> 
             <span>오</span>
             <span>!</span>
           </p>
@@ -39,11 +39,17 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
       ) : giwaLength < 12 ? (
         // 기와 12개 미만일때
         <p ref={speechRef}>
-          <span>환</span>
-          <span>영</span>
-          <span>하</span>
+          <span>기</span>
+          <span>와</span>
+          <span>집</span>
+          <span>을</span>
+          <span className="space">널</span>
+          <span>리</span>
+          <span className="space">알</span>
+          <span>리</span>
+          <span>시</span>
           <span>오</span>
-          <span>!</span>
+          <span>.</span>
         </p>
       ) : (
         // 기와 12개 이상일때
