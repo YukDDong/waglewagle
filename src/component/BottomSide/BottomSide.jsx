@@ -38,33 +38,33 @@ const BottomSide = ({
   useEffect(() => {
     openMakeup
       ? gsap.to(ContainRef.current, 1, {
-          y: "100px",
-          opacity: 0,
-          display: "none",
-          ease: "Power1.easeInOut",
-        })
+        y: "100px",
+        opacity: 0,
+        display: "none",
+        ease: "Power1.easeInOut",
+      })
       : gsap.to(ContainRef.current, 1, {
-          y: 0,
-          opacity: 1,
-          display: "flex",
-          ease: "Power1.easeInOut",
-        });
+        y: 0,
+        opacity: 1,
+        display: "flex",
+        ease: "Power1.easeInOut",
+      });
   }, [openMakeup]);
 
   useEffect(() => {
     openGusetBook
       ? gsap.to(ContainRef.current, 1, {
-          y: "100px",
-          opacity: 0,
-          display: "none",
-          ease: "Power1.easeInOut",
-        })
+        y: "100px",
+        opacity: 0,
+        display: "none",
+        ease: "Power1.easeInOut",
+      })
       : gsap.to(ContainRef.current, 1, {
-          y: 0,
-          opacity: 1,
-          display: "flex",
-          ease: "Power1.easeInOut",
-        });
+        y: 0,
+        opacity: 1,
+        display: "flex",
+        ease: "Power1.easeInOut",
+      });
   }, [openGusetBook]);
 
   const [iconToggle, setIconToggle] = useState(boleand);
@@ -136,7 +136,7 @@ const BottomSide = ({
             <button onClick={(e) => clickToggleOpen(e)}>
               <SharingIcon width={29} height={30} />
             </button>
-            {iconToggle[2].boolean && <Sharing setPopup={setPopup} />}
+            {iconToggle[2].boolean && <Sharing setPopup={setPopup} setIconToggle={setIconToggle} boleand={boleand} />}
           </li>
           <li>
             <button
@@ -179,11 +179,11 @@ const Contain = styled.div`
   > div {
     &:nth-of-type(1) {
       border: ${({ $bgColor }) =>
-        $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
+    $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
       box-shadow: ${({ $bgColor }) =>
-        $bgColor
-          ? "5px 5px 10px #ECE0B9"
-          : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
+    $bgColor
+      ? "5px 5px 10px #ECE0B9"
+      : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
       > a {
         &:hover {
           span {
@@ -215,10 +215,10 @@ const Contain = styled.div`
           }
           > button {
             border: ${({ $bgColor }) =>
-              $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
+    $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
             &:hover {
               background-color: ${({ $bgColor }) =>
-                $bgColor ? "#AE8960" : "#171A32"};
+    $bgColor ? "#AE8960" : "#171A32"};
               svg {
                 path {
                   stroke: #fff;
@@ -345,7 +345,7 @@ const IconBar = styled.div`
       &.inline {
         left: ${(props) => (props.$isOpen ? "2px" : "-1px")};
         transform: ${(props) =>
-          props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
+    props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
       }
     }
   }
