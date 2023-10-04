@@ -20,6 +20,7 @@ const Captrue = ({ setCapturePopBol, canvas, url }) => {
   }, []);
 
   useEffect(() => {
+    console.log(canvas)
     if (!canvas) return;
     setImg(canvas.toDataURL("image/png"));
   }, [canvas]);
@@ -84,32 +85,12 @@ const Captrue = ({ setCapturePopBol, canvas, url }) => {
             <img src={img} alt="사진" />
           </div>
         </BoradWrap>
-        <ul>
-          <li>
-            <button type="button" onClick={handleSaveCapture}>
-              <SaveImg />
-              <span>풍경 저장</span>
-            </button>
-          </li>
-          <li>
-            <button type="button">
-              <InstarLogo />
-              <span>인스타 공유</span>
-            </button>
-          </li>
-          <li>
-            <button type="button">
-              <InstarStory />
-              <span>스토리 공유</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" onClick={handleKaokaoShare}>
-              <KaKaoIcon />
-              <span>카톡 공유</span>
-            </button>
-          </li>
-        </ul>
+        <SavePoto>
+          <button type="button" onClick={handleSaveCapture}>
+            <SaveImg />
+            <span>풍경 저장</span>
+          </button>
+        </SavePoto>
       </Contain>
     </Modal>
   );
@@ -122,28 +103,7 @@ const Contain = styled.div`
   border-radius: 30px;
   background-color: #fff;
   padding: 60px 60px 50px;
-  box-sizing: border-box;
-  ul {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 35px;
-  }
-  li {
-    button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    span {
-      margin: 10px 0 0;
-      color: #222;
-      text-align: center;
-      font-family: var(--font-hunmin-saeron);
-      font-size: 18px;
-      font-weight: 600;
-      line-height: normal;
-    }
-  }
+  box-sizing: border-box;  
 `;
 
 const BoradWrap = styled.div`
@@ -181,4 +141,24 @@ const XBtnBox = styled.button`
   right: 30px;
   top: 30px;
   z-index: 1;
+`;
+
+const SavePoto = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 0 35px;
+  button {  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  span {
+    margin: 10px 0 0;
+    color: #222;
+    text-align: center;
+    font-family: var(--font-hunmin-saeron);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+  }
 `;
