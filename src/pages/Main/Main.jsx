@@ -67,9 +67,6 @@ const Main = () => {
 
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   useEffect(() => {
-    if (previousPath === "/makeGiwaHouse") {
-      setCopyLinkPop(true);
-    }
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : userInfo.boardId;
@@ -111,6 +108,9 @@ const Main = () => {
   };
 
   useEffect(() => {
+    if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
+      setCopyLinkPop(true);
+    }
     if (!giwaHouse.id) return;
     getGiwaListApi({
       broadId: giwaHouse.id,
