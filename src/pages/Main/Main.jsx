@@ -240,11 +240,10 @@ const Main = () => {
           setCapturePopBol={handleCaptureBtn}
           setPopup={setCopyLinkPop}
           url={url}
+          giwaTitle={giwaHouse.title}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
-        {/* 배경 end */}
-        <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
 
       {/* 캡쳐 팝업 start */}
