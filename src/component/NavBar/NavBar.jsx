@@ -5,11 +5,13 @@ import { ReactComponent as MenuBtn } from "../../assets/gnb/ic_baseline_menu.svg
 import { ReactComponent as ArrowBtn } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as MenuXBtn } from "../../assets/common/x-menu.svg";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
+import { removeItem } from "../../utils/localStorage";
 
 export default function NavBar({ isShowing = true }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -29,7 +31,9 @@ export default function NavBar({ isShowing = true }) {
   const logoutBtnClick = (e) => {
     e.preventDefault();
     dispatch(logout());
+    removeItem("AUTH");
     setIsLogin(false);
+    navigate("/login");
   };
 
   useEffect(() => {

@@ -18,11 +18,11 @@ import {
   changeGiwaHouseStyle,
   getGiwaHouse,
 } from "../../redux/actions/giwaHouseActions";
+import { makeGiwaHouse } from "../../redux/actions/userActions";
 
 const RightSide = ({
   openMakeup,
   xBtnClickHandler,
-  updateFunction,
   btnText,
   initGiwaHouse,
   giwaStyle,
@@ -52,7 +52,7 @@ const RightSide = ({
     if (isMakeGiwaHouse) {
       makeGiwaHouseApi({
         version: "v1",
-        title: "아무타이틀",
+        title: userInfo.username,
         broadStyle: {
           colorCode: giwaColor,
           backGroundCode: background,
@@ -60,8 +60,8 @@ const RightSide = ({
         },
         url: generateRandomString(20),
       }).then((result) => {
-        // broadId 가 안내려옴.. 내려와야 적용가능
         if (result.data.status === "SUCCESS") {
+          dispatch(makeGiwaHouse(result.data.data));
           navigate("/main", { state: { from: "/makeGiwaHouse" } });
           return;
         }
