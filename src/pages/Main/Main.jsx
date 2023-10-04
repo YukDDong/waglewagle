@@ -33,7 +33,6 @@ const Main = () => {
   const { url } = useParams();
   const userInfo = useSelector((state) => state.userReducer);
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
-  const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false); // 기와선택
   const [openNav, setOpenNav] = useState(true); // 네비
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
@@ -179,7 +178,7 @@ const Main = () => {
 
   console.log("giwaHouse", giwaHouse);
   return (
-    <CaptureBox ref={captureDivRef}>
+    <CaptureBox>
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -188,7 +187,10 @@ const Main = () => {
         />
       ) : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={giwaHouseStyle.background === 1 ? true : false}>
+      <ExDiv
+        $bgColor={giwaHouseStyle.background === 1 ? true : false}
+        ref={captureDivRef}
+      >
         <StyledMain>
           <HouseBox
             className={openMakeup || openGusetBook ? "left" : null}
@@ -233,18 +235,24 @@ const Main = () => {
           username={userInfo.username}
         ></GuestBook>
         {/* 방명록 end */}
-        <BottomSide
+
+        {/* 배경 start */}
+        <MainBg
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
-          openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={handleCaptureBtn}
-          setPopup={setCopyLinkPop}
-          url={url}
-          giwaTitle={giwaHouse.title}
+          background={giwaHouseStyle.background === 1 ? true : false}
         />
-        {/* 배경 start */}
-        <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
       </ExDiv>
+
+      <BottomSide
+        openMakeup={openMakeup}
+        openGusetBook={openGusetBook}
+        openMakeupHouse={openMakeupHouse}
+        setCapturePopBol={handleCaptureBtn}
+        setPopup={setCopyLinkPop}
+        url={url}
+        giwaTitle={giwaHouse.title}
+      />
 
       {/* 캡쳐 팝업 start */}
       {capturePopBol && (

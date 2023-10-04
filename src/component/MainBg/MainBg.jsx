@@ -10,8 +10,9 @@ import cloudNightCenter from "../../assets/main/cloud_night_2.png";
 import cloudNightRight from "../../assets/main/cloud_night_3.png";
 import moon from "../../assets/main/moon.png";
 
-const MainBg = ({ openMakeup, openGusetBook }) => {
-  const { bgColor } = useBgColor();
+const MainBg = ({ openMakeup, openGusetBook, background }) => {
+  // const { bgColor } = useBgColor();
+  const bgColor = background;
   return (
     <BgContainer className={openMakeup || openGusetBook ? "left" : null}>
       {!bgColor && <img src={moon} alt="달" />}
