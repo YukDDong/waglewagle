@@ -52,9 +52,9 @@ const MakeHopae = () => {
     // 호패명이 있는 경우
     else {
       // 최대 8자 이하로 작성해 주세요.
-      if (data.hopae.length > 8) {
+      if (data.hopae.length > 4) {
         updateData("isHopae", false);
-        setHopaeWarn("최대 8자 이하로 작성해 주세요.");
+        setHopaeWarn("최대 4자 이하로 작성해 주세요.");
       }
 
       // 8자 이하인 경우
