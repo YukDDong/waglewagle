@@ -164,7 +164,10 @@ const BottomSide = ({
 export default BottomSide;
 
 const Contain = styled.div`
-  width: 1250px;
+  width: 100%;
+  max-width: 1320px;
+  min-width: 1125px;
+  padding: 0 50px 0 20px;
   position: absolute;
   bottom: 50px;
   left: 50%;
@@ -442,7 +445,7 @@ const ToggleBtn = styled.button`
   width: 40px;
   height: 40px;
   position: absolute;
-  right: 0;
+  right: 30px;
   svg {
     position: absolute;
     left: 0;
