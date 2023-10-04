@@ -57,19 +57,16 @@ const Main = () => {
     if (copyLinkPop) {
       let textarea = document.createElement("textarea");
       document.body.appendChild(textarea);
-      LinkCopy = window.location.href;
+      LinkCopy = `${window.location.href}/${giwaHouse.url}`;
       textarea.value = LinkCopy;
       textarea.select();
       document.execCommand("copy");
       document.body.removeChild(textarea);
     }
-  }, [copyLinkPop])
+  }, [copyLinkPop]);
 
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   useEffect(() => {
-    if (previousPath === "/makeGiwaHouse") {
-      setCopyLinkPop(true);
-    }
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : userInfo.boardId;
@@ -111,6 +108,9 @@ const Main = () => {
   };
 
   useEffect(() => {
+    if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
+      setCopyLinkPop(true);
+    }
     if (!giwaHouse.id) return;
     getGiwaListApi({
       broadId: giwaHouse.id,
@@ -176,16 +176,10 @@ const Main = () => {
     await handleCapture();
     setCapturePopBol(true);
   };
+
+  console.log("giwaHouse", giwaHouse);
   return (
     <CaptureBox ref={captureDivRef}>
-      {previousPath === "/makeGiwaHouse" ? (
-        <Modal>
-          {/* 수정해야함 임시 */}
-          <ModalContent>
-            <Link to="/main">널리 알리기</Link>
-          </ModalContent>
-        </Modal>
-      ) : null}
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -224,7 +218,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -246,11 +240,10 @@ const Main = () => {
           setCapturePopBol={handleCaptureBtn}
           setPopup={setCopyLinkPop}
           url={url}
+          giwaTitle={giwaHouse.title}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
-        {/* 배경 end */}
-        <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
 
       {/* 캡쳐 팝업 start */}
@@ -268,15 +261,15 @@ const Main = () => {
       {/* 기와 등록 완료 팝업창 end */}
 
       {/* 링크 복사 팝업창 start */}
-      {copyLinkPop &&
+      {copyLinkPop && (
         <ModalBasic
           msg={"주소가 복사되었습니다.\n소중한 사람들에게 공유해주세요!"}
           buttonText="확인"
           onClickBtn={() => {
-            setCopyLinkPop(false)
+            setCopyLinkPop(false);
           }}
         />
-      }
+      )}
       {/* 링크 복사 팝업창 end */}
     </CaptureBox>
   );
@@ -306,7 +299,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;

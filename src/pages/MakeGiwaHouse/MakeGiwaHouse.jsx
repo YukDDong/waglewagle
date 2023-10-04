@@ -12,7 +12,6 @@ import { Tree } from "../../component/MainBg/MainBg";
 
 const MakeGiwaHouse = () => {
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
-  const userInfo = useSelector((state) => state.userReducer);
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
