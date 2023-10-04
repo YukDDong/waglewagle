@@ -225,7 +225,7 @@ const HeaderBox = styled.div`
 const SelectWrap = styled.div`
   overflow-x: hidden;
   min-height: 150px;
-  /* max-height: 400px; */
+  max-height: 600px;
   height: calc(100vh - 323px);
   margin: 15px 0 0;
   overflow-y: auto;
