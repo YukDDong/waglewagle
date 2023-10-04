@@ -57,7 +57,7 @@ const Main = () => {
     if (copyLinkPop) {
       let textarea = document.createElement("textarea");
       document.body.appendChild(textarea);
-      LinkCopy = window.location.href;
+      LinkCopy = `${window.location.href}/${giwaHouse.url}`;
       textarea.value = LinkCopy;
       textarea.select();
       document.execCommand("copy");
