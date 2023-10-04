@@ -445,7 +445,7 @@ const ToggleBtn = styled.button`
   width: 40px;
   height: 40px;
   position: absolute;
-  right: 30px;
+  right: 40px;
   svg {
     position: absolute;
     left: 0;
