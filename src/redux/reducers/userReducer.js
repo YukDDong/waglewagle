@@ -1,4 +1,9 @@
-import { LOGIN_USER, LOGOUT_USER, MAKE_HOPAE } from "../actions/userActions";
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+  MAKE_GIWA_HOUSE,
+  MAKE_HOPAE,
+} from "../actions/userActions";
 
 const initialState = {
   email: "",
@@ -28,6 +33,11 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+    case MAKE_GIWA_HOUSE:
+      return {
+        ...state,
+        boardId: action.payload.broadId,
       };
     default:
       return state;
