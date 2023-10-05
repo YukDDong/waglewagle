@@ -5,7 +5,7 @@ import styled, { keyframes } from "styled-components";
 import speechBubble from "../../assets/main/speech_bubble.svg";
 import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 
-const Speech = ({ setOpenModal, url, giwaLength }) => {
+const Speech = ({ setOpenModal, url, giwaLength, openMakeup, openGusetBook }) => {
   const speechRef = useRef();
   useEffect(() => {
     gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
@@ -16,8 +16,8 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
     });
   }, [giwaLength]);
 
-  return (    
-    <Container>
+  return (
+    <Container className={openMakeup || openGusetBook ? "on" : null}>
       {url ? (
         // 방문자
         <>
@@ -28,7 +28,7 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
             <span className="space">남</span>
             <span>겨</span>
             <span className="space">주</span>
-            <span>시</span> 
+            <span>시</span>
             <span>오</span>
             <span>!</span>
           </p>
@@ -96,6 +96,10 @@ const Container = styled.div`
   background: url(${speechBubble}) 50% 50% no-repeat;
   background-size: cover;
   text-align: center;
+  transition: opacity, ease-in-out 1s;
+  &.on {
+    opacity: 0;
+  }
   > button {     
     &.giwa_plus {
       position: absolute;

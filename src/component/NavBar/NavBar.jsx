@@ -55,9 +55,7 @@ export default function NavBar({ isShowing = true }) {
 
   return (
     <Nav className={isShowing ? null : "no-showing"}>
-      <NavLogo>
-        <Link to="/main">와글와글</Link>
-      </NavLogo>
+      <NavLogo>와글와글</NavLogo>
       <NavMenu>
         <NavMenuTop>
           {menuOpen ? (
@@ -135,12 +133,10 @@ const NavLogo = styled.p`
   font-family: var(--font-hunmin);
   position: absolute;
   left: 19vw;
-  a {
-    color: #222222;
-    font-size: 30px;
-    line-height: 55px;
-    font-weight: 600;
-  }
+  color: #222222;
+  font-size: 30px;
+  line-height: 55px;
+  font-weight: 600;
 `;
 
 const NavMenu = styled.div`

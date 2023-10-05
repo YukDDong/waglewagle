@@ -202,6 +202,8 @@ const Main = () => {
               setOpenModal={setOpenModal}
               url={url} //url이 있는 경우(방문자), url이 없는 경우(주인)
               giwaLength={giwaList.length} //기와의 개수
+              openMakeup={openMakeup}
+              openGusetBook={openGusetBook}
             />
             {/* 말풍선 end */}
             {/* 기와 버튼 start */}
@@ -220,7 +222,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -307,7 +309,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;

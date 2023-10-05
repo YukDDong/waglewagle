@@ -20,7 +20,6 @@ const Captrue = ({ setCapturePopBol, canvas, url }) => {
   }, []);
 
   useEffect(() => {
-    console.log(canvas)
     if (!canvas) return;
     setImg(canvas.toDataURL("image/png"));
   }, [canvas]);

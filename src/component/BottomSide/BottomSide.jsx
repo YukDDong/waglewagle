@@ -39,33 +39,33 @@ const BottomSide = ({
   useEffect(() => {
     openMakeup
       ? gsap.to(ContainRef.current, 1, {
-          y: "100px",
-          opacity: 0,
-          display: "none",
-          ease: "Power1.easeInOut",
-        })
+        y: "100px",
+        opacity: 0,
+        display: "none",
+        ease: "Power1.easeInOut",
+      })
       : gsap.to(ContainRef.current, 1, {
-          y: 0,
-          opacity: 1,
-          display: "flex",
-          ease: "Power1.easeInOut",
-        });
+        y: 0,
+        opacity: 1,
+        display: "block",
+        ease: "Power1.easeInOut",
+      });
   }, [openMakeup]);
 
   useEffect(() => {
     openGusetBook
       ? gsap.to(ContainRef.current, 1, {
-          y: "100px",
-          opacity: 0,
-          display: "none",
-          ease: "Power1.easeInOut",
-        })
+        y: "100px",
+        opacity: 0,
+        display: "none",
+        ease: "Power1.easeInOut",
+      })
       : gsap.to(ContainRef.current, 1, {
-          y: 0,
-          opacity: 1,
-          display: "flex",
-          ease: "Power1.easeInOut",
-        });
+        y: 0,
+        opacity: 1,
+        display: "block",
+        ease: "Power1.easeInOut",
+      });
   }, [openGusetBook]);
 
   const [iconToggle, setIconToggle] = useState(boleand);
@@ -90,21 +90,23 @@ const BottomSide = ({
 
   return (
     <Contain ref={ContainRef} $bgColor={bgColor}>
-      <History>
-        <img src={KigImg} alt="세종대왕 이미지" />
-        <div>
-          <strong>내가 아는 한글의 역사는 어디까지?</strong>
-          <p>풀면서 배우는 한국 역사능력 고사</p>
-        </div>
-        <VisitLink
-          href="https://hangeul.naver.com/hangeulmattteutquiz"
-          target="_blank"
-        >
-          <span>방문하기</span>
-          <VisitIcon />
-        </VisitLink>
-      </History>
-      <IconBar $isOpen={iconIsOpen}>
+      {!url && (
+        <History className="history">
+          <img src={KigImg} alt="세종대왕 이미지" />
+          <div>
+            <strong>내가 아는 한글의 역사는 어디까지?</strong>
+            <p>풀면서 배우는 한국 역사능력 고사</p>
+          </div>
+          <VisitLink
+            href="https://hangeul.naver.com/hangeulmattteutquiz"
+            target="_blank"
+          >
+            <span>방문하기</span>
+            <VisitIcon />
+          </VisitLink>
+        </History>
+      )}
+      <IconBar $isOpen={iconIsOpen} className="icon_bar">
         <Name>
           <SideBoard className="side1" />
           <div>
@@ -171,26 +173,30 @@ const BottomSide = ({
 export default BottomSide;
 
 const Contain = styled.div`
-  width: 1250px;
+  width: 100%;
+  height: 102px;
+  max-width: 1320px;
+  min-width: 1125px;
+  padding: 0 50px 0 20px;
   position: absolute;
   bottom: 50px;
   left: 50%;
   margin: auto;
   box-sizing: border-box;
   transform: translate(-50%, 0);
-  display: flex;
-  justify-content: space-between;
+  /* display: flex; */
+  /* justify-content: space-between; */
   opacity: 1;
   z-index: 3;
   /* bgColor 조건 가르기 */
   > div {
-    &:nth-of-type(1) {
+    &.history {
       border: ${({ $bgColor }) =>
-        $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
+    $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
       box-shadow: ${({ $bgColor }) =>
-        $bgColor
-          ? "5px 5px 10px #ECE0B9"
-          : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
+    $bgColor
+      ? "5px 5px 10px #ECE0B9"
+      : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
       > a {
         &:hover {
           span {
@@ -212,7 +218,7 @@ const Contain = styled.div`
         }
       }
     }
-    &:nth-of-type(2) {
+    &.icon_bar {
       ul {
         li {
           &:nth-of-type(3) {
@@ -221,11 +227,9 @@ const Contain = styled.div`
             }
           }
           > button {
-            border: ${({ $bgColor }) =>
-              $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
+            border: ${({ $bgColor }) => $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
             &:hover {
-              background-color: ${({ $bgColor }) =>
-                $bgColor ? "#AE8960" : "#171A32"};
+              background-color: ${({ $bgColor }) => $bgColor ? "#AE8960" : "#171A32"};
               svg {
                 path {
                   stroke: #fff;
@@ -264,6 +268,7 @@ const Contain = styled.div`
 const History = styled.div`
   width: 582px;
   position: relative;
+  float: left;
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.65);
@@ -335,8 +340,10 @@ const VisitLink = styled.a`
 /* 오른쪽 사이드 바 */
 const IconBar = styled.div`
   width: 430px;
+  float: right;
   display: flex;
   align-items: center;
+  margin: 15px 0 0;
   justify-content: space-between;
   > div {
     width: ${(props) => (props.$isOpen ? "1px" : "368px")};
@@ -352,7 +359,7 @@ const IconBar = styled.div`
       &.inline {
         left: ${(props) => (props.$isOpen ? "2px" : "-1px")};
         transform: ${(props) =>
-          props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
+    props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
       }
     }
   }
@@ -450,7 +457,7 @@ const ToggleBtn = styled.button`
   width: 40px;
   height: 40px;
   position: absolute;
-  right: 0;
+  right: 40px;
   svg {
     position: absolute;
     left: 0;
