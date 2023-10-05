@@ -8,9 +8,10 @@ import {
   selectTextOption,
   writeGuestText,
 } from "../../../redux/actions/giwaActions";
+import { ClickedBox } from "./SelectGiwa";
 
 // 기본 데이터
-const font = ["노토 산스", "훈민정음"];
+const font = ["노토 산스", "훈민정음", "지마켓"];
 export const fontColorDefault = [
   "#EA7E00",
   "#8B76C1",
@@ -46,6 +47,9 @@ const WriteGuestText = () => {
       break;
     case 2:
       selectedFont = "EBS Hunminjeongeum";
+      break;
+    case 3:
+      selectedFont = "Gmarket Sans";
       break;
     default:
       break;
@@ -192,7 +196,9 @@ const WriteGuestText = () => {
                     style={{ backgroundColor: color }}
                     onClick={fontColorChange}
                     value={index + 1}
-                  ></button>
+                  >
+                    {index + 1 === giwaInfo.fontColor ? <ClickedBox /> : null}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -325,17 +331,36 @@ const Color = styled.div`
     margin: 15px 0;
   }
   ul {
+    width: 100%;
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
   }
-  button {
+  li {
     width: 45px;
     height: 45px;
+  }
+  button {
+    display: flex;
+    width: 100%;
+    height: 100%;
     background-color: #368c8f;
     border: 1px solid #e6e6e6;
     border-radius: 6px;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    > div {
+      border-radius: 6px;
+      border: 1.5px solid #1748c1;
+      background-color: inherit;
+      &:after {
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        background-size: 15px;
+      }
+    }
   }
 `;
 

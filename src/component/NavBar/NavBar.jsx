@@ -87,9 +87,7 @@ export default function NavBar({ isShowing = true }) {
             </MyInfoItemFirst>
             <MyInfoItem>
               <LinkMypage $isLogin={isLogin}>마이페이지</LinkMypage>
-              <StyledLink onClick={handleGoToUnius}>
-                유니어스에 대하여
-              </StyledLink>
+              <StyledLink onClick={handleGoToUnius}>유니어스 소개</StyledLink>
               <StyledLink>문의하기</StyledLink>
             </MyInfoItem>
             {isLogin && (

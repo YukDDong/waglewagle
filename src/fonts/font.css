@@ -13,26 +13,26 @@
 }
 @font-face {
   font-family: "EBS Hunminjeongeum";
-  font-style: normal; 
+  font-style: normal;
   font-weight: 300;
   src: url("./woff/EBSHunminjeongeum-L.woff") format("woff");
 }
 /* 훈민정음 새론체 */
 @font-face {
   font-family: "EBS HMJE Saeron";
-  font-style: normal; 
-  font-weight: 600;  
+  font-style: normal;
+  font-weight: 600;
   src: url("./woff/EBSHMJESaeron-SB.woff") format("woff");
 }
 @font-face {
   font-family: "EBS HMJE Saeron";
-  font-style: normal; 
+  font-style: normal;
   font-weight: 400;
   src: url("./woff/EBSHMJESaeron-R.woff") format("woff");
 }
 @font-face {
   font-family: "EBS HMJE Saeron";
-  font-style: normal; 
+  font-style: normal;
   font-weight: 300;
   src: url("./woff/EBSHMJESaeron-L.woff") format("woff");
 }
@@ -61,4 +61,26 @@
   font-style: normal;
   font-weight: 400;
   src: url("./woff/Inter-Regular.woff") format("woff");
+}
+
+/* Gmarket */
+@font-face {
+  font-family: "Gmarket Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: url("./woff/GmarketSansTTFLight.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gmarket Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./woff/GmarketSansTTFMedium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gmarket Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./woff/GmarketSansTTFBold.woff") format("woff");
 }

@@ -8,7 +8,6 @@ import WriteGuestText, { englishRegex } from "./WriteGuestText";
 import NameContain from "./NameMade";
 import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
 import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
-import giwaComplated from "../../../assets/modal/giwa_complated.png";
 import { addGiwaApi } from "../../../apis/giwa";
 
 const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
