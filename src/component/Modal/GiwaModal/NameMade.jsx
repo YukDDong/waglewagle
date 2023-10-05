@@ -3,14 +3,44 @@ import styled from "styled-components";
 import SelectTitle from "../../SelectTitle/SelectTitle";
 import { ReactComponent as Booklet } from "./../../../assets/modal/booklet.svg";
 import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
-import { englishRegex, profanity } from "./WriteGuestText";
+import { englishRegex, fontColorDefault, profanity } from "./WriteGuestText";
 import { useDispatch } from "react-redux";
 import { writeNickName } from "../../../redux/actions/giwaActions";
 
-const NameContain = ({ text }) => {
+const NameContain = ({ text, giwaInfo }) => {
   const dispatch = useDispatch();
   const [nickName, setNickName] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+
+  let selectedFont;
+  let selectedSort;
+
+  switch (giwaInfo.font) {
+    case 1:
+      selectedFont = "Noto Sans KR";
+      break;
+    case 2:
+      selectedFont = "EBS Hunminjeongeum";
+      break;
+    default:
+      break;
+  }
+
+  switch (giwaInfo.sort) {
+    case 1:
+      selectedSort = "left";
+      break;
+    case 2:
+      selectedSort = "center";
+      break;
+    case 3:
+      selectedSort = "right";
+      break;
+    default:
+      break;
+  }
+
+  console.log("giwaInfo", giwaInfo);
 
   const checkProfanity = (text) => {
     let censoredText = text;
@@ -50,7 +80,11 @@ const NameContain = ({ text }) => {
   };
   return (
     <NameWrap>
-      <Text>
+      <Text
+        $font={selectedFont}
+        $sort={selectedSort}
+        $fontColor={fontColorDefault[giwaInfo.fontColor - 1]}
+      >
         <Booklet />
         <p>{text}</p>
       </Text>
@@ -107,12 +141,13 @@ const Text = styled.div`
     height: 250px;
     position: relative;
     padding: 0 10px 0 0;
-    color: #000;
+    color: ${(props) => props.$fontColor};
+    text-align: ${(props) => props.$sort};
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 30px;
-    font-family: var(--font-Inter);
+    font-family: ${(props) => props.$font};
     overflow-y: auto;
     &::-webkit-scrollbar {
       width: 6px;

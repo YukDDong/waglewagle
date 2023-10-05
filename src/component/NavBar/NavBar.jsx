@@ -46,6 +46,13 @@ export default function NavBar({ isShowing = true }) {
     }
   }, [isShowing]);
 
+  const handleGoToUnius = () => {
+    window.open(
+      "https://www.notion.so/Intro-1db7a52c5a9f4e899f17ef620c63678b",
+      "_blank"
+    );
+  };
+
   return (
     <Nav className={isShowing ? null : "no-showing"}>
       <NavLogo>와글와글</NavLogo>
@@ -80,7 +87,7 @@ export default function NavBar({ isShowing = true }) {
             </MyInfoItemFirst>
             <MyInfoItem>
               <LinkMypage $isLogin={isLogin}>마이페이지</LinkMypage>
-              <StyledLink>사그업에 대하여</StyledLink>
+              <StyledLink onClick={handleGoToUnius}>유니어스 소개</StyledLink>
               <StyledLink>문의하기</StyledLink>
             </MyInfoItem>
             {isLogin && (
