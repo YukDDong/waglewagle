@@ -4,11 +4,14 @@ import SelectTitle from "./../../SelectTitle/SelectTitle";
 import { ReactComponent as FontsArrow } from "./../../../assets/common/fonts_arrow.svg";
 import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { writeGuestText } from "../../../redux/actions/giwaActions";
+import {
+  selectTextOption,
+  writeGuestText,
+} from "../../../redux/actions/giwaActions";
 
 // 기본 데이터
-const font = ["노토 산스", "value2", "value3"];
-const fontColorDefault = [
+const font = ["노토 산스", "훈민정음"];
+export const fontColorDefault = [
   "#EA7E00",
   "#8B76C1",
   "#2BBDA3",
@@ -17,13 +20,6 @@ const fontColorDefault = [
   "#000000",
 ];
 const rangeData = ["왼쪽 정렬", "중앙 정렬", "오른쪽 정렬"];
-
-// 사용자 선택 데이터
-let selectData = {
-  font: "노토 산스",
-  range: "왼쪽 정렬",
-  color: "#6A8AF7",
-};
 
 export const profanity = [/씨발/g, /개새끼/g, /놈/g, /년/g, /닥쳐/g, /애미/g];
 
@@ -38,9 +34,36 @@ const WriteGuestText = () => {
   const dispatch = useDispatch();
   const giwaInfo = useSelector((state) => state.giwaReducer);
   const [show, setShow] = useState(false); // 셀렉트
-  const [select, setSelect] = useState(selectData);
   const [text, setText] = useState("");
   const [checkText, setCheckText] = useState(false);
+
+  let selectedFont;
+  let selectedSort;
+
+  switch (giwaInfo.font) {
+    case 1:
+      selectedFont = "Noto Sans KR";
+      break;
+    case 2:
+      selectedFont = "EBS Hunminjeongeum";
+      break;
+    default:
+      break;
+  }
+
+  switch (giwaInfo.sort) {
+    case 1:
+      selectedSort = "left";
+      break;
+    case 2:
+      selectedSort = "center";
+      break;
+    case 3:
+      selectedSort = "right";
+      break;
+    default:
+      break;
+  }
 
   useEffect(() => {
     if (!giwaInfo.text) return;
@@ -50,27 +73,29 @@ const WriteGuestText = () => {
 
   /* 폰트 변경 */
   const handleOnChangeSelectValue = (e) => {
-    const { innerText } = e.target;
-    setSelect({
-      ...select,
-      font: innerText,
-    });
+    dispatch(
+      selectTextOption({
+        font: Number(e.target.value),
+      })
+    );
   };
 
   /* 폰트 컬러 변경 */
-  const fontColorChange = (color) => {
-    setSelect({
-      ...select,
-      color: color.color,
-    });
+  const fontColorChange = (e) => {
+    dispatch(
+      selectTextOption({
+        fontColor: Number(e.target.value),
+      })
+    );
   };
 
   /* 폰트 정렬 변경 */
-  const rangeChange = (range) => {
-    setSelect({
-      ...select,
-      range: range.range,
-    });
+  const rangeChange = (e) => {
+    dispatch(
+      selectTextOption({
+        sort: Number(e.target.value),
+      })
+    );
   };
 
   const checkProfanity = (text) => {
@@ -116,22 +141,26 @@ const WriteGuestText = () => {
               setText(e.target.value);
             }}
             onBlur={handleTextBlur}
+            $font={selectedFont}
+            $sort={selectedSort}
+            $fontColor={fontColorDefault[giwaInfo.fontColor - 1]}
           />
-          <p>
-            {select.font}, {select.color}, {select.range}
-          </p>
         </TextContain>
         <div>
           <Fonts>
             <SelectTitle title={"글꼴선택"} fontSize="18px" weight={500} />
             <SelectBox onClick={() => setShow((prev) => !prev)} $show={show}>
               <Label>
-                {select.font}
+                {font[giwaInfo.font - 1]}
                 <FontsArrow />
               </Label>
               <SelectOptions $show={show}>
-                {font.map((item) => (
-                  <Option key={item} onClick={handleOnChangeSelectValue}>
+                {font.map((item, index) => (
+                  <Option
+                    key={item}
+                    onClick={handleOnChangeSelectValue}
+                    value={index + 1}
+                  >
                     {item}
                   </Option>
                 ))}
@@ -141,9 +170,13 @@ const WriteGuestText = () => {
           <Range>
             <SelectTitle title={"정렬"} fontSize="18px" weight={500} />
             <ul>
-              {rangeData.map((range) => (
+              {rangeData.map((range, index) => (
                 <li key={range}>
-                  <button onClick={() => rangeChange({ range })}>
+                  <button
+                    onClick={rangeChange}
+                    value={index + 1}
+                    className={giwaInfo.sort === index + 1 ? "selected" : null}
+                  >
                     {range}
                   </button>
                 </li>
@@ -153,11 +186,12 @@ const WriteGuestText = () => {
           <Color>
             <SelectTitle title={"글자색상"} fontSize="18px" weight={500} />
             <ul>
-              {fontColorDefault.map((color) => (
+              {fontColorDefault.map((color, index) => (
                 <li key={color}>
                   <button
                     style={{ backgroundColor: color }}
-                    onClick={() => fontColorChange({ color })}
+                    onClick={fontColorChange}
+                    value={index + 1}
                   ></button>
                 </li>
               ))}
@@ -224,15 +258,16 @@ const TextArea = styled.textarea`
   width: 100%;
   height: 100%;
   resize: none;
-  font-family: var(--font-Inter);
+  font-family: ${(props) => props.$font};
   border: none;
-  color: #000;
+  color: ${(props) => props.$fontColor};
   outline: 0;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 27px;
   background-color: transparent;
+  text-align: ${(props) => props.$sort};
   &::placeholder {
     color: #bbb;
     text-align: center;
@@ -271,13 +306,18 @@ const Range = styled.div`
   }
   button {
     padding: 10px 11px 11px;
-    border: 1px solid #1748c1;
-    color: #1748c1;
+    color: #bdbdbd;
     border-radius: 6px;
-    background: #fff;
+    border: 1px solid #e6e6e6;
+    background: #fafafa;
     font-size: 16px;
     font-weight: 500;
     box-sizing: border-box;
+    &.selected {
+      border: 1px solid #1748c1;
+      color: #1748c1;
+      background: #fff;
+    }
   }
 `;
 const Color = styled.div`
