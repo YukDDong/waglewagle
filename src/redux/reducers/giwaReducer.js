@@ -1,4 +1,5 @@
 import {
+  INIT_GIWA,
   SELECT_GIWA,
   SELECT_TEXT_OPTION,
   WRITE_GUEST_TEXT,
@@ -37,6 +38,8 @@ export const giwaReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
+    case INIT_GIWA:
+      return initialState;
 
     default:
       return state;

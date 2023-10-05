@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
 import Modal from "../Modal";
 import SelectGiwa, { giwaPatternItems } from "./SelectGiwa";
@@ -9,8 +9,10 @@ import NameContain from "./NameMade";
 import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
 import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
 import { addGiwaApi } from "../../../apis/giwa";
+import { initGiwa } from "../../../redux/actions/giwaActions";
 
 const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
+  const dispatch = useDispatch();
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
 
@@ -28,6 +30,7 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
       },
     }).then((result) => {
       if (result.data.status === "SUCCESS") {
+        dispatch(initGiwa());
         onXBtnClick();
         setCompletedGiwa(true);
       }
@@ -79,7 +82,7 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
                     src={
                       giwaPatternItems.filter(
                         (item) => item.id === selectedGiwa.number
-                      )[0].imgSrc
+                      )[0]?.imgSrc
                     }
                     alt="기와 선택완료"
                   />
@@ -118,7 +121,7 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
                     src={
                       giwaPatternItems.filter(
                         (item) => item.id === selectedGiwa.number
-                      )[0].imgSrc
+                      )[0]?.imgSrc
                     }
                     alt="기와 선택완료"
                   />
