@@ -6,7 +6,6 @@ import SelectTitle from "../../SelectTitle/SelectTitle";
 import GiwaLuck from "./GiwaLuck";
 import { ReactComponent as Hat } from "../../../assets/main/kigHat.svg";
 import checkIcon from "../../../assets/common/check_icon.svg";
-import selectedGiwaPath from "../../../assets/modal/selected_giwa.svg";
 
 export const giwaPatternItems = [
   {

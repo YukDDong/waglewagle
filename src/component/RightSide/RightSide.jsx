@@ -19,6 +19,7 @@ import {
   getGiwaHouse,
 } from "../../redux/actions/giwaHouseActions";
 import { makeGiwaHouse } from "../../redux/actions/userActions";
+import { useBgColor } from "../../contexts/BackgroundColor";
 
 const RightSide = ({
   openMakeup,
@@ -36,9 +37,12 @@ const RightSide = ({
   const { giwaColor, background, friend } = useSelector(
     (state) => state.giwaHouseReducer
   );
+  const { changeDaytime, changeNight, bgColor } = useBgColor(); // BG Color context
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
+    e.target.id === 'night' && changeNight()
+    e.target.id === 'day' && changeDaytime()
     const value = Number(e.target.value);
     dispatch(
       changeGiwaHouseStyle({
@@ -119,6 +123,7 @@ const RightSide = ({
               id={"giwaIndigo"}
               checked={giwaColor === 1}
               onChange={handleChangeGiwaStyle}
+              onClick={() => { console.log('fddfdfdfdf') }}
             />
             <SelectItem
               label="먹색 기와"
@@ -158,6 +163,7 @@ const RightSide = ({
               checked={background === 2}
               onChange={handleChangeGiwaStyle}
               img={night}
+              onClick={changeNight}
             />
           </ItemLists>
           <SelectTitle title="친구 선택" />
@@ -275,6 +281,10 @@ const Btn = styled.button`
   color: white;
   background-color: var(--btn-main-color);
   border-radius: 10px;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    background-color: #D24640;
+  }
   &:disabled {
     color: #bbb;
     background-color: #f2f2f2;
