@@ -71,7 +71,7 @@ const GiwaName = styled.ul`
     height: 10%;
     position: absolute;
     top: 0;
-    z-index: -1;
+    /* z-index: -1; */
     /* transform: rotate(35deg); */
     /* background-color: green; */
     &:nth-of-type(1) {
