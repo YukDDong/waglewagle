@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import BgProvider from "./contexts/BackgroundColor";
+import { ThemeProvider } from "styled-components";
+import theme from "./style/DeviceTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +17,9 @@ root.render(
       <React.StrictMode>
         <GlobalStyles />
         <BgProvider>
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
         </BgProvider>
       </React.StrictMode>
     </PersistGate>

@@ -26,6 +26,8 @@ import html2canvas from "html2canvas";
 import { getGiwaHouse } from "../../redux/actions/giwaHouseActions";
 import { getItem } from "../../utils/localStorage";
 import { EventSourcePolyfill } from "event-source-polyfill";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -205,7 +207,14 @@ const Main = () => {
   };
 
   return (
-    <CaptureBox>
+    <Container>
+
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
+      
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -307,13 +316,13 @@ const Main = () => {
         />
       )}
       {/* 링크 복사 팝업창 end */}
-    </CaptureBox>
+    </Container>
   );
 };
 
 export default Main;
 
-const CaptureBox = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 100vh;
 `;
