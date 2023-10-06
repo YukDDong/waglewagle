@@ -10,8 +10,8 @@ import cloudNightCenter from "../../assets/main/cloud_night_2.png";
 import cloudNightRight from "../../assets/main/cloud_night_3.png";
 import moon from "../../assets/main/moon.png";
 
-const MainBg = ({ openMakeup, openGusetBook, background }) => {
-  const bgColor = background;
+const MainBg = ({ openMakeup, openGusetBook }) => {
+  const { bgColor } = useBgColor();
   return (
     <BgContainer className={openMakeup || openGusetBook ? "left" : null}>
       <BgWrap className={bgColor ? "day bg_wrap" : "night bg_wrap"}>
