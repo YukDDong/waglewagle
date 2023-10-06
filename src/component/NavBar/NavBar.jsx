@@ -4,6 +4,7 @@ import { ReactComponent as MenuBtn } from "../../assets/gnb/ic_baseline_menu.svg
 // import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
 import { ReactComponent as ArrowBtn } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as MenuXBtn } from "../../assets/common/x-menu.svg";
+import { ReactComponent as Logo } from "../../assets/common/logo_txt.svg";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -124,17 +125,12 @@ const Nav = styled.nav`
   }
 `;
 
-const NavLogo = styled.p`
-  width: 180px;
-  height: 55px;
+const NavLogo = styled(Logo)`
+  width: 140px;
+  height: 45px;
   text-align: center;
-  font-family: var(--font-hunmin);
   position: absolute;
   left: 19vw;
-  color: #222222;
-  font-size: 30px;
-  line-height: 55px;
-  font-weight: 600;
 `;
 
 const NavMenu = styled.div`
