@@ -9,6 +9,7 @@ const GiwaButton = ({
   url,
   setIsVisitorClick,
 }) => {
+  console.log(giwaList);
   return (
     <GiwaContainer>
       <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px">

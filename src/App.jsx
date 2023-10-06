@@ -5,7 +5,6 @@ import Join from "./pages/Join/Join";
 import Main from "./pages/Main/Main";
 import MakeHopae from "./pages/MakeHopae/MakeHopae";
 import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
-import Sample from "./pages/Sample/Sample";
 import FindPwd from "./pages/FindPwd/FindPwd";
 import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
 import StorageGiwa from "./pages/StorageGiwa/StorageGiwa";
@@ -15,6 +14,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import ChangePwd from "./pages/ChangePwd/ChangePwd";
 import ConfirmPwd from "./pages/ChangePwd/ConfirmPwd";
 import Error from "./pages/Error/Error";
+import AuthRoute from "./component/AuthRoute/AuthRoute";
 
 const routes = [
   {
@@ -23,15 +23,15 @@ const routes = [
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <AuthRoute loginOption={false} component={<Login />} />,
   },
   {
     path: "/join",
-    element: <Join />,
+    element: <AuthRoute loginOption={false} component={<Join />} />,
   },
   {
     path: "/main",
-    element: <Main />,
+    element: <AuthRoute loginOption={true} component={<Main />} />,
   },
   {
     path: "/main/:url",
@@ -39,51 +39,47 @@ const routes = [
   },
   {
     path: "/makeHopae",
-    element: <MakeHopae />,
+    element: <AuthRoute loginOption={true} component={<MakeHopae />} />,
   },
   {
     path: "/makeGiwaHouse",
-    element: <MakeGiwaHouse />,
+    element: <AuthRoute loginOption={true} component={<MakeGiwaHouse />} />,
   },
   {
     path: "/kakao_login",
-    element: <KakaoLogin />,
-  },
-  {
-    path: "/sample",
-    element: <Sample />,
+    element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
   },
   {
     path: "/findPwd",
-    element: <FindPwd />,
+    element: <AuthRoute loginOption={false} component={<FindPwd />} />,
   },
   {
     /* 마이페이지 - 보관함 */
     path: "/storageGiwa",
-    element: <StorageGiwa />,
+    element: <AuthRoute loginOption={true} component={<StorageGiwa />} />,
   },
   {
     /* 회원탈퇴 */
     path: "/withdrawal",
-    element: <Withdrawal />,
+    element: <AuthRoute loginOption={true} component={<Withdrawal />} />,
   },
   {
     /* 마이페이지 */
     path: "/myPage",
-    element: <MyPage />,
+    element: <AuthRoute loginOption={true} component={<MyPage />} />,
   },
   {
     /* 마이페이지 - 설정 */
     path: "/setting",
-    element: <Setting />,
+    element: <AuthRoute loginOption={true} component={<Setting />} />,
   },
   {
     path: "/changePwd",
-    element: <ChangePwd />,
+    element: <AuthRoute loginOption={true} component={<ChangePwd />} />,
   },
   {
     path: "/confirmPwd",
-    element: <ConfirmPwd />,
+    element: <AuthRoute loginOption={true} component={<ConfirmPwd />} />,
   },
   /* 404 에러 */
   {
