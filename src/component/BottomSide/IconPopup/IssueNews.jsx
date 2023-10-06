@@ -41,7 +41,7 @@ const IssueNews = ({ backgroundState }) => {
   const { bgColor } = useBgColor(); // BG Color context
 
   return (
-    <IssueWrap $bgColor={bgColor}>
+    <IssueWrap $bgColor={bgColor} className="issue_news">
       <strong>소식통</strong>
       <ul>
         {

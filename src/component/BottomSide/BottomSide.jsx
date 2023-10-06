@@ -34,6 +34,7 @@ const BottomSide = ({
   const userInfo = useSelector((state) => state.userReducer);
   const { bgColor } = useBgColor(); // BG Color context
   const [iconIsOpen, setIconIsOpen] = useState(false);
+  const [iconToggle, setIconToggle] = useState(boleand);
   const ContainRef = useRef();
 
   useEffect(() => {
@@ -68,7 +69,6 @@ const BottomSide = ({
       });
   }, [openGusetBook]);
 
-  const [iconToggle, setIconToggle] = useState(boleand);
 
   const clickToggleOpen = (e) => {
     const currentType = e.target.closest("li").getAttribute("type");
@@ -87,6 +87,14 @@ const BottomSide = ({
     });
     setIconToggle(changeBoolean);
   };
+
+  useEffect(() => {
+    document.addEventListener("mouseup", e => {
+      if ((!e.target.closest(".issue_news") && document.querySelector(".issue_news")) || !e.target.closest(".sharing") && document.querySelector(".sharing")) {
+        setIconToggle(boleand)
+      }
+    });
+  }, [])
 
   return (
     <Contain ref={ContainRef} $bgColor={bgColor}>
