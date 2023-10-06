@@ -11,9 +11,7 @@ import cloudNightRight from "../../assets/main/cloud_night_3.png";
 import moon from "../../assets/main/moon.png";
 
 const MainBg = ({ openMakeup, openGusetBook, background }) => {
-  // const { bgColor } = useBgColor();
   const bgColor = background;
-  console.log(bgColor)
   return (
     <BgContainer className={openMakeup || openGusetBook ? "left" : null}>
       <BgWrap className={bgColor ? "day bg_wrap" : "night bg_wrap"}>
