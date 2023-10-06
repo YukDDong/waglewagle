@@ -10,9 +10,9 @@ const Withdrawal = () => {
       <NavBar />
       <Main>
         <MainDiv>
-          <Title title="회원 탈퇴 하실껀가요?ㅠㅠ" />
-          <Sub>회원탈퇴후 기와집에 등록된 모든 기와는 삭제됩니다.</Sub>
-          <Button buttonText="회원 탈퇴 하기" />
+          <Title title="회원을 탈퇴하실 건가요?ㅠㅠ" />
+          <Sub>회원 탈퇴후 기와집에 등록된 모든 기와는 삭제됩니다.</Sub>
+          <Button buttonText="회원 탈퇴" />
         </MainDiv>
       </Main>
     </>
