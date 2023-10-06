@@ -37,7 +37,13 @@ const RightSide = ({
   const { giwaColor, background, friend } = useSelector(
     (state) => state.giwaHouseReducer
   );
-  const { changeDaytime, changeNight, bgColor } = useBgColor(); // BG Color context
+
+  useEffect(() => {
+    const giwaSvg = document.querySelector(".giwa_svg");
+    openMakeup
+      ? (giwaSvg.style.pointerEvents = "none")
+      : (giwaSvg.style.pointerEvents = "initial")
+  }, [openMakeup])
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;

@@ -11,7 +11,7 @@ const GiwaButton = ({
 }) => {
   return (
     <GiwaContainer>
-      <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px">
+      <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px" className="giwa_svg">
         {giwaList.map((giwa, index) => (
           <path
             key={giwa.id}
