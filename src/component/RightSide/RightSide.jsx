@@ -41,8 +41,8 @@ const RightSide = ({
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
-    e.target.id === 'night' && changeNight()
-    e.target.id === 'day' && changeDaytime()
+    // e.target.id === 'night' && changeNight()
+    // e.target.id === 'day' && changeDaytime()
     const value = Number(e.target.value);
     dispatch(
       changeGiwaHouseStyle({
