@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { ReactComponent as SharingIcon } from "../../../assets/bottomSide/out_sharing_icon.svg";
-import { useBgColor } from "../../../contexts/BackgroundColor";
 
-const Sharing = ({ setPopup, setIconToggle, boleand }) => {
-  const { bgColor } = useBgColor(); // BG Color context
+const Sharing = ({ setPopup, setIconToggle, boleand, background }) => {
+  const bgColor = background;
   return (
     <Contain $bgColor={bgColor} className="sharing">
       <p>

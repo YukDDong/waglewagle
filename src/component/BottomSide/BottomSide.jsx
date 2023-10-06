@@ -28,14 +28,15 @@ const BottomSide = ({
   openMakeupHouse,
   setCapturePopBol,
   setPopup,
+  background,
   url,
   giwaTitle,
 }) => {
   const userInfo = useSelector((state) => state.userReducer);
-  const { bgColor } = useBgColor(); // BG Color context
   const [iconIsOpen, setIconIsOpen] = useState(false);
   const [iconToggle, setIconToggle] = useState(boleand);
   const ContainRef = useRef();
+  const bgColor = background;
 
   useEffect(() => {
     openMakeup
@@ -130,7 +131,7 @@ const BottomSide = ({
             <button onClick={(e) => clickToggleOpen(e)}>
               <Issue width={23} height={25} />
             </button>
-            {iconToggle[0].boolean && <IssueNews />}
+            {iconToggle[0].boolean && <IssueNews background={background} />}
             <NewsNumber>{15}</NewsNumber>
           </li>
           <li type="capture">
@@ -149,6 +150,7 @@ const BottomSide = ({
             </button>
             {iconToggle[2].boolean && (
               <Sharing
+                background={background}
                 setPopup={setPopup}
                 setIconToggle={setIconToggle}
                 boleand={boleand}

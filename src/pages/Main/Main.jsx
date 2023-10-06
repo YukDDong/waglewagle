@@ -54,7 +54,6 @@ const Main = () => {
   const [initGiwaHouse, setInitGiwaHouse] = useState();
   const previousPath = location.state ? location.state.from : null;
   const token = getItem("AUTH");
-  const { setBgColor } = useBgColor();
 
   /* 널리알리기 - URL 클립보드 복사하기 */
   useEffect(() => {
@@ -137,15 +136,6 @@ const Main = () => {
         break;
     }
   };
-
-  useEffect(() => {
-    if (giwaHouseStyle.background === 2) {
-      setBgColor(true);
-    } else {
-      setBgColor(false);
-    }
-  }, [])
-
 
   useEffect(() => {
     if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
@@ -287,19 +277,19 @@ const Main = () => {
         <MainBg
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
-          // background={giwaHouseStyle.background === 1 ? true : false}
-        />
-        <BottomSide
-          openMakeup={openMakeup}
-          openGusetBook={openGusetBook}
-          openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={handleCaptureBtn}
-          setPopup={setCopyLinkPop}
-          // background={giwaHouseStyle.background === 1 ? true : false}
-          url={url}
-          giwaTitle={giwaHouse.title}
+          background={giwaHouseStyle.background === 1 ? true : false}
         />
       </ExDiv>
+      <BottomSide
+        openMakeup={openMakeup}
+        openGusetBook={openGusetBook}
+        openMakeupHouse={openMakeupHouse}
+        setCapturePopBol={handleCaptureBtn}
+        setPopup={setCopyLinkPop}
+        background={giwaHouseStyle.background === 1 ? true : false}
+        url={url}
+        giwaTitle={giwaHouse.title}
+      />
 
       {/* 캡쳐 팝업 start */}
       {capturePopBol && (

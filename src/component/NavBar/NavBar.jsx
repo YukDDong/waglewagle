@@ -133,6 +133,7 @@ const NavLogo = styled(Logo)`
   text-align: center;
   position: absolute;
   left: 19vw;
+  top: 2vw;
 `;
 
 const NavMenu = styled.div`
