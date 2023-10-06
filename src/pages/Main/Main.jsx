@@ -28,6 +28,7 @@ import { getItem } from "../../utils/localStorage";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
+import { useBgColor } from "../../contexts/BackgroundColor";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -53,6 +54,7 @@ const Main = () => {
   const [initGiwaHouse, setInitGiwaHouse] = useState();
   const previousPath = location.state ? location.state.from : null;
   const token = getItem("AUTH");
+  const { setBgColor } = useBgColor();
 
   /* 널리알리기 - URL 클립보드 복사하기 */
   useEffect(() => {
@@ -137,6 +139,15 @@ const Main = () => {
   };
 
   useEffect(() => {
+    if (giwaHouseStyle.background === 2) {
+      setBgColor(true);
+    } else {
+      setBgColor(false);
+    }
+  }, [])
+
+
+  useEffect(() => {
     if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
       setCopyLinkPop(true);
     }
@@ -195,6 +206,7 @@ const Main = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
   };
+
   const closeGusetBookModal = () => {
     setOpenNav(true);
     setOpenGusetBook(false);
@@ -255,7 +267,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -277,7 +289,7 @@ const Main = () => {
         <MainBg
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
-          background={giwaHouseStyle.background === 1 ? true : false}
+          // background={giwaHouseStyle.background === 1 ? true : false}
         />
         <BottomSide
           openMakeup={openMakeup}
@@ -285,6 +297,7 @@ const Main = () => {
           openMakeupHouse={openMakeupHouse}
           setCapturePopBol={handleCaptureBtn}
           setPopup={setCopyLinkPop}
+          // background={giwaHouseStyle.background === 1 ? true : false}
           url={url}
           giwaTitle={giwaHouse.title}
         />
@@ -343,7 +356,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
