@@ -73,8 +73,8 @@ const ChangePwd = () => {
       {/* Modal */}
       {(visibleModal)
         ? <ModalBasic
-          msg = {"비밀번호를 성공적으로!\n변경했습니다!"}
-          buttonText="로그인 하러가기"
+          msg = {"비밀번호를 성공적으로\n변경했습니다!"}
+          buttonText="로그인 화면으로 이동"
           visibleFtn={visibleFtn}
           onClickBtn={handleClick}
         />

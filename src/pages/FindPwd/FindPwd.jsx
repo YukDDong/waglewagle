@@ -91,7 +91,7 @@ const FindPwd = () => {
           {/* Title */}
           <Title title="비밀번호 찾기" />
           <Sub>비밀번호를 분실하셨나요?</Sub>
-          <Sub>이메일로 보낸 링크를 타고 들어와서 비밀번호 변경이 가능합니다.</Sub>
+          <Sub>이메일 주소를 통해 임시 비밀번호를 발급받으실 수 있습니다.</Sub>
 
           <MainDivBottom>
 

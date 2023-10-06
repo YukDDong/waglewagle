@@ -127,7 +127,7 @@ const Join = () => {
       {isModalOpen ? (
         <ModalBasic
           msg="회원가입이 완료되었습니다."
-          buttonText="확인"
+          buttonText="로그인 화면으로 이동"
           onClickBtn={handleClick}
           visibleFtn={visibleFtn}
         />
@@ -137,7 +137,7 @@ const Join = () => {
       {emailCheckModal ? (
         isValid.isEmeilCheck ? (
           <ModalBasic
-            msg="사용가능한 이메일입니다."
+            msg="사용할 수 있는 이메일입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
             // visibleFtn={visibleFtn}
