@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import giwaNews from "../../../assets/bottomSide/giwa_news.png";
-import { useBgColor } from "../../../contexts/BackgroundColor";
 
 const newsData = [
   {
@@ -36,9 +35,9 @@ const newsData = [
   },
 ]
 
-const IssueNews = ({ backgroundState }) => {
+const IssueNews = ({ backgroundState, background }) => {
   const [news, setNews] = useState(newsData);
-  const { bgColor } = useBgColor(); // BG Color context
+  const bgColor = background;
 
   return (
     <IssueWrap $bgColor={bgColor} className="issue_news">
