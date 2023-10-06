@@ -10,7 +10,7 @@ const BgColorProvider = ({ children }) => {
   const changeNight = () => setBgColor(false)
 
   return (
-    <BgColor.Provider value={{ bgColor, changeBgColor, changeDaytime, changeNight }}>
+    <BgColor.Provider value={{ bgColor, changeBgColor, changeDaytime, changeNight, setBgColor }}>
       {children}
     </BgColor.Provider>
   );

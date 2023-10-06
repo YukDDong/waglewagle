@@ -123,7 +123,6 @@ const RightSide = ({
               id={"giwaIndigo"}
               checked={giwaColor === 1}
               onChange={handleChangeGiwaStyle}
-              onClick={() => { console.log('fddfdfdfdf') }}
             />
             <SelectItem
               label="먹색 기와"
@@ -163,7 +162,6 @@ const RightSide = ({
               checked={background === 2}
               onChange={handleChangeGiwaStyle}
               img={night}
-              onClick={changeNight}
             />
           </ItemLists>
           <SelectTitle title="친구 선택" />
