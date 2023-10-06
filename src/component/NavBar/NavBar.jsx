@@ -110,8 +110,7 @@ const Nav = styled.nav`
   width: 100%;
   height: 120px;
   display: flex;
-  align-items: center;
-  /* padding-left: 19vw; */
+  /* align-items: center; */
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -122,6 +121,9 @@ const Nav = styled.nav`
   &.no-showing {
     top: -150px;
     opacity: 0;
+  }
+  @media ${(props) => props.theme.device.mobile} {
+    display: none;
   }
 `;
 
