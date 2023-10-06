@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
-import { removeItem } from "../../utils/localStorage";
+import { removeItem } from "../../utils/storage";
 
 export default function NavBar({ isShowing = true }) {
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export default function NavBar({ isShowing = true }) {
     e.preventDefault();
     dispatch(logout());
     removeItem("AUTH");
+    removeItem("USERINFO");
     setIsLogin(false);
     navigate("/login");
   };

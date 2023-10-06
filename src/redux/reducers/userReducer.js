@@ -12,6 +12,7 @@ const initialState = {
   loggedIn: false,
   memberType: "",
   boardId: 0,
+  autoLogin: false,
 };
 
 // user의 로그인 유지와 로그아웃을 위한 Reducer
@@ -26,6 +27,7 @@ export const userReducer = (state = initialState, action) => {
         email: action.payload.email,
         memberType: action.payload.memberType,
         loggedIn: true,
+        autoLogin: action.payload.autoLogin,
       };
     case LOGOUT_USER:
       return initialState;

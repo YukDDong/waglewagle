@@ -26,3 +26,8 @@ export const makeHopaeApi = async (payload) => {
   const response = await client.post("/api/v1/users/hopae", payload);
   return response;
 };
+
+export const loginSocialApi = async (payload) => {
+  const response = await client.post("/api/v1/users/login/oauth", payload);
+  return response;
+};
