@@ -1,5 +1,7 @@
 import {
+  INIT_GIWA,
   SELECT_GIWA,
+  SELECT_TEXT_OPTION,
   WRITE_GUEST_TEXT,
   WRITE_NICKNAME,
 } from "../actions/giwaActions";
@@ -7,7 +9,7 @@ import {
 const initialState = {
   number: null, //shapeCode
   text: "", //message
-  fontColor: 1, //fontColorCode
+  fontColor: 6, //fontColorCode
   font: 1, //fontSize
   sort: 1, //sortCode
   nickname: "", //nickName
@@ -31,6 +33,13 @@ export const giwaReducer = (state = initialState, action) => {
         ...state,
         nickname: action.payload,
       };
+    case SELECT_TEXT_OPTION:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case INIT_GIWA:
+      return initialState;
 
     default:
       return state;

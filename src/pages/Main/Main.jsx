@@ -17,15 +17,17 @@ import mainHousePink from "../../assets/main/giwa_house_pink.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
 // import CopyLink from "../../component/Popup/CopyLink";
-import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
-import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector, useDispatch } from "react-redux";
 import ModalBasic from "../../component/Modal/ModalBasic";
-import Modal from "../../component/Modal/Modal";
 import Warning from "../../component/Warning/Warning";
 import html2canvas from "html2canvas";
 import { getGiwaHouse } from "../../redux/actions/giwaHouseActions";
+import { getItem } from "../../utils/localStorage";
+import { EventSourcePolyfill } from "event-source-polyfill";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Main = () => {
   const location = useLocation();
@@ -33,7 +35,6 @@ const Main = () => {
   const { url } = useParams();
   const userInfo = useSelector((state) => state.userReducer);
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
-  const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false); // 기와선택
   const [openNav, setOpenNav] = useState(true); // 네비
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
@@ -48,8 +49,8 @@ const Main = () => {
   const captureDivRef = useRef();
   const [img, setImg] = useState();
   const [initGiwaHouse, setInitGiwaHouse] = useState();
-
   const previousPath = location.state ? location.state.from : null;
+  const token = getItem("AUTH");
 
   /* 널리알리기 - URL 클립보드 복사하기 */
   useEffect(() => {
@@ -65,10 +66,7 @@ const Main = () => {
     }
   }, [copyLinkPop]);
 
-  // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   useEffect(() => {
-    // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
-    // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : userInfo.boardId;
     getGiwaHouseApi(requestData).then((result) => {
       if (result.data.status === "SUCCESS") {
@@ -86,9 +84,38 @@ const Main = () => {
           background: giwaHouseData.broadStyle.backGroundCode,
           friend: giwaHouseData.broadStyle.friendCode,
         });
+        if (!url) {
+          const eventSource = new EventSourcePolyfill(
+            `${BASE_URL}/api/v1/notification/connect`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          eventSource.onmessage = async (e) => {
+            const res = await e.data;
+            const parsedData = JSON.parse(res);
+            console.log(parsedData);
+          };
+
+          eventSource.onerror = (e) => {
+            // 종료 또는 에러 발생 시 할 일
+            eventSource.close();
+
+            if (e.error) {
+              // 에러 발생 시 할 일
+            }
+
+            if (e.target.readyState === EventSourcePolyfill.CLOSED) {
+              // 종료 시 할 일
+            }
+          };
+        }
         return;
       } else {
-        // alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
         return;
       }
     });
@@ -177,9 +204,8 @@ const Main = () => {
     setCapturePopBol(true);
   };
 
-  console.log("giwaHouse", giwaHouse);
   return (
-    <CaptureBox ref={captureDivRef}>
+    <CaptureBox>
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -188,7 +214,10 @@ const Main = () => {
         />
       ) : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={giwaHouseStyle.background === 1 ? true : false}>
+      <ExDiv
+        $bgColor={giwaHouseStyle.background === 1 ? true : false}
+        ref={captureDivRef}
+      >
         <StyledMain>
           <HouseBox
             className={openMakeup || openGusetBook ? "left" : null}
@@ -220,7 +249,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -235,18 +264,24 @@ const Main = () => {
           username={userInfo.username}
         ></GuestBook>
         {/* 방명록 end */}
-        <BottomSide
+
+        {/* 배경 start */}
+        <MainBg
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
-          openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={handleCaptureBtn}
-          setPopup={setCopyLinkPop}
-          url={url}
-          giwaTitle={giwaHouse.title}
+          background={giwaHouseStyle.background === 1 ? true : false}
         />
-        {/* 배경 start */}
-        <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
       </ExDiv>
+
+      <BottomSide
+        openMakeup={openMakeup}
+        openGusetBook={openGusetBook}
+        openMakeupHouse={openMakeupHouse}
+        setCapturePopBol={handleCaptureBtn}
+        setPopup={setCopyLinkPop}
+        url={url}
+        giwaTitle={giwaHouse.title}
+      />
 
       {/* 캡쳐 팝업 start */}
       {capturePopBol && (
@@ -301,7 +336,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
