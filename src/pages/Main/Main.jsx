@@ -68,60 +68,60 @@ const Main = () => {
     }
   }, [copyLinkPop]);
 
-  // useEffect(() => {
-  //   const requestData = url ? url : userInfo.boardId;
-  //   getGiwaHouseApi(requestData).then((result) => {
-  //     if (result.data.status === "SUCCESS") {
-  //       const giwaHouseData = result.data.data;
-  //       setGiwaHouse(giwaHouseData);
-  //       dispatch(
-  //         getGiwaHouse({
-  //           giwaColor: giwaHouseData.broadStyle.colorCode,
-  //           background: giwaHouseData.broadStyle.backGroundCode,
-  //           friend: giwaHouseData.broadStyle.friendCode,
-  //         })
-  //       );
-  //       setInitGiwaHouse({
-  //         giwaColor: giwaHouseData.broadStyle.colorCode,
-  //         background: giwaHouseData.broadStyle.backGroundCode,
-  //         friend: giwaHouseData.broadStyle.friendCode,
-  //       });
-  //       if (!url) {
-  //         const eventSource = new EventSourcePolyfill(
-  //           `${BASE_URL}/api/v1/notification/connect`,
-  //           {
-  //             headers: {
-  //               Authorization: `Bearer ${token}`,
-  //             },
-  //           }
-  //         );
+  useEffect(() => {
+    const requestData = url ? url : userInfo.boardId;
+    getGiwaHouseApi(requestData).then((result) => {
+      if (result.data.status === "SUCCESS") {
+        const giwaHouseData = result.data.data;
+        setGiwaHouse(giwaHouseData);
+        dispatch(
+          getGiwaHouse({
+            giwaColor: giwaHouseData.broadStyle.colorCode,
+            background: giwaHouseData.broadStyle.backGroundCode,
+            friend: giwaHouseData.broadStyle.friendCode,
+          })
+        );
+        setInitGiwaHouse({
+          giwaColor: giwaHouseData.broadStyle.colorCode,
+          background: giwaHouseData.broadStyle.backGroundCode,
+          friend: giwaHouseData.broadStyle.friendCode,
+        });
+        if (!url) {
+          const eventSource = new EventSourcePolyfill(
+            `${BASE_URL}/api/v1/notification/connect`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
-  //         eventSource.onmessage = async (e) => {
-  //           const res = await e.data;
-  //           const parsedData = JSON.parse(res);
-  //           console.log(parsedData);
-  //         };
+          eventSource.onmessage = async (e) => {
+            const res = await e.data;
+            const parsedData = JSON.parse(res);
+            console.log(parsedData);
+          };
 
-  //         eventSource.onerror = (e) => {
-  //           // 종료 또는 에러 발생 시 할 일
-  //           eventSource.close();
+          eventSource.onerror = (e) => {
+            // 종료 또는 에러 발생 시 할 일
+            eventSource.close();
 
-  //           if (e.error) {
-  //             // 에러 발생 시 할 일
-  //           }
+            if (e.error) {
+              // 에러 발생 시 할 일
+            }
 
-  //           if (e.target.readyState === EventSourcePolyfill.CLOSED) {
-  //             // 종료 시 할 일
-  //           }
-  //         };
-  //       }
-  //       return;
-  //     } else {
-  //       alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
-  //       return;
-  //     }
-  //   });
-  // }, []);
+            if (e.target.readyState === EventSourcePolyfill.CLOSED) {
+              // 종료 시 할 일
+            }
+          };
+        }
+        return;
+      } else {
+        alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        return;
+      }
+    });
+  }, []);
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -137,26 +137,25 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
-    //   setCopyLinkPop(true);
-    // }
-    // if (!giwaHouse.id) return;
-    // getGiwaListApi({
-    //   broadId: giwaHouse.id,
-    //   reverse: true,
-    // })
-    //   .then((result) => {
-    //     if (result.data.status === "SUCCESS") {
-    //       setGiwaList(result.data.data);
-    //     }
-
-    //     if (result.data.status === "FAIL") {
-    //       setGiwaList([]);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("오류:", error);
-    //   });
+    if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
+      setCopyLinkPop(true);
+    }
+    if (!giwaHouse.id) return;
+    getGiwaListApi({
+      broadId: giwaHouse.id,
+      reverse: true,
+    })
+      .then((result) => {
+        if (result.data.status === "SUCCESS") {
+          setGiwaList(result.data.data);
+        }
+        if (result.data.status === "FAIL") {
+          setGiwaList([]);
+        }
+      })
+      .catch((error) => {
+        console.error("오류:", error);
+      });
   }, [giwaHouse, completedGiwa]);
 
   useEffect(() => {
@@ -229,9 +228,7 @@ const Main = () => {
       >
         <StyledMain>
           <div className={openMakeup || openGusetBook ? "left" : null}>
-            <HouseBox
-              $houseImg={mainHousePath()}
-            >
+            <HouseBox $houseImg={mainHousePath()}>
               <Warning testActive={isVisitorClick} />
               {/* 말풍선 start */}
               <Speech
@@ -259,7 +256,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -344,7 +341,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
@@ -368,7 +365,7 @@ export const StyledMain = styled.main`
     top: 18%;
     right: 0;
     bottom: 0;
-    margin: auto;  
+    margin: auto;
     z-index: 2;
     transition: all ease-in-out 1s;
   }
