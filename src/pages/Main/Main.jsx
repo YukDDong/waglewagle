@@ -24,7 +24,7 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import Warning from "../../component/Warning/Warning";
 import html2canvas from "html2canvas";
 import { getGiwaHouse } from "../../redux/actions/giwaHouseActions";
-import { getItem } from "../../utils/localStorage";
+import { getItem } from "../../utils/storage";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";

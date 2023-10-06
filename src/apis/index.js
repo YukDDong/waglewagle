@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getItem } from "../utils/localStorage.js";
+import { getItem } from "../utils/storage.js";
 
 // 서버 통신을 위한 BASE_URL을 env 환경변수로 뺐습니다
 const BASE_URL = process.env.REACT_APP_BASE_URL;

@@ -15,6 +15,10 @@ import ChangePwd from "./pages/ChangePwd/ChangePwd";
 import ConfirmPwd from "./pages/ChangePwd/ConfirmPwd";
 import Error from "./pages/Error/Error";
 import AuthRoute from "./component/AuthRoute/AuthRoute";
+import { useEffect } from "react";
+import { getItem } from "./utils/storage";
+import { useDispatch } from "react-redux";
+import { login } from "./redux/actions/userActions";
 
 const routes = [
   {
@@ -86,11 +90,24 @@ const routes = [
     path: "/error",
     element: <Error />,
   },
+  {
+    path: "*",
+    element: <Error />,
+  },
 ];
 
 const router = createBrowserRouter(routes);
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const autoLogin = getItem("autoLogin");
+    if (!autoLogin) return;
+
+    const userInfo = getItem("USERINFO");
+
+    dispatch(login(userInfo));
+  }, []);
   return <RouterProvider router={router} />;
 }
 
