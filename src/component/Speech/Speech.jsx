@@ -88,7 +88,6 @@ const animation = keyframes`
 const Container = styled.div`
   width: 242px;
   height: 64px;
-  background-color: red;
   position: absolute;
   z-index: 2;
   right: 25%;

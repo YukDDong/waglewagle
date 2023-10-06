@@ -13,15 +13,27 @@ import moon from "../../assets/main/moon.png";
 const MainBg = ({ openMakeup, openGusetBook, background }) => {
   // const { bgColor } = useBgColor();
   const bgColor = background;
+  console.log(bgColor)
   return (
     <BgContainer className={openMakeup || openGusetBook ? "left" : null}>
-      {!bgColor && <img src={moon} alt="달" />}
-      <CloudWrap>
-        <img src={bgColor ? cloudLeft : cloudNightLeft} alt="왼쪽 구름" />
-        <img src={bgColor ? cloudCenter : cloudNightCenter} alt="센터 구름" />
-        <img src={bgColor ? cloudRight : cloudNightRight} alt="오른쪽 구름" />
-      </CloudWrap>
-      <Tree>
+      <BgWrap className={bgColor ? "day bg_wrap" : "night bg_wrap"}>
+        <div>
+          <figure>
+            <img src={cloudLeft} alt="왼쪽 구름" />
+            <img src={cloudCenter} alt="센터 구름" />
+            <img src={cloudRight} alt="오른쪽 구름" />
+          </figure>
+        </div>
+        <div>
+          {!bgColor && <img src={moon} alt="달" className="moon" />}
+          <figure>
+            <img src={cloudNightLeft} alt="왼쪽 구름" />
+            <img src={cloudNightCenter} alt="센터 구름" />
+            <img src={cloudNightRight} alt="오른쪽 구름" />
+          </figure>
+        </div>
+      </BgWrap>
+      <Tree className="tree">
         <img src={pineTreeLeft} alt="왼쪽 소나무" />
         <img src={pineTreeRight} alt="오른쪽 소나무" />
       </Tree>
@@ -37,59 +49,60 @@ const BgContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  transition: all ease-in-out 1s;
   &.left {
-    > img {
-      left: -60px;
+    .bg_wrap {
+      left: calc(50% - 310px);
     }
-    > div {
-      &:nth-of-type(1) {
-        left: calc(50% - 310px);
-      }
-      &:nth-of-type(2) {
-        img {
-          &:nth-of-type(1) {
-            left: -13%;
-          }
-        }
+    .tree {
+      img:nth-of-type(1) {
+        left: -15%;
       }
     }
-  }
-  > img {
-    position: absolute;
-    left: -1px;
-    top: -110px;
-    z-index: 1;
-    transition: all ease-in-out 1s;
   }
 `;
 
-const CloudWrap = styled.div`
+const BgWrap = styled.div`
   width: 100%;
   min-width: 1920px;
   height: 100%;
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 0);    
   transition: all ease-in-out 1s;
-  img {
+  .moon {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    &:nth-of-type(1) {
-      left: 1%;
-      top: -55%;
-    }
-    &:nth-of-type(2) {
-      top: -65%;
-      left: -1%;
-      right: 0;
-    }
-    &:nth-of-type(3) {
-      right: -60px;
-      top: -50%;
+    left: -1px;
+    top: -110px;
+    z-index: 1;
+  }
+  &.day {
+    > div:nth-of-type(1) { opacity: 1; }
+    > div:nth-of-type(2) { opacity: 0; }
+  }
+  &.night {
+    > div:nth-of-type(1) { opacity: 0; }
+    > div:nth-of-type(2) { opacity: 1; }
+  }
+  figure {
+    img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      &:nth-of-type(1) {
+        left: 1%;
+        top: -55%;
+      }
+      &:nth-of-type(2) {
+        top: -65%;
+        left: -1%;
+        right: 0;
+      }
+      &:nth-of-type(3) {
+        right: -60px;
+        top: -50%;
+      }
     }
   }
 `;
