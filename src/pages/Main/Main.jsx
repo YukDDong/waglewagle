@@ -249,7 +249,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -271,17 +271,16 @@ const Main = () => {
           openGusetBook={openGusetBook}
           background={giwaHouseStyle.background === 1 ? true : false}
         />
+        <BottomSide
+          openMakeup={openMakeup}
+          openGusetBook={openGusetBook}
+          openMakeupHouse={openMakeupHouse}
+          setCapturePopBol={handleCaptureBtn}
+          setPopup={setCopyLinkPop}
+          url={url}
+          giwaTitle={giwaHouse.title}
+        />
       </ExDiv>
-
-      <BottomSide
-        openMakeup={openMakeup}
-        openGusetBook={openGusetBook}
-        openMakeupHouse={openMakeupHouse}
-        setCapturePopBol={handleCaptureBtn}
-        setPopup={setCopyLinkPop}
-        url={url}
-        giwaTitle={giwaHouse.title}
-      />
 
       {/* 캡쳐 팝업 start */}
       {capturePopBol && (
@@ -336,7 +335,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
