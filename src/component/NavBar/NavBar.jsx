@@ -126,8 +126,8 @@ const Nav = styled.nav`
 `;
 
 const NavLogo = styled(Logo)`
-  width: 180px;
-  height: 55px;
+  width: 140px;
+  height: 45px;
   text-align: center;
   position: absolute;
   left: 19vw;
