@@ -266,7 +266,6 @@ const Main = () => {
         ></GuestBook>
         {/* 방명록 end */}
 
-        {/* 배경 start */}
         <MainBg
           openMakeup={openMakeup}
           openGusetBook={openGusetBook}
@@ -342,7 +341,7 @@ export const ExDiv = styled.div`
   overflow: hidden;
 `;
 
-const StyledMain = styled.main`
+export const StyledMain = styled.main`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -366,7 +365,7 @@ const StyledMain = styled.main`
   }
 `;
 
-const HouseBox = styled.div`
+export const HouseBox = styled.div`
   width: 100%;
   height: 100%;
   background: ${({ $houseImg }) => `url(${$houseImg})`};
@@ -382,56 +381,4 @@ const HouseBox = styled.div`
       top: 18%;
     }
   }
-`;
-
-const WarnMessage = styled.div`
-  width: 378px;
-  height: 54px;
-  position: absolute;
-  left: calc(50% - 250px);
-  top: -70px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #ece0b9;
-  border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(244, 233, 203, 0.5);
-  backdrop-filter: blur(5px);
-  font-family: var(--font-hunmin);
-  color: #222;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 54px;
-  text-align: center;
-`;
-
-const HaetaeWrap = styled.div`
-  width: 120px;
-  position: absolute;
-  top: 11%;
-  left: 47%;
-  z-index: 2;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const Test = styled.div`
-  position: relative;
-  z-index: 10;
-  > button {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    font-size: 20px;
-    font-weight: 600;
-  }
-`;
-
-const Test2 = styled.button`
-  position: absolute;
-  left: 0;
-  top: 0;
-  font-size: 20px;
-  font-weight: 700;
-  z-index: 9999;
 `;
