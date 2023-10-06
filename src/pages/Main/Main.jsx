@@ -207,13 +207,12 @@ const Main = () => {
 
   return (
     <Container>
-
       <Mobile>
         {/* pc 최적화 팝업 start */}
         <MobilePopup />
         {/* pc 최적화 팝업 end */}
       </Mobile>
-      
+
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -264,12 +263,15 @@ const Main = () => {
         ></RightSide>
 
         {/* 방명록 start */}
-        <GuestBook
-          openGusetBook={openGusetBook}
-          xBtnClickHandler={closeGusetBookModal}
-          selectedGiwa={selectedGiwa}
-          username={userInfo.username}
-        ></GuestBook>
+        {openGusetBook ? (
+          <GuestBook
+            openGusetBook={openGusetBook}
+            xBtnClickHandler={closeGusetBookModal}
+            selectedGiwa={selectedGiwa}
+            username={userInfo.username}
+          ></GuestBook>
+        ) : null}
+
         {/* 방명록 end */}
 
         <MainBg

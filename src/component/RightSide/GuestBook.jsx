@@ -7,6 +7,9 @@ import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg
 import { getGiwaDetailApi } from "../../apis/giwa";
 import { fontColor, textSort } from "../../data/giwaData";
 import { koreaDate } from "../../utils/koreaDate";
+import { fontColorDefault } from "../Modal/GiwaModal/WriteGuestText";
+import giwaPath from "../../data/giwaPath";
+import { giwaPatternItems } from "../Modal/GiwaModal/SelectGiwa";
 
 const GuestBook = ({
   openGusetBook,
@@ -14,7 +17,14 @@ const GuestBook = ({
   selectedGiwa,
   username,
 }) => {
-  const [giwa, setGiwa] = useState({});
+  const [giwa, setGiwa] = useState(null);
+  let selectedSort;
+  let giwaCreatedDate;
+  let giwaFontColor;
+  let giwaImg;
+  let giwaInfo;
+  let giwaTitle;
+
   useEffect(() => {
     if (!selectedGiwa) return;
     getGiwaDetailApi(selectedGiwa).then((result) => {
@@ -23,9 +33,30 @@ const GuestBook = ({
       }
     });
   }, [selectedGiwa]);
-  // const giwaFontColor = fontColor[giwa.postStyle.fontColorCode - 1];
-  // const giwaTextSort = textSort[giwa.postStyle.sortCode - 1];
-  const giwaCreatedDate = koreaDate(giwa.createdTime);
+
+  console.log("giwa", giwa);
+
+  if (giwa) {
+    switch (giwa.postStyle.sortCode) {
+      case 1:
+        selectedSort = "left";
+        break;
+      case 2:
+        selectedSort = "center";
+        break;
+      case 3:
+        selectedSort = "right";
+        break;
+      default:
+        break;
+    }
+    giwaCreatedDate = koreaDate(giwa.createdTime);
+    giwaFontColor = fontColorDefault[giwa.postStyle.fontColorCode - 1];
+    giwaImg = giwaPath[giwa.postStyle.shapeCode - 1].svg;
+    giwaTitle = giwaPatternItems[giwa.postStyle.shapeCode - 1].title;
+    giwaInfo = giwaPatternItems[giwa.postStyle.shapeCode - 1].shortDesc;
+  }
+
   return (
     <Container className={openGusetBook ? "show" : null}>
       <XBox>
@@ -41,72 +72,25 @@ const GuestBook = ({
           <span>{username}</span>님에게
         </strong>
         <Title>
-          <GiwaImg>
-            <GiwaMeaning />
-          </GiwaImg>
+          <GiwaImg>{giwaImg}</GiwaImg>
           <GiwaText>
-            <b>기와의 뜻</b>
-            <p>
-              Aliquam vehicula pellentesque id mi quam ipsum. Arcu nisl faucibus
-              mattis etiam.
-            </p>
+            <b>{giwaTitle}</b>
+            <p>{giwaInfo}</p>
           </GiwaText>
         </Title>
         <GuestBookWrap>
-          <Text
-          // $fontColor={giwaFontColor}
-          // $sort={giwaTextSort}
-          >
+          <Text $fontColor={giwaFontColor} $sort={selectedSort}>
             {/* <Board /> */}
-            <p>
-              {giwa.message}
-              {/* 들어봐 밤이, <br />
-              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
-              <br />
-              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
-              <br />
-              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도
-              <br />
-              푸근하고 아린이런 봄날, 봄밤발치에 조으는
-              <br />
-              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서
-              <br />
-              끓는 구수한 보리차 냄새가지들 마른 울음
-              <br />
-              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
-              <br />
-              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
-              <br />
-              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도
-              <br />
-              푸근하고 아린이런 봄날, 봄밤발치에 조으는
-              <br />
-              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서
-              <br />
-              끓는 구수한 보리차 냄새가지들 마른 울음
-              <br />
-              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
-              <br />
-              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
-              <br />
-              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도
-              <br />
-              푸근하고 아린이런 봄날, 봄밤발치에 조으는
-              <br />
-              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서
-              <br />
-              끓는 구수한 보리차 냄새가지들 마른 울음
-              <br />
-              그치고 저리던 뿌리들도 축축히 잠드는이런 봄, 밤 */}
-            </p>
+            <p>{giwa?.message}</p>
           </Text>
           <div>
             <span>
-              <em>{giwaCreatedDate.year}</em>년<em>{giwaCreatedDate.month}</em>
-              월<em>{giwaCreatedDate.day}</em>일
+              <em>{giwaCreatedDate?.year}</em>년
+              <em>{giwaCreatedDate?.month}</em>월<em>{giwaCreatedDate?.day}</em>
+              일
             </span>
             <b>
-              <span>{giwa.nickName}</span>
+              <span>{giwa?.nickName}</span>
             </b>
           </div>
         </GuestBookWrap>
@@ -196,7 +180,7 @@ const GiwaText = styled.div`
     margin: 0 0 10px;
     color: #212121;
     font-family: var(--font-hunmin-saeron);
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
     letter-spacing: 0.2px;
   }
@@ -243,23 +227,24 @@ const Text = styled.div`
   max-height: 400px;
   height: calc(100vh - 500px);
   position: relative;
-  background-color: #F8EFE7;
-  &:after, &:before {
+  background-color: #f8efe7;
+  &:after,
+  &:before {
     width: 530px;
     height: 20px;
     content: "";
     display: block;
-    left:50%; 
-    transform: translate(-50%,0);
+    left: 50%;
+    transform: translate(-50%, 0);
     position: absolute;
-    background:url(${bookletTop}) 50% 50% no-repeat;
+    background: url(${bookletTop}) 50% 50% no-repeat;
     background-color: cover;
   }
   &:before {
-    top:-20px;
+    top: -20px;
   }
   &:after {
-    bottom:-20px;
+    bottom: -20px;
   }
   /* svg {
     width: 100%;
