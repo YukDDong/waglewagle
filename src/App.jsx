@@ -56,7 +56,7 @@ const routes = [
   },
   {
     path: "/oauth/kakao/callback",
-    element: <KakaoLogin />,
+    element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
   },
   {
     path: "/findPwd",

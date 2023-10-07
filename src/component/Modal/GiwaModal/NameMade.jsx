@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SelectTitle from "../../SelectTitle/SelectTitle";
 import { ReactComponent as Booklet } from "./../../../assets/modal/booklet.svg";
 import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
 import { englishRegex, fontColorDefault, profanity } from "./WriteGuestText";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { writeNickName } from "../../../redux/actions/giwaActions";
 
 const NameContain = ({ text, giwaInfo }) => {
   const dispatch = useDispatch();
+  const giwaInfoNickname = useSelector((state) => state.giwaReducer);
   const [nickName, setNickName] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
   let selectedFont;
   let selectedSort;
+
+  useEffect(() => {
+    if (!giwaInfoNickname.nickname) return;
+
+    setNickName(giwaInfoNickname.nickname);
+  }, []);
 
   switch (giwaInfo.font) {
     case 1:
@@ -21,6 +28,9 @@ const NameContain = ({ text, giwaInfo }) => {
       break;
     case 2:
       selectedFont = "EBS Hunminjeongeum";
+      break;
+    case 3:
+      selectedFont = "Gmarket Sans";
       break;
     default:
       break;
@@ -39,8 +49,6 @@ const NameContain = ({ text, giwaInfo }) => {
     default:
       break;
   }
-
-  console.log("giwaInfo", giwaInfo);
 
   const checkProfanity = (text) => {
     let censoredText = text;
@@ -64,6 +72,9 @@ const NameContain = ({ text, giwaInfo }) => {
   };
 
   const handleNickNameBlur = () => {
+    if (nickName.trim() === "") {
+      return;
+    }
     if (englishRegex.test(nickName)) {
       dispatch(writeNickName(nickName));
       setIsChecked(
@@ -86,9 +97,7 @@ const NameContain = ({ text, giwaInfo }) => {
         $fontColor={fontColorDefault[giwaInfo.fontColor - 1]}
       >
         <Booklet />
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
       </Text>
       <NameInput>
         <SelectTitle
@@ -115,7 +124,7 @@ const NameContain = ({ text, giwaInfo }) => {
           <div>{isChecked ? isChecked : <span>이름이 무엇인가?</span>}</div>
         </TextNotification>
       </NameInput>
-    </NameWrap >
+    </NameWrap>
   );
 };
 export default NameContain;
@@ -178,7 +187,7 @@ const NameInput = styled.div`
     border-radius: 6px;
     border: 1px solid #e6e6e6;
     background-color: #fafafa;
-    color: #bdbdbd;
+    color: black;
     font-family: var(--font-hunmin);
     font-size: 16px;
     font-style: normal;

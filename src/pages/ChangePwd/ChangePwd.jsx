@@ -184,7 +184,6 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
   box-sizing: border-box;
 `;
 

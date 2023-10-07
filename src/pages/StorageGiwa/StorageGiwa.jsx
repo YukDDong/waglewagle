@@ -26,6 +26,7 @@ const StorageGiwa = () => {
   const userInfo = useSelector((state) => state.userReducer);
   const userName = userInfo.username;
   const [giwaList, setGiwaList] = useState([]);
+  const [newList, setNewList] = useState(true);
   const { url } = useParams();
   const [selectData, setSelectData] = useState({
     select: "기와 목록 최신순",
@@ -46,6 +47,7 @@ const StorageGiwa = () => {
   }, []);
 
   useEffect(() => {
+    setNewList(true);
     if (!giwaHouse.id) return;
     getGiwaListApi({
       broadId: giwaHouse.id,
@@ -62,19 +64,16 @@ const StorageGiwa = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
-    document.querySelectorAll('.giwa_wrap > li').forEach((e, index) => {
-      if (index < 12) {
-        console.log(e.classList.add('on'));
-      }
-    })
   }, [giwaHouse]);
 
   useEffect(() => {
     let boolean;
-    if (selectData.select[0] === "기와 목록 최신순") {
+    if (selectData.select === "기와 목록 최신순") {
+      setNewList(true);
       boolean = true;
     } else {
       boolean = false;
+      setNewList(false);
     }
     getGiwaListApi({
       broadId: giwaHouse.id,
@@ -91,6 +90,7 @@ const StorageGiwa = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
+
   }, [selectData]);
 
   const openGusetBookModal = (e) => {
@@ -111,7 +111,7 @@ const StorageGiwa = () => {
     if (!showOptions) return
     const { innerText } = e.target;
     setSelectData({
-      select: data.filter(item => item === innerText),
+      select: data.find(item => item === innerText),
       option: data.filter(item => item !== innerText)
     })
   };
@@ -149,19 +149,27 @@ const StorageGiwa = () => {
           </Nav>
           <GiwaWrap className="giwa_wrap">
             {
-              giwaList.map(giwa => {
+              giwaList.map((giwa, index) => {
                 let giwaCreatedDate = koreaDate(giwa.createdTime);
-                return <GiwaLi key={giwa.id} className="new">
+                return <GiwaLi key={giwa.id}>
                   <button type="button" onClick={e => {
                     openGusetBookModal(e)
                     setSelectedGiwa(giwa.id);
                   }}>
                     <img src={giwaData[giwa.postStyle.shapeCode - 1].imgUrl} alt="이미지" />
-                    <em><Badge /></em>
+                    {(giwaList.length - [index + 1] < 12) && !newList && <em><Badge /></em>}
+                    {(index < 12 && newList) && <em><Badge /></em>}
                   </button>
                   <span>{giwaCreatedDate.year}년 {giwaCreatedDate.month}월 {giwaCreatedDate.day}일</span>
                 </GiwaLi>
               })
+            }
+            {
+              giwaList.length === 0 && (
+                <NoneGiwa>
+                  <p>기와가 존재하지 않소! <br /> 기와집을 공유하여 친구들에게 널리알리시오. </p>
+                </NoneGiwa>
+              )
             }
           </GiwaWrap>
         </StorageContain>
@@ -402,7 +410,7 @@ const GiwaLi = styled.li`
       margin: auto;
     }
     > em {
-      display: none;
+      /* display: none; */
       width: 30px;
       height: 30px;
       background-color: #E75852;
@@ -420,6 +428,21 @@ const GiwaLi = styled.li`
   img {
     width: 100%;
   }  
+`;
+
+const NoneGiwa = styled.div`
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > p {
+    font-size: 15px;
+    display: block;
+    line-height: 25px;
+    color: #9E9E9E;
+  }
 `;
 
 const Dimmed = styled.div`

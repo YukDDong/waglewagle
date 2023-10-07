@@ -14,6 +14,7 @@ import { makeHopae } from "../../redux/actions/userActions";
 import { makeHopaeApi } from "../../apis/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { getItem, setItem } from "../../utils/storage";
 
 const MakeHopae = () => {
   // 백엔드 통신 변수 선언
@@ -78,7 +79,17 @@ const MakeHopae = () => {
       userName: data.hopae,
     }).then((result) => {
       if (result.data.status === "SUCCESS") {
-        console.log(result.data.data);
+        const autoLogin = getItem("autoLogin");
+        if (autoLogin) {
+          const localUserInfo = getItem("USERINFO");
+          setItem("USERINFO", {
+            ...localUserInfo,
+            username: result.data.data.userName,
+            boardId: result.data.data.broadId,
+            memberType: result.data.data.memberType,
+            email: result.data.data.email,
+          });
+        }
         dispatch(
           makeHopae({
             username: result.data.data.userName,
@@ -127,7 +138,7 @@ const MakeHopae = () => {
             />
 
             {/* 호패명 판별 */}
-            {((data.hopae !== "") && (!data.isHopae)) ? (
+            {data.hopae !== "" && !data.isHopae ? (
               <IsFalse>{hopaeWarn}</IsFalse>
             ) : (
               <CheckInfo>
@@ -162,7 +173,6 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
   box-sizing: border-box;
 `;
 

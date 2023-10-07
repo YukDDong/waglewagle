@@ -127,13 +127,13 @@ const BottomSide = ({
           <SideBoard className="side2" />
         </Name>
         <Various>
-          <li type="issue">
+          {/* <li type="issue">
             <button onClick={(e) => clickToggleOpen(e)}>
               <Issue width={23} height={25} />
             </button>
             {iconToggle[0].boolean && <IssueNews background={background} />}
             <NewsNumber>{15}</NewsNumber>
-          </li>
+          </li> */}
           <li type="capture">
             <button
               onClick={(e) => {
@@ -172,7 +172,7 @@ const BottomSide = ({
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
-            <NewsNumber>{15}</NewsNumber>
+            {/* <NewsNumber>{15}</NewsNumber> */}
           </ToggleBtn>
         )}
       </IconBar>
@@ -231,7 +231,7 @@ const Contain = styled.div`
     &.icon_bar {
       ul {
         li {
-          &:nth-of-type(3) {
+          &:nth-of-type(2) {
             svg {
               left: -1px;
             }
@@ -421,12 +421,12 @@ const Name = styled.div`
 const Various = styled.ul`
   height: min-content;
   gap: 30px;
-  padding: 0 0 0 40px;
   position: absolute;
   top: 0;
   bottom: 0;
   margin: auto;
   display: flex;
+  right: 150px;
   transition: width, 0.4s ease-in;
   li {
     position: relative;
