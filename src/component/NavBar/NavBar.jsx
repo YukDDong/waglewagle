@@ -4,12 +4,15 @@ import { ReactComponent as MenuBtn } from "../../assets/gnb/ic_baseline_menu.svg
 // import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
 import { ReactComponent as ArrowBtn } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as MenuXBtn } from "../../assets/common/x-menu.svg";
+import { ReactComponent as Logo } from "../../assets/common/logo_txt.svg";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
+import { removeItem } from "../../utils/storage";
 
 export default function NavBar({ isShowing = true }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -19,7 +22,7 @@ export default function NavBar({ isShowing = true }) {
   // const userName = !(userInfo === null) ? userInfo.name : "";
   // 위 코드를 리덕스로 바꾼 부분이 아래부분입니다.
   const userInfo = useSelector((state) => state.userReducer);
-  const userName = userInfo.name;
+  const userName = userInfo.username;
 
   const menuBtnClick = () => {
     setMenuOpen((menuOpen) => !menuOpen);
@@ -29,7 +32,10 @@ export default function NavBar({ isShowing = true }) {
   const logoutBtnClick = (e) => {
     e.preventDefault();
     dispatch(logout());
+    removeItem("AUTH");
+    removeItem("USERINFO");
     setIsLogin(false);
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -41,6 +47,13 @@ export default function NavBar({ isShowing = true }) {
       setMenuOpen(false);
     }
   }, [isShowing]);
+
+  const handleGoToUnius = () => {
+    window.open(
+      "https://www.notion.so/Intro-1db7a52c5a9f4e899f17ef620c63678b",
+      "_blank"
+    );
+  };
 
   return (
     <Nav className={isShowing ? null : "no-showing"}>
@@ -76,7 +89,7 @@ export default function NavBar({ isShowing = true }) {
             </MyInfoItemFirst>
             <MyInfoItem>
               <LinkMypage $isLogin={isLogin}>마이페이지</LinkMypage>
-              <StyledLink>사그업에 대하여</StyledLink>
+              <StyledLink onClick={handleGoToUnius}>유니어스 소개</StyledLink>
               <StyledLink>문의하기</StyledLink>
             </MyInfoItem>
             {isLogin && (
@@ -98,8 +111,7 @@ const Nav = styled.nav`
   width: 100%;
   height: 120px;
   display: flex;
-  align-items: center;
-  /* padding-left: 19vw; */
+  /* align-items: center; */
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -111,18 +123,18 @@ const Nav = styled.nav`
     top: -150px;
     opacity: 0;
   }
+  @media ${(props) => props.theme.device.mobile} {
+    display: none;
+  }
 `;
 
-const NavLogo = styled.p`
-  width: 180px;
-  height: 55px;
-  font-size: 30px;
+const NavLogo = styled(Logo)`
+  width: 140px;
+  height: 45px;
   text-align: center;
-  font-family: var(--font-hunmin);
-  line-height: 55px;
   position: absolute;
   left: 19vw;
-  font-weight: 600;
+  top: 2vw;
 `;
 
 const NavMenu = styled.div`
@@ -211,12 +223,12 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     line-height: 26px;
     color: #fff;
     font-weight: 400;
-    font-size: 18px;    
+    font-size: 18px;
     svg {
       margin: 0 0 0 3px;
-      transition: transform, .2s ease-in-out;
+      transition: transform, 0.2s ease-in-out;
       path {
-        stroke: #fff;        
+        stroke: #fff;
       }
     }
   }

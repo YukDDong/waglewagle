@@ -5,7 +5,7 @@ import styled, { keyframes } from "styled-components";
 import speechBubble from "../../assets/main/speech_bubble.svg";
 import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 
-const Speech = ({ setOpenModal, url, giwaLength }) => {
+const Speech = ({ setOpenModal, url, giwaLength, openMakeup, openGusetBook }) => {
   const speechRef = useRef();
   useEffect(() => {
     gsap.to(speechRef.current.querySelectorAll("span"), 0.5, {
@@ -16,8 +16,8 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
     });
   }, [giwaLength]);
 
-  return (    
-    <Container>
+  return (
+    <Container className={openMakeup || openGusetBook ? "on" : null}>
       {url ? (
         // 방문자
         <>
@@ -27,7 +27,7 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
             <span>를</span>
             <span className="space">남</span>
             <span>겨</span>
-            <span>주</span>
+            <span className="space">주</span>
             <span>시</span>
             <span>오</span>
             <span>!</span>
@@ -39,11 +39,17 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
       ) : giwaLength < 12 ? (
         // 기와 12개 미만일때
         <p ref={speechRef}>
-          <span>환</span>
-          <span>영</span>
-          <span>하</span>
+          <span>기</span>
+          <span>와</span>
+          <span>집</span>
+          <span>을</span>
+          <span className="space">널</span>
+          <span>리</span>
+          <span className="space">알</span>
+          <span>리</span>
+          <span>시</span>
           <span>오</span>
-          <span>!</span>
+          <span>.</span>
         </p>
       ) : (
         // 기와 12개 이상일때
@@ -82,7 +88,6 @@ const animation = keyframes`
 const Container = styled.div`
   width: 242px;
   height: 64px;
-  background-color: red;
   position: absolute;
   z-index: 2;
   right: 25%;
@@ -90,6 +95,10 @@ const Container = styled.div`
   background: url(${speechBubble}) 50% 50% no-repeat;
   background-size: cover;
   text-align: center;
+  transition: opacity, ease-in-out 1s;
+  &.on {
+    opacity: 0;
+  }
   > button {     
     &.giwa_plus {
       position: absolute;

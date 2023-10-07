@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { ReactComponent as SharingIcon } from "../../../assets/bottomSide/out_sharing_icon.svg";
-import { useBgColor } from "../../../contexts/BackgroundColor";
 
-const Sharing = ({ setPopup }) => {
-  const { bgColor } = useBgColor(); // BG Color context
+const Sharing = ({ setPopup, setIconToggle, boleand, background }) => {
+  const bgColor = background;
   return (
-    <Contain $bgColor={bgColor}>
+    <Contain $bgColor={bgColor} className="sharing">
       <p>
         기와집을 널리 알리면, <br />
         기와를 더 받을수 있다네
       </p>
-      <button type="button" onClick={() => setPopup(true)}>
+      <button type="button" onClick={() => {
+        setPopup(true)
+        setIconToggle(boleand)
+      }}>
         <SharingIcon />
       </button>
     </Contain>

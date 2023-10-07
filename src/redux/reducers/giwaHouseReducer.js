@@ -1,4 +1,4 @@
-import { CHANGE_GIWA_HOUSE } from "../actions/giwaHouseActions";
+import { CHANGE_GIWA_HOUSE, GET_GIWA_HOUSE } from "../actions/giwaHouseActions";
 
 const initialState = {
   giwaColor: 1,
@@ -13,6 +13,12 @@ export const giwaHouseReducer = (state = initialState, action) => {
       return {
         ...state,
         [action.payload.name]: action.payload.value,
+      };
+
+    case GET_GIWA_HOUSE:
+      return {
+        ...state,
+        ...action.payload,
       };
     default:
       return state;

@@ -52,9 +52,9 @@ const MakeHopae = () => {
     // 호패명이 있는 경우
     else {
       // 최대 8자 이하로 작성해 주세요.
-      if (data.hopae.length > 8) {
+      if (data.hopae.length > 4) {
         updateData("isHopae", false);
-        setHopaeWarn("최대 8자 이하로 작성해 주세요.");
+        setHopaeWarn("최대 4자 이하로 작성해 주시오.");
       }
 
       // 8자 이하인 경우
@@ -65,7 +65,7 @@ const MakeHopae = () => {
 
         // 한글로 구성되지 않은 호패인 경우
         if (!isHopae) {
-          setHopaeWarn("호명은 한글만 사용할 수 있습니다.");
+          setHopaeWarn("호명은 한글만 사용 가능하오.");
         }
       }
     }
@@ -78,15 +78,16 @@ const MakeHopae = () => {
       userName: data.hopae,
     }).then((result) => {
       if (result.data.status === "SUCCESS") {
+        console.log(result.data.data);
         dispatch(
           makeHopae({
-            userName: result.data.data.userName,
-            boardId: result.data.data.boardId,
+            username: result.data.data.userName,
+            boardId: result.data.data.broadId,
             memberType: result.data.data.memberType,
             email: result.data.data.email,
           })
         );
-        if (result.data.data.boardId) {
+        if (result.data.data.broadId) {
           navigate("/main");
           return;
         }
@@ -112,7 +113,7 @@ const MakeHopae = () => {
             <Title title="호패만들기" />
             <Sub>
               {
-                "자네, 이곳은 처음이요?\n이곳은 호패가 없으면 들어갈 수가 없다네."
+                "자네, 이곳은 처음이오?\n이곳은 호패가 없으면 들어갈 수가 없다네."
               }
             </Sub>
           </MainDivTop>
@@ -126,16 +127,12 @@ const MakeHopae = () => {
             />
 
             {/* 호패명 판별 */}
-            {data.hopae !== "" ? (
-              data.isHopae ? (
-                <IsTrue>유효한 호패입니다.</IsTrue>
-              ) : (
-                <IsFalse>{hopaeWarn}</IsFalse>
-              )
+            {((data.hopae !== "") && (!data.isHopae)) ? (
+              <IsFalse>{hopaeWarn}</IsFalse>
             ) : (
               <CheckInfo>
                 <span>* </span>
-                호명은 한글만 사용 가능해요.
+                호명은 4자 이하, 한글만 사용 가능하오.
               </CheckInfo>
             )}
 

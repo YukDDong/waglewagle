@@ -6,18 +6,24 @@ import Title from "../../component/Title/Title";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/userActions";
 import { loginApi } from "../../apis/user";
-import { setItem } from "../../utils/localStorage";
+import { setItem } from "../../utils/storage";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { InputText, InputPwd } from "../../component/Input/Input";
 import Button from "../../component/Button/Button";
 import CheckBox from "../../component/CheckBox/CheckBox";
+import {
+  IsFalse,
+  validEmail,
+  validPwd,
+} from "../../component/ValidTest/ValidTest";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [autoLogin, setAutoLogin] = useState(false);
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
   // 변수
@@ -34,18 +40,50 @@ const Login = () => {
     [loginInfo]
   );
 
+  // 에러 출력 후 이메일 or 비밀번호 입력 시 초기화
+  useEffect(() => {
+    setIsError(false);
+  }, [loginInfo]);
+
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = () => {
+    if (!validEmail(loginInfo.id)) {
+      setIsError(true);
+      setErrorMessage("이메일을 입력해 주세요.");
+      return;
+    }
+
+    if (!validPwd(loginInfo.pwd)) {
+      setIsError(true);
+      setErrorMessage("비밀번호를 입력해 주세요.");
+      return;
+    }
+
     loginApi({
       email: loginInfo.id,
       password: loginInfo.pwd,
     }).then((result) => {
       if (result.data.status === "FAIL") {
-        setErrorMessage(result.data.message);
+        setIsError(true);
+        setErrorMessage(
+          "등록되지 않은 이메일이거나 이메일 또는 비밀번호를 잘못 입력했습니다."
+        );
+        return;
       }
 
       if (result.data.status === "SUCCESS") {
+        if (autoLogin) {
+          setItem("USERINFO", {
+            email: loginInfo.id,
+            userId: result.data.data.userId,
+            username: result.data.data.userName,
+            boardId: result.data.data.boardId,
+            memberType: "GENERAL",
+            autoLogin: autoLogin,
+          });
+        }
         setItem("AUTH", result.data.data.accessToken);
+        setItem("autoLogin", autoLogin);
         dispatch(
           login({
             email: loginInfo.id,
@@ -53,6 +91,7 @@ const Login = () => {
             username: result.data.data.userName,
             boardId: result.data.data.boardId,
             memberType: "GENERAL",
+            autoLogin: autoLogin,
           })
         );
         if (!result.data.data.isExistHopae) {
@@ -73,7 +112,6 @@ const Login = () => {
   const handleClickJoin = () => {
     window.location.href = "/join";
   };
-
   return (
     <>
       <NavBar />
@@ -100,11 +138,16 @@ const Login = () => {
 
             {/* 저장 기능, 비밀번호 찾기 */}
             <LoginCheckDiv>
-              <CheckBox labelName="이메일, 비밀번호 저장" />
+              <CheckBox
+                labelName="자동 로그인"
+                checked={autoLogin}
+                setChecked={setAutoLogin}
+              />
               <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
             </LoginCheckDiv>
 
-            {errorMessage ? <p>{errorMessage}</p> : null}
+            {/* 에러 출력 */}
+            {isError ? <ErrorStyled>{errorMessage}</ErrorStyled> : null}
 
             {/* 로그인 버튼 */}
             <Button onClick={onSubmit}>로그인</Button>
@@ -186,4 +229,9 @@ const LinkItem = styled(Link)`
   text-decoration-line: none;
   padding-bottom: 1px;
   border-bottom: 1px solid #9e9e9e;
+`;
+
+const ErrorStyled = styled(IsFalse)`
+  margin-bottom: 30px;
+  font-size: 14px;
 `;

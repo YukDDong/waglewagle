@@ -5,7 +5,6 @@ import Join from "./pages/Join/Join";
 import Main from "./pages/Main/Main";
 import MakeHopae from "./pages/MakeHopae/MakeHopae";
 import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
-import Sample from "./pages/Sample/Sample";
 import FindPwd from "./pages/FindPwd/FindPwd";
 import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
 import StorageGiwa from "./pages/StorageGiwa/StorageGiwa";
@@ -14,6 +13,12 @@ import Setting from "./pages/Setting/Setting";
 import MyPage from "./pages/MyPage/MyPage";
 import ChangePwd from "./pages/ChangePwd/ChangePwd";
 import ConfirmPwd from "./pages/ChangePwd/ConfirmPwd";
+import Error from "./pages/Error/Error";
+import AuthRoute from "./component/AuthRoute/AuthRoute";
+import { useEffect } from "react";
+import { getItem } from "./utils/storage";
+import { useDispatch } from "react-redux";
+import { login } from "./redux/actions/userActions";
 
 const routes = [
   {
@@ -22,15 +27,15 @@ const routes = [
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <AuthRoute loginOption={false} component={<Login />} />,
   },
   {
     path: "/join",
-    element: <Join />,
+    element: <AuthRoute loginOption={false} component={<Join />} />,
   },
   {
     path: "/main",
-    element: <Main />,
+    element: <AuthRoute loginOption={true} component={<Main />} />,
   },
   {
     path: "/main/:url",
@@ -38,57 +43,71 @@ const routes = [
   },
   {
     path: "/makeHopae",
-    element: <MakeHopae />,
+    element: <AuthRoute loginOption={true} component={<MakeHopae />} />,
   },
   {
     path: "/makeGiwaHouse",
-    element: <MakeGiwaHouse />,
+    element: <AuthRoute loginOption={true} component={<MakeGiwaHouse />} />,
   },
   {
     path: "/kakao_login",
-    element: <KakaoLogin />,
-  },
-  {
-    path: "/sample",
-    element: <Sample />,
+    element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
   },
   {
     path: "/findPwd",
-    element: <FindPwd />,
+    element: <AuthRoute loginOption={false} component={<FindPwd />} />,
   },
   {
     /* 마이페이지 - 보관함 */
-    path: "/StorageGiwa",
-    element: <StorageGiwa />,
+    path: "/storageGiwa",
+    element: <AuthRoute loginOption={true} component={<StorageGiwa />} />,
   },
   {
     /* 회원탈퇴 */
-    path: "/Withdrawal",
-    element: <Withdrawal />,
+    path: "/withdrawal",
+    element: <AuthRoute loginOption={true} component={<Withdrawal />} />,
   },
   {
     /* 마이페이지 */
-    path: "/MyPage",
-    element: <MyPage />,
+    path: "/myPage",
+    element: <AuthRoute loginOption={true} component={<MyPage />} />,
   },
   {
     /* 마이페이지 - 설정 */
-    path: "/Setting",
-    element: <Setting />,
+    path: "/setting",
+    element: <AuthRoute loginOption={true} component={<Setting />} />,
   },
   {
     path: "/changePwd",
-    element: <ChangePwd />,
+    element: <AuthRoute loginOption={true} component={<ChangePwd />} />,
   },
   {
     path: "/confirmPwd",
-    element: <ConfirmPwd />,
+    element: <AuthRoute loginOption={true} component={<ConfirmPwd />} />,
+  },
+  /* 404 에러 */
+  {
+    path: "/error",
+    element: <Error />,
+  },
+  {
+    path: "*",
+    element: <Error />,
   },
 ];
 
 const router = createBrowserRouter(routes);
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const autoLogin = getItem("autoLogin");
+    if (!autoLogin) return;
+
+    const userInfo = getItem("USERINFO");
+
+    dispatch(login(userInfo));
+  }, []);
   return <RouterProvider router={router} />;
 }
 

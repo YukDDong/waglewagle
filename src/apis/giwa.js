@@ -5,6 +5,14 @@ export const makeGiwaHouseApi = async (payload) => {
   return response;
 };
 
+export const editGiwaHouseApi = async (giwaStyleId, payload) => {
+  const response = await client.patch(
+    `/api/v1/broads/style/${giwaStyleId}`,
+    payload
+  );
+  return response;
+};
+
 export const getGiwaHouseApi = async (payload) => {
   const response = await client.get(`/api/v1/broads/${payload}`);
   return response;

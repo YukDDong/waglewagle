@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
     --font-hunmin: "EBS Hunminjeongeum"; // 훈민정음
     --font-hunmin-saeron: "EBS HMJE Saeron"; // 훈민정음 새론
     --font-Inter: "Inter"; // Inter
+    --font-gmarket: "Gmarket Sans"
   }
   a{
     text-decoration: none;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
@@ -12,15 +12,22 @@ import giwaPink from "../../assets/rightSide/giwa_pink.png";
 import daytime from "../../assets/rightSide/daytime.png";
 import night from "../../assets/rightSide/night.png";
 import haetaeFrame from "../../assets/rightSide/haetae_frame.png";
-import { makeGiwaHouseApi } from "../../apis/giwa";
+import { editGiwaHouseApi, makeGiwaHouseApi } from "../../apis/giwa";
 import { generateRandomString } from "../../utils/generateRandomString";
-import { changeGiwaHouseStyle } from "../../redux/actions/giwaHouseActions";
+import {
+  changeGiwaHouseStyle,
+  getGiwaHouse,
+} from "../../redux/actions/giwaHouseActions";
+import { makeGiwaHouse } from "../../redux/actions/userActions";
+import { useBgColor } from "../../contexts/BackgroundColor";
 
 const RightSide = ({
   openMakeup,
   xBtnClickHandler,
-  updateFunction,
   btnText,
+  initGiwaHouse,
+  giwaStyle,
+  setInitGiwaHouse,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -30,9 +37,12 @@ const RightSide = ({
   const { giwaColor, background, friend } = useSelector(
     (state) => state.giwaHouseReducer
   );
+  const { changeDaytime, changeNight, bgColor } = useBgColor(); // BG Color context
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
+    // e.target.id === 'night' && changeNight()
+    // e.target.id === 'day' && changeDaytime()
     const value = Number(e.target.value);
     dispatch(
       changeGiwaHouseStyle({
@@ -46,7 +56,7 @@ const RightSide = ({
     if (isMakeGiwaHouse) {
       makeGiwaHouseApi({
         version: "v1",
-        title: "아무타이틀",
+        title: userInfo.username,
         broadStyle: {
           colorCode: giwaColor,
           backGroundCode: background,
@@ -54,9 +64,25 @@ const RightSide = ({
         },
         url: generateRandomString(20),
       }).then((result) => {
-        // broadId 가 안내려옴.. 내려와야 적용가능
         if (result.data.status === "SUCCESS") {
+          dispatch(makeGiwaHouse(result.data.data));
           navigate("/main", { state: { from: "/makeGiwaHouse" } });
+          return;
+        }
+      });
+    } else {
+      editGiwaHouseApi(giwaStyle.broadStyle.id, {
+        color: giwaColor,
+        background: background,
+        friend: friend,
+      }).then((result) => {
+        if (result.data.status === "SUCCESS") {
+          xBtnClickHandler();
+          setInitGiwaHouse({
+            giwaColor,
+            background,
+            friend,
+          });
           return;
         }
       });
@@ -71,7 +97,10 @@ const RightSide = ({
             width={"32px"}
             height={"32px"}
             fill="#212121"
-            onClick={xBtnClickHandler}
+            onClick={() => {
+              xBtnClickHandler();
+              dispatch(getGiwaHouse(initGiwaHouse));
+            }}
           />
         </XBox>
       )}
@@ -143,7 +172,13 @@ const RightSide = ({
         <ButtonWrap>
           <Btn onClick={handleSubmit}>{btnText}</Btn>
           <ResetBox>
-            <ResetIcon width={24} height={24} />
+            <ResetIcon
+              width={24}
+              height={24}
+              onClick={() => {
+                dispatch(getGiwaHouse(initGiwaHouse));
+              }}
+            />
           </ResetBox>
         </ButtonWrap>
       </div>
@@ -161,7 +196,7 @@ const Container = styled.aside`
   justify-content: center;
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
-  border-radius: 50px 0px 0px 50px;
+  border-radius: 30px 0px 0px 30px;
   position: absolute;
   right: -730px;
   top: 0;
@@ -194,7 +229,7 @@ const HeaderBox = styled.div`
 const SelectWrap = styled.div`
   overflow-x: hidden;
   min-height: 150px;
-  /* max-height: 400px; */
+  max-height: 600px;
   height: calc(100vh - 323px);
   margin: 15px 0 0;
   overflow-y: auto;
@@ -244,6 +279,10 @@ const Btn = styled.button`
   color: white;
   background-color: var(--btn-main-color);
   border-radius: 10px;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    background-color: #D24640;
+  }
   &:disabled {
     color: #bbb;
     background-color: #f2f2f2;
