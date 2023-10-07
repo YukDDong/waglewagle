@@ -34,6 +34,7 @@ export default function NavBar({ isShowing = true }) {
     dispatch(logout());
     removeItem("AUTH");
     removeItem("USERINFO");
+    removeItem("autoLogin");
     setIsLogin(false);
     navigate("/login");
   };

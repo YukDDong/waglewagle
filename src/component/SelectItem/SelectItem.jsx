@@ -13,7 +13,7 @@ const SelectItem = ({ label, id, name, value, onChange, img, checked }) => {
         name={name}
         id={id}
         value={value}
-        onChange={onChange}
+        onClick={onChange}
       />
       <span>{label}</span>
     </Container>
@@ -51,7 +51,7 @@ const Item = styled.button`
   width: 160px;
   height: 110px;
   border-radius: 10px;
-  box-sizing: border-box;  
+  box-sizing: border-box;
   pointer-events: none;
   background: ${(props) => `url( ${props.$img}) 50%, 50% no-repeat;`};
   background-size: cover;
@@ -59,23 +59,24 @@ const Item = styled.button`
   overflow: hidden;
   > svg {
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
-    right: 0; 
+    right: 0;
     bottom: 0;
     margin: auto;
   }
-  &:after {    
-    width:40px;
+  &:after {
+    width: 40px;
     height: 40px;
-    content:""; 
+    content: "";
     border-radius: 100%;
-    left: 0; top: 0;
-    background-color: var(--btn-main-color); 
-    left: 0; 
-    top: 0; 
-    right: 0; 
+    left: 0;
+    top: 0;
+    background-color: var(--btn-main-color);
+    left: 0;
+    top: 0;
+    right: 0;
     bottom: 0;
-    margin: auto; 
+    margin: auto;
   }
 `;

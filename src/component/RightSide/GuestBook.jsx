@@ -4,19 +4,22 @@ import SelectTitle from "../SelectTitle/SelectTitle";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import bookletTop from "../../assets/modal/booklet_top.svg";
 import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg";
-import { getGiwaDetailApi } from "../../apis/giwa";
+import { editGiwaReadApi, getGiwaDetailApi } from "../../apis/giwa";
 import { fontColor, textSort } from "../../data/giwaData";
 import { koreaDate } from "../../utils/koreaDate";
 import { fontColorDefault } from "../Modal/GiwaModal/WriteGuestText";
 import giwaPath from "../../data/giwaPath";
 import { giwaPatternItems } from "../Modal/GiwaModal/SelectGiwa";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const GuestBook = ({
   openGusetBook,
   xBtnClickHandler,
   selectedGiwa,
   username,
+  setGiwaList,
 }) => {
+  const navigate = useNavigate();
   const [giwa, setGiwa] = useState(null);
   let selectedSort;
   let giwaCreatedDate;
@@ -29,12 +32,40 @@ const GuestBook = ({
     if (!selectedGiwa) return;
     getGiwaDetailApi(selectedGiwa).then((result) => {
       if (result.data.status === "SUCCESS") {
-        setGiwa(result.data.data);
+        if (!result.data.data.isRead) {
+          editGiwaReadApi(selectedGiwa, {
+            isRead: true,
+          }).then((response) => {
+            if (response.data.status === "SUCCESS") {
+              setGiwaList((prev) => {
+                const filterList = prev.map((item) => {
+                  if (item.id !== selectedGiwa) return item;
+
+                  const editItem = item;
+                  editItem["isRead"] = true;
+                  return editItem;
+                });
+                return filterList;
+              });
+              setGiwa(result.data.data);
+              return;
+            }
+          });
+        } else {
+          setGiwa(result.data.data);
+          return;
+        }
+      }
+
+      if (result.data.status === "FAIL") {
+        if (result.data.message === "접근이 거부되었습니다.") {
+          navigate("/logout");
+          return;
+        }
+        alert(result.data.message);
       }
     });
   }, [selectedGiwa]);
-
-  console.log("giwa", giwa);
 
   if (giwa) {
     switch (giwa.postStyle.sortCode) {

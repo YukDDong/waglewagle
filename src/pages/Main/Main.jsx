@@ -275,6 +275,7 @@ const Main = () => {
           xBtnClickHandler={closeGusetBookModal}
           selectedGiwa={selectedGiwa}
           username={userInfo.username}
+          setGiwaList={setGiwaList}
         ></GuestBook>
 
         {/* 방명록 end */}

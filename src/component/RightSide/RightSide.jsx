@@ -286,7 +286,7 @@ const Btn = styled.button`
   border-radius: 10px;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background-color: #D24640;
+    background-color: #d24640;
   }
   &:disabled {
     color: #bbb;
