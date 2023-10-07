@@ -26,6 +26,7 @@ import { getItem } from "../../utils/storage";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
+import CopyLink from "../../component/Popup/CopyLink";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -42,6 +43,7 @@ const Main = () => {
   const [copyLinkPop, setCopyLinkPop] = useState(false); // 링크복사 팝업창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업창
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
+  const [completedGiwaHouse, setCompletedGiwaHouse] = useState(false); // 기와집 등록 팝업창
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
@@ -141,7 +143,7 @@ const Main = () => {
 
   useEffect(() => {
     if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
-      setCopyLinkPop(true);
+      setCompletedGiwaHouse(true);
     }
     if (!giwaHouse.id) return;
     getGiwaListApi({
@@ -333,6 +335,7 @@ const Main = () => {
         />
       )}
       {/* 링크 복사 팝업창 end */}
+      {completedGiwaHouse && <CopyLink setGiwaHouse={setCompletedGiwaHouse} setCopyLinkPop={setCopyLinkPop} />}
     </Container>
   );
 };

@@ -6,19 +6,22 @@ import Haetae from "../../assets/popup/popup_haetae_img.png";
 import Pattern from "../../assets/popup/pattern.png";
 import ButtonBasic from '../Button/Button';
 
-const CopyLink = ({ setCopyLinkPop }) => {
+const CopyLink = ({ setGiwaHouse, setCopyLinkPop }) => {
 
   return (
     <Modal>
       <Contain>
-        <XBtnBox onClick={() => setCopyLinkPop(false)}>
+        <XBtnBox onClick={() => setGiwaHouse(false)}>
           <CloseBtn width={36} height={37} fill="black" />
         </XBtnBox>
         <Wrap>
           <strong>기와집을 만들었소!</strong>
           <p>이제 기와집 주소를 널리 알려서 기와를 받으시오.</p>
           <img className="haetae_img" src={Haetae} alt="해태" />
-          <ButtonBasic>
+          <ButtonBasic onClick={() => {
+            setCopyLinkPop(true)
+            setGiwaHouse(false)
+          }}>
             널리 알리기
           </ButtonBasic>
         </Wrap>
