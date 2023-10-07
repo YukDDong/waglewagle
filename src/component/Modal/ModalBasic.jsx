@@ -14,7 +14,7 @@ function ModalBasic({ msg, buttonText, onClickBtn = () => { }, visibleFtn, linkP
     <ModalBg>
       <ModalMain>
         <ModalTop>
-          {msg.split('\n').map(line => <p>{line}</p>)}
+          {msg.split('\n').map(line => <p key={line}>{line}</p>)}
         </ModalTop>
         <ModalBottom onClick={onClick}>
           {buttonText}
