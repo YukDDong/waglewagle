@@ -6,7 +6,7 @@ import Title from "../../component/Title/Title";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/userActions";
 import { loginApi } from "../../apis/user";
-import { setItem } from "../../utils/localStorage";
+import { setItem } from "../../utils/storage";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { InputText, InputPwd } from "../../component/Input/Input";
@@ -23,6 +23,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [autoLogin, setAutoLogin] = useState(false);
 
   // Form의 input정보를 하위컴포넌트에서 받아서 상태값으로 변경해주는 과정
   // 변수
@@ -71,7 +72,18 @@ const Login = () => {
       }
 
       if (result.data.status === "SUCCESS") {
+        if (autoLogin) {
+          setItem("USERINFO", {
+            email: loginInfo.id,
+            userId: result.data.data.userId,
+            username: result.data.data.userName,
+            boardId: result.data.data.boardId,
+            memberType: "GENERAL",
+            autoLogin: autoLogin,
+          });
+        }
         setItem("AUTH", result.data.data.accessToken);
+        setItem("autoLogin", autoLogin);
         dispatch(
           login({
             email: loginInfo.id,
@@ -79,6 +91,7 @@ const Login = () => {
             username: result.data.data.userName,
             boardId: result.data.data.boardId,
             memberType: "GENERAL",
+            autoLogin: autoLogin,
           })
         );
         if (!result.data.data.isExistHopae) {
@@ -99,7 +112,6 @@ const Login = () => {
   const handleClickJoin = () => {
     window.location.href = "/join";
   };
-
   return (
     <>
       <NavBar />
@@ -126,7 +138,11 @@ const Login = () => {
 
             {/* 저장 기능, 비밀번호 찾기 */}
             <LoginCheckDiv>
-              <CheckBox labelName="이메일, 비밀번호 저장" />
+              <CheckBox
+                labelName="자동 로그인"
+                checked={autoLogin}
+                setChecked={setAutoLogin}
+              />
               <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
             </LoginCheckDiv>
 

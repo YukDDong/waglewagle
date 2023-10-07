@@ -24,7 +24,7 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import Warning from "../../component/Warning/Warning";
 import html2canvas from "html2canvas";
 import { getGiwaHouse } from "../../redux/actions/giwaHouseActions";
-import { getItem } from "../../utils/localStorage";
+import { getItem } from "../../utils/storage";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
@@ -87,35 +87,6 @@ const Main = () => {
           background: giwaHouseData.broadStyle.backGroundCode,
           friend: giwaHouseData.broadStyle.friendCode,
         });
-        if (!url) {
-          const eventSource = new EventSourcePolyfill(
-            `${BASE_URL}/api/v1/notification/connect`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          eventSource.onmessage = async (e) => {
-            const res = await e.data;
-            const parsedData = JSON.parse(res);
-            console.log(parsedData);
-          };
-
-          eventSource.onerror = (e) => {
-            // 종료 또는 에러 발생 시 할 일
-            eventSource.close();
-
-            if (e.error) {
-              // 에러 발생 시 할 일
-            }
-
-            if (e.target.readyState === EventSourcePolyfill.CLOSED) {
-              // 종료 시 할 일
-            }
-          };
-        }
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
@@ -123,6 +94,39 @@ const Main = () => {
       }
     });
   }, []);
+
+  // useEffect(() => {
+  //   let eventSource;
+  //   const fetchSse = async () => {
+  //     try {
+  //       eventSource = new EventSource(
+  //         `${BASE_URL}/api/v1/notification/connect`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //           withCredentials: "include",
+  //         }
+  //       );
+  //       eventSource.onopen = () => {
+  //         console.log("연결됨");
+  //       };
+
+  //       /* EVENTSOURCE ONMESSAGE ---------------------------------------------------- */
+  //       eventSource.onmessage = async (event) => {
+  //         const res = await event.data;
+  //         console.log(res);
+  //       };
+
+  //       /* EVENTSOURCE ONERROR ------------------------------------------------------ */
+  //       eventSource.onerror = async (event) => {
+  //         if (!event.error.message.includes("No activity")) eventSource.close();
+  //       };
+  //     } catch (error) {}
+  //   };
+  //   fetchSse();
+  //   return () => eventSource.close();
+  // });
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -209,7 +213,6 @@ const Main = () => {
 
   return (
     <Container>
-
       <Mobile>
         {/* pc 최적화 팝업 start */}
         <MobilePopup />
@@ -258,7 +261,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -266,12 +269,14 @@ const Main = () => {
         ></RightSide>
 
         {/* 방명록 start */}
+
         <GuestBook
           openGusetBook={openGusetBook}
           xBtnClickHandler={closeGusetBookModal}
           selectedGiwa={selectedGiwa}
           username={userInfo.username}
         ></GuestBook>
+
         {/* 방명록 end */}
 
         <MainBg
@@ -346,7 +351,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
