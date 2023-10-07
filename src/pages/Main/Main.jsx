@@ -8,7 +8,6 @@ import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
 import GiwaButton from "../../component/GiwaButton/GiwaButton";
 import MainBg from "../../component/MainBg/MainBg";
-import mainHouse from "../../assets/main/giwa_house_indigo.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import mainHouseIndigo from "../../assets/main/giwa_house_indigo.png";
@@ -16,7 +15,6 @@ import mainHouseBlack from "../../assets/main/giwa_house_black.png";
 import mainHousePink from "../../assets/main/giwa_house_pink.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
-// import CopyLink from "../../component/Popup/CopyLink";
 import { useParams, useLocation } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,7 +26,6 @@ import { getItem } from "../../utils/storage";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
-import { useBgColor } from "../../contexts/BackgroundColor";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -234,7 +231,10 @@ const Main = () => {
         <StyledMain>
           <div className={openMakeup || openGusetBook ? "left" : null}>
             <HouseBox $houseImg={mainHousePath()}>
-              <Warning testActive={isVisitorClick} />
+              <Warning
+                active={isVisitorClick}
+                background={giwaHouseStyle.background === 1 ? true : false}
+              />
               {/* 말풍선 start */}
               <Speech
                 setOpenModal={setOpenModal}
@@ -261,7 +261,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -275,6 +275,7 @@ const Main = () => {
           xBtnClickHandler={closeGusetBookModal}
           selectedGiwa={selectedGiwa}
           username={userInfo.username}
+          setGiwaList={setGiwaList}
         ></GuestBook>
 
         {/* 방명록 end */}
@@ -330,6 +331,8 @@ export default Main;
 const Container = styled.div`
   width: 100%;
   height: 100vh;
+  overflow: hidden;
+  position: relative;
 `;
 
 const ModalContent = styled.div`
@@ -349,7 +352,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;

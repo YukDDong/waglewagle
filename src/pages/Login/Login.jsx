@@ -17,6 +17,8 @@ import {
   validEmail,
   validPwd,
 } from "../../component/ValidTest/ValidTest";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -94,16 +96,17 @@ const Login = () => {
             autoLogin: autoLogin,
           })
         );
-        if (!result.data.data.isExistHopae) {
-          navigate("/makeHopae");
-          return;
-        } else if (!result.data.data.boardId) {
-          navigate("/makeGiwaHouse");
-          return;
-        } else {
-          navigate("/main");
-          return;
-        }
+
+        // if (!result.data.data.isExistHopae) {
+        //   navigate("/makeHopae");
+        //   return;
+        // } else if (!result.data.data.boardId) {
+        //   navigate("/makeGiwaHouse");
+        //   return;
+        // } else {
+        //   navigate("/main");
+        //   return;
+        // }
       }
     });
   };
@@ -114,8 +117,12 @@ const Login = () => {
   };
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
-
       <Main>
         <MainDiv>
           {/* Title */}

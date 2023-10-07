@@ -7,6 +7,8 @@ import Layer1 from "../../assets/onBoarding/layer_1.png";
 import Layer2 from "../../assets/onBoarding/layer_2.png";
 import Layer3 from "../../assets/onBoarding/layer_3.png";
 import { ReactComponent as Logo } from "../../assets/common/logo.svg";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Onboarding = () => {
   const houseRef = useRef(), layerRef1 = useRef(), layerRef2 = useRef(), layerRef3 = useRef();
@@ -25,35 +27,42 @@ const Onboarding = () => {
   }, []);
 
   return (
-    <OnboardingMain>
-      <TitleContain>
-        <Title ref={titleRef}>
-          <Logo width={140} height={30} />
-          <strong>한글날 기념 소통창, <br />와글와글이랑 함께해요! </strong>
-          <div>
-            <p>
-              와글와글은 한글날을 기념하기 위한 소통창입니다. <br />
-              기와의 ‘와’ 랑 한글의 ‘글’을 합쳐 와글와글이란 이름이 탄생하게 되었습니다.
-            </p>
-            <p>
-              와글와글의 사전적 의미는 <br />
-              <em>‘ 사람이 한곳에 많이 모여 잇따라 떠들거나 움직이는 소리 또는 그 모양 ’</em>
-              이라는 의미를 담고 있어 이곳에서  많은 사람들이 <br />
-              한글날을 기억하며, ‘와글와글’ 떠들기 바랍니다.
-            </p>
-          </div>
-        </Title>
-        <ButtonWrap>
-          <button ref={buttonRef} type="button" onClick={moveToLogin}>와글와글 시작하기</button>
-        </ButtonWrap>
-        <HouseWrap>
-          <img src={house} alt="기와집" ref={houseRef} />
-          <img src={Layer1} alt="레이어1" ref={layerRef1} />
-          <img src={Layer2} alt="레이어2" ref={layerRef2} />
-          <img src={Layer3} alt="레이어3" ref={layerRef3} />
-        </HouseWrap>
-      </TitleContain>
-    </OnboardingMain >
+    <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
+      <OnboardingMain>
+        <TitleContain>
+          <Title ref={titleRef}>
+            <Logo width={140} height={30} />
+            <strong>한글날 기념 소통창, <br />와글와글이랑 함께해요! </strong>
+            <div>
+              <p>
+                와글와글은 한글날을 기념하기 위한 소통창입니다. <br />
+                기와의 ‘와’ 랑 한글의 ‘글’을 합쳐 와글와글이란 이름이 탄생하게 되었습니다.
+              </p>
+              <p>
+                와글와글의 사전적 의미는 <br />
+                <em>‘ 사람이 한곳에 많이 모여 잇따라 떠들거나 움직이는 소리 또는 그 모양 ’</em>
+                이라는 의미를 담고 있어 이곳에서  많은 사람들이 <br />
+                한글날을 기억하며, ‘와글와글’ 떠들기 바랍니다.
+              </p>
+            </div>
+          </Title>
+          <ButtonWrap>
+            <button ref={buttonRef} type="button" onClick={moveToLogin}>와글와글 시작하기</button>
+          </ButtonWrap>
+          <HouseWrap>
+            <img src={house} alt="기와집" ref={houseRef} />
+            <img src={Layer1} alt="레이어1" ref={layerRef1} />
+            <img src={Layer2} alt="레이어2" ref={layerRef2} />
+            <img src={Layer3} alt="레이어3" ref={layerRef3} />
+          </HouseWrap>
+        </TitleContain>
+      </OnboardingMain>
+    </>
   );
 };
 export default Onboarding;

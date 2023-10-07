@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import NavBar from '../../component/NavBar/NavBar';
 import { Link } from "react-router-dom";
 import { ReactComponent as Kakao } from "../../assets/common/kakao.svg"
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const MyPage = () => {
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
       <Main>
         <Contain>
@@ -56,6 +63,10 @@ const Contain = styled.div`
   width: 990px;
   display: flex;
   justify-content: space-between;
+  @media ${(props) => props.theme.device.mobile} {
+    width: 100vw;
+    overflow: hidden;
+  }
 `;
 
 const TitleWrap = styled.div`

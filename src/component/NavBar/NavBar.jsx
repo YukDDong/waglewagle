@@ -34,6 +34,7 @@ export default function NavBar({ isShowing = true }) {
     dispatch(logout());
     removeItem("AUTH");
     removeItem("USERINFO");
+    removeItem("autoLogin");
     setIsLogin(false);
     navigate("/login");
   };
@@ -88,7 +89,7 @@ export default function NavBar({ isShowing = true }) {
               )}
             </MyInfoItemFirst>
             <MyInfoItem>
-              <LinkMypage $isLogin={isLogin}>마이페이지</LinkMypage>
+              <LinkMypage to="/myPage" $isLogin={isLogin}>마이페이지</LinkMypage>
               <StyledLink onClick={handleGoToUnius}>유니어스 소개</StyledLink>
               <StyledLink>문의하기</StyledLink>
             </MyInfoItem>
@@ -109,7 +110,7 @@ export default function NavBar({ isShowing = true }) {
 
 const Nav = styled.nav`
   width: 100%;
-  height: 120px;
+  /* height: 120px; */
   display: flex;
   /* align-items: center; */
   box-sizing: border-box;
@@ -238,11 +239,15 @@ const StyledLink = styled(Link)`
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  line-height: 24px; /* 150% */
+  line-height: 24px; 
 `;
 
-const LinkMypage = styled(StyledLink)`
+const LinkMypage = styled(Link)`
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px; 
   color: ${(props) => (props.$isLogin ? "#fff" : "#455263")};
+  pointer-events: ${(props) => props.$isLogin ? 'initial' : 'none'};
 `;
 
 const LogoutBtn = styled.button`

@@ -34,3 +34,8 @@ export const addGiwaApi = async (payload) => {
   const response = await client.post(`/api/v1/posts`, payload);
   return response;
 };
+
+export const editGiwaReadApi = async (giwaId) => {
+  const response = await client.patch(`/api/v1/posts/${giwaId}`);
+  return response;
+};

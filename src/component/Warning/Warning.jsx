@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useBgColor } from "../../contexts/BackgroundColor";
 
-const Warning = ({ testActive }) => {
-  const { bgColor } = useBgColor(); // BG Color context
+const Warning = ({ active, background }) => {
+  const bgColor = background;
 
   return (
-    <WarningConain $bgColor={bgColor} className={testActive ? "active" : null}>
+    <WarningConain $bgColor={bgColor} className={active ? "active" : null}>
       {
         <p>
           <em>❌</em>다른 사람이 받은 기와는 볼 수 없다네.

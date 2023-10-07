@@ -10,8 +10,10 @@ import taegeukgi from "../../assets/main/taegeukgi.png";
 import { useSelector } from "react-redux";
 import { ExDiv, StyledMain, HouseBox } from "../Main/Main";
 import MainBg from "../../component/MainBg/MainBg";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
-const MakeGiwaHouse = () => {
+const MakeGiwaHouse = ({ openMakeup }) => {
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
 
   const mainHousePath = () => {
@@ -29,23 +31,30 @@ const MakeGiwaHouse = () => {
   return (
     // 배경이 추가 될 것을 감안한다면 true, false 보다는 값을 주는게 더 좋아보입니다!  -> 넵!! 확인했습니당!!
     // 일단 지금은 2개밖에 없으니 true, false로 처리할게요
-    <ExDiv $bgColor={giwaHouseStyle.background === 1 ? true : false}>
-      <StyledMainCustom>
-        <div>
-          <HouseBox
-            $houseImg={mainHousePath()}
-          >
-            <img className="heatae" src={haetaeImg} alt="해태" />
-            <img className="taegeukgi" src={taegeukgi} alt="태극기" />
-          </HouseBox>
-        </div>
-      </StyledMainCustom>
-      <RightSide openMakeup={true} btnText={"기와집 만들기 완료"}></RightSide>
-      <MainBg
-        background={giwaHouseStyle.background === 1 ? true : false}
-        openMakeup={true}
-      />
-    </ExDiv>
+    <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
+      <ExDiv $bgColor={giwaHouseStyle.background === 1 ? true : false}>
+        <StyledMainCustom>
+          <div>
+            <HouseBox
+              $houseImg={mainHousePath()}
+            >
+              <img className="heatae" src={haetaeImg} alt="해태" />
+              <img className="taegeukgi" src={taegeukgi} alt="태극기" />
+            </HouseBox>
+          </div>
+        </StyledMainCustom>
+        <RightSide openMakeup={true} btnText={"기와집 만들기 완료"}></RightSide>
+        <MainBg
+          background={giwaHouseStyle.background === 1 ? true : false}
+          openMakeup={true}
+        />
+      </ExDiv>
+    </>
   );
 };
 

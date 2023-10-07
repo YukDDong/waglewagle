@@ -3,15 +3,22 @@ import styled from 'styled-components';
 import Button from '../../component/Button/Button';
 import Title from "../../component/Title/Title";
 import NavBar from '../../component/NavBar/NavBar';
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Withdrawal = () => {
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
       <Main>
         <MainDiv>
           <Title title="회원을 탈퇴하실 건가요?ㅠㅠ" />
-          <Sub>회원 탈퇴후 기와집에 등록된 모든 기와는 삭제됩니다.</Sub>
+          <Sub>회원을 탈퇴하면 기와집에 등록된 모든 기와는 삭제됩니다.</Sub>
           <Button buttonText="회원 탈퇴" />
         </MainDiv>
       </Main>
