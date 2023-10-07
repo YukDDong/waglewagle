@@ -10,6 +10,7 @@ import { koreaDate } from "../../utils/koreaDate";
 import { fontColorDefault } from "../Modal/GiwaModal/WriteGuestText";
 import giwaPath from "../../data/giwaPath";
 import { giwaPatternItems } from "../Modal/GiwaModal/SelectGiwa";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const GuestBook = ({
   openGusetBook,
@@ -17,6 +18,7 @@ const GuestBook = ({
   selectedGiwa,
   username,
 }) => {
+  const navigate = useNavigate();
   const [giwa, setGiwa] = useState(null);
   let selectedSort;
   let giwaCreatedDate;
@@ -28,8 +30,18 @@ const GuestBook = ({
   useEffect(() => {
     if (!selectedGiwa) return;
     getGiwaDetailApi(selectedGiwa).then((result) => {
+      console.log(result);
       if (result.data.status === "SUCCESS") {
+        console.log(result.data);
         setGiwa(result.data.data);
+      }
+
+      if (result.data.status === "FAIL") {
+        if (result.data.message === "접근이 거부되었습니다.") {
+          navigate("/logout");
+          return;
+        }
+        alert(result.data.message);
       }
     });
   }, [selectedGiwa]);
