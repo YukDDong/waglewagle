@@ -11,40 +11,58 @@ import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arro
 import { addGiwaApi } from "../../../apis/giwa";
 import { initGiwa } from "../../../redux/actions/giwaActions";
 
-const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId, setgiwaAddOut }) => {
+const GiwaModal = ({
+  onXBtnClick,
+  setCompletedGiwa,
+  giwaHouseId,
+  setgiwaAddOut,
+}) => {
   const dispatch = useDispatch();
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const handleSubmit = () => {
-    addGiwaApi({
-      broadId: giwaHouseId,
-      version: "v1",
-      message: selectedGiwa.text,
-      nickName: selectedGiwa.nickname,
-      postStyle: {
-        fontColorCode: selectedGiwa.fontColor,
-        sortCode: selectedGiwa.sort,
-        shapeCode: selectedGiwa.number,
-        fontSize: selectedGiwa.font,
-      },
-    }).then((result) => {
-      if (result.data.status === "SUCCESS") {
-        dispatch(initGiwa());
-        onXBtnClick();
-        setCompletedGiwa(true);
-      }
-    });
+    if (!isRequesting) {
+      setIsRequesting(true);
+      addGiwaApi({
+        broadId: giwaHouseId,
+        version: "v1",
+        message: selectedGiwa.text,
+        nickName: selectedGiwa.nickname,
+        postStyle: {
+          fontColorCode: selectedGiwa.fontColor,
+          sortCode: selectedGiwa.sort,
+          shapeCode: selectedGiwa.number,
+          fontSize: selectedGiwa.font,
+        },
+      })
+        .then((result) => {
+          if (result.data.status === "SUCCESS") {
+            dispatch(initGiwa());
+            onXBtnClick();
+            setCompletedGiwa(true);
+          }
+        })
+        .finally(() => {
+          setIsRequesting(false);
+        });
+    }
   };
 
   return (
     <Modal>
       <ChooseBox>
         <XBtnBox>
-          <CloseBtn width={36} height={37} fill="black" onClick={() => {
-            onXBtnClick();
-            setgiwaAddOut(true);
-          }} />
+          <CloseBtn
+            width={36}
+            height={37}
+            fill="black"
+            onClick={() => {
+              onXBtnClick();
+              setgiwaAddOut(true);
+            }}
+          />
         </XBtnBox>
         {pageNum === 1 ? (
           <>
@@ -102,7 +120,7 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId, setgiwaAddOut }
                 style={{ width: "300px", height: "54px", marginTop: "0" }}
               >
                 {selectedGiwa.text === "" ||
-                  englishRegex.test(selectedGiwa.text)
+                englishRegex.test(selectedGiwa.text)
                   ? "방명록 작성하기"
                   : "기와 등록 하러가기"}
               </ButtonActDeact>
@@ -136,12 +154,14 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId, setgiwaAddOut }
               <ButtonActDeact
                 disabled={
                   selectedGiwa.nickname === "" ||
-                  englishRegex.test(selectedGiwa.nickname)
+                  englishRegex.test(selectedGiwa.nickname) ||
+                  selectedGiwa.nickname.length > 8 ||
+                  isRequesting
                 }
                 onClick={handleSubmit}
                 style={{ width: "300px", height: "54px", marginBottom: "0" }}
               >
-                기와 등록 하기
+                {isRequesting ? "등록중" : "기와 등록 하기"}
               </ButtonActDeact>
             </ExDiv>
           </>

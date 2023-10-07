@@ -27,6 +27,9 @@ const GuestBook = ({
   let giwaImg;
   let giwaInfo;
   let giwaTitle;
+  let giwaFont;
+
+  console.log(giwa);
 
   useEffect(() => {
     if (!selectedGiwa) return;
@@ -66,6 +69,20 @@ const GuestBook = ({
   }, [selectedGiwa]);
 
   if (giwa) {
+    switch (giwa.postStyle.shapeCode) {
+      case 1:
+        giwaFont = "Noto Sans KR";
+        break;
+      case 2:
+        giwaFont = "EBS Hunminjeongeum";
+        break;
+      case 3:
+        giwaFont = "Gmarket Sans";
+        break;
+      default:
+        break;
+    }
+
     switch (giwa.postStyle.sortCode) {
       case 1:
         selectedSort = "left";
@@ -108,7 +125,11 @@ const GuestBook = ({
           </GiwaText>
         </Title>
         <GuestBookWrap>
-          <Text $fontColor={giwaFontColor} $sort={selectedSort}>
+          <Text
+            $fontColor={giwaFontColor}
+            $sort={selectedSort}
+            $font={giwaFont}
+          >
             {/* <Board /> */}
             <p>{giwa?.message}</p>
           </Text>
@@ -298,7 +319,7 @@ const Text = styled.div`
     font-size: 20px;
     font-weight: 400;
     line-height: 30px;
-    font-family: var(--font-Inter);
+    font-family: ${(props) => props.$font};
     overflow-y: auto;
     word-wrap: break-word;
     &::-webkit-scrollbar {
