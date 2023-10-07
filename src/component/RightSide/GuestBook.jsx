@@ -297,6 +297,7 @@ const Text = styled.div`
     line-height: 30px;
     font-family: var(--font-Inter);
     overflow-y: auto;
+    word-wrap: break-word;
     &::-webkit-scrollbar {
       width: 6px;
       background-color: #e6d6b757;
