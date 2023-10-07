@@ -206,12 +206,8 @@ const Join = () => {
             />
 
             {/* 비밀번호 판별 */}
-            {data.pwd !== "" ? (
-              isValid.isPassword ? (
-                <IsTrue>유효한 비밀번호입니다.</IsTrue>
-              ) : (
-                <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
-              )
+            {((data.pwd !== "") && (!isValid.isPassword)) ? (
+              <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
             ) : (
               <CheckInfo>
                 <span>* </span>

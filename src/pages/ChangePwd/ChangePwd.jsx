@@ -6,8 +6,16 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import { validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
 import { InputPwd } from "../../component/Input/Input";
 import { ButtonActDeact } from "../../component/Button/Button";
+import { changePwdApi } from "../../apis/user";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/userActions";
+import { removeItem } from "../../utils/storage";
 
 const ChangePwd = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //// data
 
@@ -59,11 +67,24 @@ const ChangePwd = () => {
   const handleClick = ()=>{
     
     // 비밀번호 변경 요청
-    // 백엔드 처리
-    
-    // 비밀번호 변경 후 로그인 화면 이동
-    window.location.href = "/login"
+    changePwdApi({
+      password: data.pwd
+    }).then((result) => {
+      if (result.status === 200) {
+        // modal 열기
+        visibleFtn(true);
+      }
+    })
   }
+
+  // 로그아웃
+  const logoutBtnClick = () => {
+    dispatch(logout());
+    removeItem("AUTH");
+    removeItem("USERINFO");
+    removeItem("autoLogin");
+    navigate("/login");
+  };
 
 
   return (
@@ -76,7 +97,7 @@ const ChangePwd = () => {
           msg = {"비밀번호를 성공적으로\n변경했습니다!"}
           buttonText="로그인 화면으로 이동"
           visibleFtn={visibleFtn}
-          onClickBtn={handleClick}
+          onClickBtn={logoutBtnClick}
         />
         : null}
 
@@ -102,12 +123,8 @@ const ChangePwd = () => {
             />
 
             {/* 비밀번호 판별 */}
-            {(data.pwd !== "") ? (
-              (isValid.isPwd) ? (
-                <IsTrue>유효한 비밀번호입니다.</IsTrue>
-              ) : (
-                <IsFalse>유효하지 않은 비밀번호입니다.</IsFalse>
-              )
+            {((data.pwd !== "") && (!isValid.isPwd)) ? (
+              <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
             ) : (
               <CheckInfo>
                 <span>* </span>
