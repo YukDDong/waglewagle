@@ -116,6 +116,7 @@ const Container = styled.div`
   position: relative;
   transition: all ease-in-out 1s;
   left: ${({ open }) => open ? "-350px" : "0"};
+  overflow: hidden;
   &:after {
     content: "";
     display: block;
