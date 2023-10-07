@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
@@ -7,21 +7,91 @@ import giwaFrame from "../../assets/common/giwa_frame_img.jpg";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Badge } from "../../assets/storage/latest_badge.svg";
 import { ReactComponent as ToggleArrow } from "../../assets/common/toggle_arrow.svg";
-import giwaData from "../../data/giwaStorage";
+import giwaData from "../../data/giwaPath";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
+import { useSelector } from "react-redux";
+import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
+import { useParams, useLocation } from "react-router-dom";
+import { koreaDate } from "../../utils/koreaDate";
 
 /* 비교데이터 */
 let data = ["기와 목록 최신순", "기와 목록 과거순"];
 
 const StorageGiwa = () => {
-  const [giwaStorage, setGiwaStorage] = useState(giwaData); // 기와 보관함 데이터
   const [showOptions, setShowOptions] = useState(false); // 셀렉트 boolean
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
+  const [selectedGiwa, setSelectedGiwa] = useState(null);
+  const [giwaHouse, setGiwaHouse] = useState({}); // 기와집 주인 데이터
+  const userInfo = useSelector((state) => state.userReducer);
+  const userName = userInfo.username;
+  const [giwaList, setGiwaList] = useState([]);
+  const { url } = useParams();
   const [selectData, setSelectData] = useState({
     select: "기와 목록 최신순",
     option: "기와 목록 과거순"
   });
+
+  useEffect(() => {
+    const requestData = url ? url : userInfo.boardId;
+    getGiwaHouseApi(requestData).then((result) => {
+      if (result.data.status === "SUCCESS") {
+        const giwaHouseData = result.data.data;
+        setGiwaHouse(giwaHouseData);
+        return;
+      } else {
+        return;
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!giwaHouse.id) return;
+    getGiwaListApi({
+      broadId: giwaHouse.id,
+      reverse: true,
+    })
+      .then((result) => {
+        if (result.data.status === "SUCCESS") {
+          setGiwaList(result.data.data);
+        }
+        if (result.data.status === "FAIL") {
+          setGiwaList([]);
+        }
+      })
+      .catch((error) => {
+        console.error("오류:", error);
+      });
+    document.querySelectorAll('.giwa_wrap > li').forEach((e, index) => {
+      if (index < 12) {
+        console.log(e.classList.add('on'));
+      }
+    })
+  }, [giwaHouse]);
+
+  useEffect(() => {
+    let boolean;
+    if (selectData.select[0] === "기와 목록 최신순") {
+      boolean = true;
+    } else {
+      boolean = false;
+    }
+    getGiwaListApi({
+      broadId: giwaHouse.id,
+      reverse: boolean,
+    })
+      .then((result) => {
+        if (result.data.status === "SUCCESS") {
+          setGiwaList(result.data.data);
+        }
+        if (result.data.status === "FAIL") {
+          setGiwaList([]);
+        }
+      })
+      .catch((error) => {
+        console.error("오류:", error);
+      });
+  }, [selectData]);
 
   const openGusetBookModal = (e) => {
     document.querySelector("html,body").style.cssText = "overflow: hidden; padding: 0 17px 0 0";
@@ -57,11 +127,11 @@ const StorageGiwa = () => {
       <Container open={openGusetBook}>
         <AsideTitle>
           <Title>
-            <span>홍길동</span>님, <br />
+            <span>{userName}</span>님, <br />
             기와를 이만큼 <br />
             받았다오.
           </Title>
-          <p>총 <em>{giwaStorage.length}</em>개를 받았소.</p>
+          <p>총 <em>{giwaList.length}</em>개를 받았소.</p>
         </AsideTitle>
         <StorageContain>
           <Nav>
@@ -79,17 +149,19 @@ const StorageGiwa = () => {
           </Nav>
           <GiwaWrap className="giwa_wrap">
             {
-              giwaStorage.map(item => (
-                <GiwaLi key={item.id}>
-                  <button type="button" onClick={e => openGusetBookModal(e)}>
-                    {/* 기와 이미지 */}
-                    <img src={item.img} alt="" />
-                    {/* 뱃지 */}
-                    {item.id < 13 && <em><Badge /></em>}
+              giwaList.map(giwa => {
+                let giwaCreatedDate = koreaDate(giwa.createdTime);
+                return <GiwaLi key={giwa.id} className="new">
+                  <button type="button" onClick={e => {
+                    openGusetBookModal(e)
+                    setSelectedGiwa(giwa.id);
+                  }}>
+                    <img src={giwaData[giwa.postStyle.shapeCode - 1].imgUrl} alt="이미지" />
+                    <em><Badge /></em>
                   </button>
-                  <span>{item.date}</span>
+                  <span>{giwaCreatedDate.year}년 {giwaCreatedDate.month}월 {giwaCreatedDate.day}일</span>
                 </GiwaLi>
-              ))
+              })
             }
           </GiwaWrap>
         </StorageContain>
@@ -99,9 +171,11 @@ const StorageGiwa = () => {
       <GuestBook
         openGusetBook={openGusetBook}
         xBtnClickHandler={closeGusetBookModal}
+        selectedGiwa={selectedGiwa}
+        username={userInfo.username}
+        setGiwaList={setGiwaList}
       ></GuestBook>
       {/* 방명록 end */}
-
       <Dimmed open={openGusetBook}></Dimmed>
     </>
   );
@@ -112,11 +186,11 @@ export default StorageGiwa;
 const Container = styled.div`
   max-width: 980px;
   margin: 0 auto;
-  padding: 240px 0 0 50px;
+  padding: 240px 50px 0 50px;
   position: relative;
   transition: all ease-in-out 1s;
   left: ${({ open }) => open ? "-350px" : "0"};
-  overflow: hidden;
+  /* overflow: hidden; */
   &:after {
     content: "";
     display: block;
@@ -267,6 +341,13 @@ const GiwaLi = styled.li`
   margin: 0 0 5.6122%;
   position: relative; 
   transition: all ease-in-out 1s;
+  &.on {
+    button {
+      > em {
+        display: block;
+      }
+    }
+  }
   &.active {
     z-index: 103; 
     > span {
@@ -321,6 +402,7 @@ const GiwaLi = styled.li`
       margin: auto;
     }
     > em {
+      display: none;
       width: 30px;
       height: 30px;
       background-color: #E75852;
