@@ -4,10 +4,17 @@ import NavBar from '../../component/NavBar/NavBar';
 import { Link } from "react-router-dom";
 import { ReactComponent as Kakao } from "../../assets/common/kakao.svg"
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Setting = () => {
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
       <Main>
         <Contain>
@@ -56,6 +63,10 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media ${(props) => props.theme.device.mobile} {
+    width: 100vw;
+    overflow: hidden;
+  }
 `;
 
 const Contain = styled.div`

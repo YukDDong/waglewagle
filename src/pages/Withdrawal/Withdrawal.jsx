@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import Button from '../../component/Button/Button';
 import Title from "../../component/Title/Title";
 import NavBar from '../../component/NavBar/NavBar';
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Withdrawal = () => {
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
       <Main>
         <MainDiv>

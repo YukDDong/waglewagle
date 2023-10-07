@@ -8,10 +8,11 @@ import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg"
 import { ReactComponent as Badge } from "../../assets/storage/latest_badge.svg";
 import { ReactComponent as ToggleArrow } from "../../assets/common/toggle_arrow.svg";
 import giwaData from "../../data/giwaStorage";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 /* 비교데이터 */
 let data = ["기와 목록 최신순", "기와 목록 과거순"];
-const root = document.querySelector("#root");
 
 const StorageGiwa = () => {
   const [giwaStorage, setGiwaStorage] = useState(giwaData); // 기와 보관함 데이터
@@ -47,6 +48,11 @@ const StorageGiwa = () => {
 
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
       <Container open={openGusetBook}>
         <AsideTitle>

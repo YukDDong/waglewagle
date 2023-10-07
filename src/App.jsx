@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { getItem } from "./utils/storage";
 import { useDispatch } from "react-redux";
 import { login } from "./redux/actions/userActions";
+import Logout from "./pages/Logout/Logout";
 
 const routes = [
   {
@@ -32,6 +33,10 @@ const routes = [
   {
     path: "/join",
     element: <AuthRoute loginOption={false} component={<Join />} />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
   {
     path: "/main",
