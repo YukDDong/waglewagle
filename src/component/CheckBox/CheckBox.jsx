@@ -19,9 +19,22 @@ export default function CheckBox({ labelName, setChecked, checked }) {
 const CheckBoxDiv = styled.div`
   display: flex;
   align-items: center;
+  gap: 6px;
+  width: auto;
+  height: 24px;
   > input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     width: 20px;
     height: 20px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    border-radius: 2px;
+    cursor: pointer;
+    &:checked {
+      background-color: #e75852;
+    }
   }
   > label {
     color: #9e9e9e;

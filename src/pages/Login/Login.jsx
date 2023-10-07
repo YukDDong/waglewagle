@@ -49,13 +49,13 @@ const Login = () => {
 
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
   const onSubmit = () => {
-    if (!validEmail(loginInfo.id)) {
+    if (loginInfo.id.trim() === "") {
       setIsError(true);
       setErrorMessage("이메일을 입력해 주세요.");
       return;
     }
 
-    if (!validPwd(loginInfo.pwd)) {
+    if (loginInfo.pwd.trim() === "") {
       setIsError(true);
       setErrorMessage("비밀번호를 입력해 주세요.");
       return;
