@@ -71,7 +71,7 @@ const Join = () => {
   // 회원가입 가능 판단
   const onJoinSubmit = (e) => {
     e.preventDefault();
-    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
+    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm && isValid.isEmeilCheck) {
       console.log(data.userId);
       joinApi({
         email: data.userId,
@@ -178,11 +178,24 @@ const Join = () => {
 
             {/* Email 판별  */}
             {data.userId !== "" ? (
+              
+              // 유효한 Email
               isValid.isEmail ? (
-                <IsTrue>유효한 이메일입니다.</IsTrue>
+
+                // 중복 확인되지 않았을 때
+                (!isValid.isEmeilCheck ? (
+                  <IsFalse>이메일 중복확인이 되지 않았습니다.</IsFalse>
+                )
+
+                // 중복 확인 되었을 때
+                : null)
+
+              // 유효하지 않은 Email
               ) : (
-                <IsFalse>유효하지 않은 이메일입니다.</IsFalse>
+                <IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>
               )
+
+            // 비어있을 때
             ) : null}
 
             {/* 비밀번호 */}
@@ -193,12 +206,8 @@ const Join = () => {
             />
 
             {/* 비밀번호 판별 */}
-            {data.pwd !== "" ? (
-              isValid.isPassword ? (
-                <IsTrue>유효한 비밀번호입니다.</IsTrue>
-              ) : (
-                <IsFalse>유효하지 않은 비밀번호입니다.</IsFalse>
-              )
+            {((data.pwd !== "") && (!isValid.isPassword)) ? (
+              <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
             ) : (
               <CheckInfo>
                 <span>* </span>

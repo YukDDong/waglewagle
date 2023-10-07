@@ -27,7 +27,20 @@ export const makeHopaeApi = async (payload) => {
   return response;
 };
 
+// 소셜로그인
 export const loginSocialApi = async (payload) => {
   const response = await client.post("/oauth/login/kakao", payload);
+  return response;
+};
+
+// 회원탈퇴
+export const withdrawalApi = async (payload) => {
+  const response = await client.delete(`/api/v1/users/${payload}`);
+  return response;
+};
+
+// 비밀번호 변경
+export const changePwdApi = async (payload) => {
+  const response = await client.put("/api/v1/users/password/change", payload);
   return response;
 };
