@@ -239,14 +239,15 @@ const StyledLink = styled(Link)`
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  line-height: 24px; /* 150% */
+  line-height: 24px; 
 `;
 
 const LinkMypage = styled(Link)`
   font-size: 16px;
   font-weight: 700;
-  line-height: 24px; /* 150% */
+  line-height: 24px; 
   color: ${(props) => (props.$isLogin ? "#fff" : "#455263")};
+  pointer-events: ${(props) => props.$isLogin ? 'initial' : 'none'};
 `;
 
 const LogoutBtn = styled.button`
