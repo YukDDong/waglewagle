@@ -96,16 +96,17 @@ const Login = () => {
             autoLogin: autoLogin,
           })
         );
-        if (!result.data.data.isExistHopae) {
-          navigate("/makeHopae");
-          return;
-        } else if (!result.data.data.boardId) {
-          navigate("/makeGiwaHouse");
-          return;
-        } else {
-          navigate("/main");
-          return;
-        }
+
+        // if (!result.data.data.isExistHopae) {
+        //   navigate("/makeHopae");
+        //   return;
+        // } else if (!result.data.data.boardId) {
+        //   navigate("/makeGiwaHouse");
+        //   return;
+        // } else {
+        //   navigate("/main");
+        //   return;
+        // }
       }
     });
   };

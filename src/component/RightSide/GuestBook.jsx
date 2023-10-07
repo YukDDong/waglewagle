@@ -33,9 +33,7 @@ const GuestBook = ({
     getGiwaDetailApi(selectedGiwa).then((result) => {
       if (result.data.status === "SUCCESS") {
         if (!result.data.data.isRead) {
-          editGiwaReadApi(selectedGiwa, {
-            isRead: true,
-          }).then((response) => {
+          editGiwaReadApi(selectedGiwa).then((response) => {
             if (response.data.status === "SUCCESS") {
               setGiwaList((prev) => {
                 const filterList = prev.map((item) => {
@@ -261,6 +259,7 @@ const Text = styled.div`
   height: calc(100vh - 500px);
   position: relative;
   background-color: #f8efe7;
+  white-space: pre-line;
   &:after,
   &:before {
     width: 530px;
