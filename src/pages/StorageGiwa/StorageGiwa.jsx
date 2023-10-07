@@ -157,12 +157,19 @@ const StorageGiwa = () => {
                     setSelectedGiwa(giwa.id);
                   }}>
                     <img src={giwaData[giwa.postStyle.shapeCode - 1].imgUrl} alt="이미지" />
-                    {(giwaList.length - [index + 1] < 10) && !newList && <em><Badge /></em>}
-                    {(index < 10 && newList) && <em><Badge /></em>}
+                    {(giwaList.length - [index + 1] < 12) && !newList && <em><Badge /></em>}
+                    {(index < 12 && newList) && <em><Badge /></em>}
                   </button>
                   <span>{giwaCreatedDate.year}년 {giwaCreatedDate.month}월 {giwaCreatedDate.day}일</span>
                 </GiwaLi>
               })
+            }
+            {
+              giwaList.length === 0 && (
+                <NoneGiwa>
+                  <p>기와가 존재하지 않소! <br /> 기와집을 공유하여 친구들에게 널리알리시오. </p>
+                </NoneGiwa>
+              )
             }
           </GiwaWrap>
         </StorageContain>
@@ -421,6 +428,21 @@ const GiwaLi = styled.li`
   img {
     width: 100%;
   }  
+`;
+
+const NoneGiwa = styled.div`
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > p {
+    font-size: 15px;
+    display: block;
+    line-height: 25px;
+    color: #9E9E9E;
+  }
 `;
 
 const Dimmed = styled.div`

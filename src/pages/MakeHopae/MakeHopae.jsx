@@ -173,7 +173,6 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
   box-sizing: border-box;
 `;
 

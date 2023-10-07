@@ -11,7 +11,6 @@ const MyPage = () => {
 
   // 데이터 불러오기
   const userInfo = useSelector(state=>state.userReducer);
-  console.log(userInfo);
   
   return (
     <>
