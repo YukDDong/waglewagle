@@ -95,6 +95,9 @@ const Main = () => {
     });
   }, []);
 
+  console.log("initGiwaHouse", initGiwaHouse);
+  console.log("giwaHouseStyle", giwaHouseStyle);
+
   // useEffect(() => {
   //   let eventSource;
   //   const fetchSse = async () => {

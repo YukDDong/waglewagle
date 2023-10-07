@@ -39,6 +39,7 @@ const RightSide = ({
   );
   const { changeDaytime, changeNight, bgColor } = useBgColor(); // BG Color context
 
+  console.log("giwaColor", giwaColor);
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
     // e.target.id === 'night' && changeNight()
@@ -281,7 +282,7 @@ const Btn = styled.button`
   border-radius: 10px;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background-color: #D24640;
+    background-color: #d24640;
   }
   &:disabled {
     color: #bbb;

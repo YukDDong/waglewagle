@@ -46,8 +46,6 @@ const GuestBook = ({
     });
   }, [selectedGiwa]);
 
-  console.log("giwa", giwa);
-
   if (giwa) {
     switch (giwa.postStyle.sortCode) {
       case 1:
