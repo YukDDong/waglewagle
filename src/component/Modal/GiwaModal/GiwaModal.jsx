@@ -11,7 +11,7 @@ import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arro
 import { addGiwaApi } from "../../../apis/giwa";
 import { initGiwa } from "../../../redux/actions/giwaActions";
 
-const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
+const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId, setgiwaAddOut }) => {
   const dispatch = useDispatch();
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
@@ -41,7 +41,10 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
     <Modal>
       <ChooseBox>
         <XBtnBox>
-          <CloseBtn width={36} height={37} fill="black" onClick={onXBtnClick} />
+          <CloseBtn width={36} height={37} fill="black" onClick={() => {
+            onXBtnClick();
+            setgiwaAddOut(true);
+          }} />
         </XBtnBox>
         {pageNum === 1 ? (
           <>
@@ -99,7 +102,7 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
                 style={{ width: "300px", height: "54px", marginTop: "0" }}
               >
                 {selectedGiwa.text === "" ||
-                englishRegex.test(selectedGiwa.text)
+                  englishRegex.test(selectedGiwa.text)
                   ? "방명록 작성하기"
                   : "기와 등록 하러가기"}
               </ButtonActDeact>
