@@ -186,6 +186,8 @@ const Title = styled.div`
 `;
 
 const GiwaImg = styled.div`
+  width: 110px;
+  height: 110px;
   min-width: 110px;
   min-height: 110px;
   position: relative;

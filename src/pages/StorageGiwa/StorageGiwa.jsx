@@ -157,8 +157,8 @@ const StorageGiwa = () => {
                     setSelectedGiwa(giwa.id);
                   }}>
                     <img src={giwaData[giwa.postStyle.shapeCode - 1].imgUrl} alt="이미지" />
-                    {(giwaList.length - [index + 1] < 10) && !newList && <em><Badge /></em>}
-                    {(index < 10 && newList) && <em><Badge /></em>}
+                    {(giwaList.length - [index + 1] < 12) && !newList && <em><Badge /></em>}
+                    {(index < 12 && newList) && <em><Badge /></em>}
                   </button>
                   <span>{giwaCreatedDate.year}년 {giwaCreatedDate.month}월 {giwaCreatedDate.day}일</span>
                 </GiwaLi>
