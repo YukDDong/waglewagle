@@ -56,6 +56,13 @@ export default function NavBar({ isShowing = true }) {
     );
   };
 
+  const handleGoToInsta = () => {
+    window.open(
+      "https://instagram.com/wa_gle.1009?igshid=OGQ5ZDc2ODk2ZA==",
+      "_blank"
+    );
+  };
+
   const handleLogoClick = () => {
     navigate("/main");
     return;
@@ -98,7 +105,7 @@ export default function NavBar({ isShowing = true }) {
                 마이페이지
               </LinkMypage>
               <StyledLink onClick={handleGoToUnius}>유니어스 소개</StyledLink>
-              <StyledLink>문의하기</StyledLink>
+              <StyledLink onClick={handleGoToInsta}>문의하기</StyledLink>
             </MyInfoItem>
             {isLogin && (
               <MyInfoItem>
