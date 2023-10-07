@@ -6,8 +6,11 @@ import { ReactComponent as Kakao } from "../../assets/common/kakao.svg"
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
+import { useSelector } from "react-redux";
 
 const Setting = () => {
+  const userInfo = useSelector(state => state.userReducer);
+
   return (
     <>
       <Mobile>
@@ -20,12 +23,12 @@ const Setting = () => {
         <Contain>
           <div>
             <Title>
-              <span>홍길동</span>님, <br />
+              <span>{userInfo.username}</span>님, <br />
               안녕하시오.
             </Title>
             <JoinEmeil>
-              <Kakao />
-              <span>asdf132@naver.com</span>
+              {/* <Kakao /> */}
+              <span>{userInfo.email}</span>
             </JoinEmeil>
           </div>
           <div>

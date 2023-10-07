@@ -164,6 +164,13 @@ const StorageGiwa = () => {
                 </GiwaLi>
               })
             }
+            {
+              giwaList.length === 0 && (
+                <NoneGiwa>
+                  <p>기와가 존재하지 않소! <br /> 기와집을 공유하여 친구들에게 널리알리시오. </p>
+                </NoneGiwa>
+              )
+            }
           </GiwaWrap>
         </StorageContain>
       </Container>
@@ -421,6 +428,21 @@ const GiwaLi = styled.li`
   img {
     width: 100%;
   }  
+`;
+
+const NoneGiwa = styled.div`
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > p {
+    font-size: 15px;
+    display: block;
+    line-height: 25px;
+    color: #9E9E9E;
+  }
 `;
 
 const Dimmed = styled.div`

@@ -231,7 +231,7 @@ const Contain = styled.div`
     &.icon_bar {
       ul {
         li {
-          &:nth-of-type(3) {
+          &:nth-of-type(2) {
             svg {
               left: -1px;
             }
@@ -426,7 +426,7 @@ const Various = styled.ul`
   bottom: 0;
   margin: auto;
   display: flex;
-  right: 100px;
+  right: 150px;
   transition: width, 0.4s ease-in;
   li {
     position: relative;
