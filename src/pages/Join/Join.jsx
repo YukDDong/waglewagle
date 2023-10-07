@@ -15,6 +15,8 @@ import {
   IsFalse,
   CheckInfo,
 } from "../../component/ValidTest/ValidTest";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Join = () => {
   const navigate = useNavigate();
@@ -122,6 +124,11 @@ const Join = () => {
   //// 출력
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
       {/* Modal */}
       {isModalOpen ? (
@@ -140,14 +147,14 @@ const Join = () => {
             msg="사용할 수 있는 이메일입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-            // visibleFtn={visibleFtn}
+          // visibleFtn={visibleFtn}
           />
         ) : (
           <ModalBasic
             msg="이미 가입된 회원 입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-            // visibleFtn={visibleFtn}
+          // visibleFtn={visibleFtn}
           />
         )
       ) : null}
@@ -248,7 +255,10 @@ const MainDiv = styled.div`
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  /* padding-top: 100px; */
+  @media ${(props) => props.theme.device.mobile} {
+    width: 100vw;
+    overflow: hidden;
+  }
 `;
 
 const MainDivBottom = styled.form`

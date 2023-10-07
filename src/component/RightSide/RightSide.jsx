@@ -19,7 +19,6 @@ import {
   getGiwaHouse,
 } from "../../redux/actions/giwaHouseActions";
 import { makeGiwaHouse } from "../../redux/actions/userActions";
-import { useBgColor } from "../../contexts/BackgroundColor";
 
 const RightSide = ({
   openMakeup,
@@ -40,15 +39,15 @@ const RightSide = ({
 
   useEffect(() => {
     const giwaSvg = document.querySelector(".giwa_svg");
-    openMakeup
-      ? (giwaSvg.style.pointerEvents = "none")
-      : (giwaSvg.style.pointerEvents = "initial")
+    if (giwaSvg !== null) {
+      openMakeup
+        ? (giwaSvg.style.pointerEvents = "none")
+        : (giwaSvg.style.pointerEvents = "initial")
+    }
   }, [openMakeup])
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
-    // e.target.id === 'night' && changeNight()
-    // e.target.id === 'day' && changeDaytime()
     const value = Number(e.target.value);
     dispatch(
       changeGiwaHouseStyle({

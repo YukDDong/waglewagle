@@ -17,6 +17,8 @@ import {
   validEmail,
   validPwd,
 } from "../../component/ValidTest/ValidTest";
+import MobilePopup from "../../component/MobilePopup/MobilePopup";
+import { Mobile } from "../../style/mediaQuery";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -114,8 +116,12 @@ const Login = () => {
   };
   return (
     <>
+      <Mobile>
+        {/* pc 최적화 팝업 start */}
+        <MobilePopup />
+        {/* pc 최적화 팝업 end */}
+      </Mobile>
       <NavBar />
-
       <Main>
         <MainDiv>
           {/* Title */}
