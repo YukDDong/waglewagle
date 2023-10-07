@@ -20,26 +20,34 @@ const GiwaModal = ({
   const dispatch = useDispatch();
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const handleSubmit = () => {
-    addGiwaApi({
-      broadId: giwaHouseId,
-      version: "v1",
-      message: selectedGiwa.text,
-      nickName: selectedGiwa.nickname,
-      postStyle: {
-        fontColorCode: selectedGiwa.fontColor,
-        sortCode: selectedGiwa.sort,
-        shapeCode: selectedGiwa.number,
-        fontSize: selectedGiwa.font,
-      },
-    }).then((result) => {
-      if (result.data.status === "SUCCESS") {
-        dispatch(initGiwa());
-        onXBtnClick();
-        setCompletedGiwa(true);
-      }
-    });
+    if (!isRequesting) {
+      setIsRequesting(true);
+      addGiwaApi({
+        broadId: giwaHouseId,
+        version: "v1",
+        message: selectedGiwa.text,
+        nickName: selectedGiwa.nickname,
+        postStyle: {
+          fontColorCode: selectedGiwa.fontColor,
+          sortCode: selectedGiwa.sort,
+          shapeCode: selectedGiwa.number,
+          fontSize: selectedGiwa.font,
+        },
+      })
+        .then((result) => {
+          if (result.data.status === "SUCCESS") {
+            dispatch(initGiwa());
+            onXBtnClick();
+            setCompletedGiwa(true);
+          }
+        })
+        .finally(() => {
+          setIsRequesting(false);
+        });
+    }
   };
 
   return (
@@ -147,12 +155,13 @@ const GiwaModal = ({
                 disabled={
                   selectedGiwa.nickname === "" ||
                   englishRegex.test(selectedGiwa.nickname) ||
-                  selectedGiwa.nickname.length > 8
+                  selectedGiwa.nickname.length > 8 ||
+                  isRequesting
                 }
                 onClick={handleSubmit}
                 style={{ width: "300px", height: "54px", marginBottom: "0" }}
               >
-                기와 등록 하기
+                {isRequesting ? "등록중" : "기와 등록 하기"}
               </ButtonActDeact>
             </ExDiv>
           </>

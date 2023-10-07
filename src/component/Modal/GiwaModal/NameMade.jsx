@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SelectTitle from "../../SelectTitle/SelectTitle";
 import { ReactComponent as Booklet } from "./../../../assets/modal/booklet.svg";
 import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
 import { englishRegex, fontColorDefault, profanity } from "./WriteGuestText";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { writeNickName } from "../../../redux/actions/giwaActions";
 
 const NameContain = ({ text, giwaInfo }) => {
   const dispatch = useDispatch();
+  const giwaInfoNickname = useSelector((state) => state.giwaReducer);
   const [nickName, setNickName] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
   let selectedFont;
   let selectedSort;
+
+  useEffect(() => {
+    if (!giwaInfoNickname.nickname) return;
+
+    setNickName(giwaInfoNickname.nickname);
+  }, []);
 
   switch (giwaInfo.font) {
     case 1:
