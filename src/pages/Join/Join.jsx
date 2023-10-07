@@ -181,7 +181,7 @@ const Join = () => {
               isValid.isEmail ? (
                 <IsTrue>유효한 이메일입니다.</IsTrue>
               ) : (
-                <IsFalse>유효하지 않은 이메일입니다.</IsFalse>
+                <IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>
               )
             ) : null}
 
@@ -197,7 +197,7 @@ const Join = () => {
               isValid.isPassword ? (
                 <IsTrue>유효한 비밀번호입니다.</IsTrue>
               ) : (
-                <IsFalse>유효하지 않은 비밀번호입니다.</IsFalse>
+                <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
               )
             ) : (
               <CheckInfo>
