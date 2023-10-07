@@ -55,8 +55,8 @@ const routes = [
     element: <AuthRoute loginOption={true} component={<MakeGiwaHouse />} />,
   },
   {
-    path: "/kakao_login",
-    element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
+    path: "/oauth/kakao/callback",
+    element: <KakaoLogin />,
   },
   {
     path: "/findPwd",
