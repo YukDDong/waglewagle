@@ -46,6 +46,7 @@ const Main = () => {
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
   const [isVisitorClick, setIsVisitorClick] = useState(false);
+  const [giwaAddOut, setgiwaAddOut] = useState(false); // 기와 등록 중 나가기
   const captureDivRef = useRef();
   const [img, setImg] = useState();
   const [initGiwaHouse, setInitGiwaHouse] = useState();
@@ -165,8 +166,16 @@ const Main = () => {
 
     setTimeout(() => {
       setIsVisitorClick(false);
-    }, 3000);
+    }, 1500);
   }, [isVisitorClick]);
+
+  useEffect(() => {
+    if (!giwaAddOut) return;
+
+    setTimeout(() => {
+      setgiwaAddOut(false);
+    }, 1500);
+  }, [giwaAddOut]);
 
   // 캡쳐
   const handleCapture = async () => {
@@ -221,6 +230,7 @@ const Main = () => {
           onXBtnClick={() => setOpenModal(false)}
           setCompletedGiwa={setCompletedGiwa}
           giwaHouseId={giwaHouse.id}
+          setgiwaAddOut={setgiwaAddOut}
         />
       ) : null}
       <NavBar isShowing={openNav} />
@@ -234,6 +244,7 @@ const Main = () => {
               <Warning
                 active={isVisitorClick}
                 background={giwaHouseStyle.background === 1 ? true : false}
+                giwaAddOut={giwaAddOut}
               />
               {/* 말풍선 start */}
               <Speech
