@@ -14,14 +14,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <React.StrictMode>
-        <GlobalStyles />
-        <BgProvider>
-          <ThemeProvider theme={theme}>
-            <App />
-          </ThemeProvider>
-        </BgProvider>
-      </React.StrictMode>
+      {/* <React.StrictMode> */}
+      <GlobalStyles />
+      <BgProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </BgProvider>
+      {/* </React.StrictMode> */}
     </PersistGate>
   </Provider>
 );

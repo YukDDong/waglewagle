@@ -56,9 +56,21 @@ export default function NavBar({ isShowing = true }) {
     );
   };
 
+  const handleGoToInsta = () => {
+    window.open(
+      "https://instagram.com/wa_gle.1009?igshid=OGQ5ZDc2ODk2ZA==",
+      "_blank"
+    );
+  };
+
+  const handleLogoClick = () => {
+    navigate("/main");
+    return;
+  };
+
   return (
     <Nav className={isShowing ? null : "no-showing"}>
-      <NavLogo>와글와글</NavLogo>
+      <NavLogo onClick={handleLogoClick}>와글와글</NavLogo>
       <NavMenu>
         <NavMenuTop>
           {menuOpen ? (
@@ -89,9 +101,11 @@ export default function NavBar({ isShowing = true }) {
               )}
             </MyInfoItemFirst>
             <MyInfoItem>
-              <LinkMypage to="/myPage" $isLogin={isLogin}>마이페이지</LinkMypage>
+              <LinkMypage to="/myPage" $isLogin={isLogin}>
+                마이페이지
+              </LinkMypage>
               <StyledLink onClick={handleGoToUnius}>유니어스 소개</StyledLink>
-              <StyledLink>문의하기</StyledLink>
+              <StyledLink onClick={handleGoToInsta}>문의하기</StyledLink>
             </MyInfoItem>
             {isLogin && (
               <MyInfoItem>
@@ -136,6 +150,7 @@ const NavLogo = styled(Logo)`
   position: absolute;
   left: 19vw;
   top: 2vw;
+  cursor: pointer;
 `;
 
 const NavMenu = styled.div`
@@ -239,15 +254,15 @@ const StyledLink = styled(Link)`
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  line-height: 24px; 
+  line-height: 24px;
 `;
 
 const LinkMypage = styled(Link)`
   font-size: 16px;
   font-weight: 700;
-  line-height: 24px; 
+  line-height: 24px;
   color: ${(props) => (props.$isLogin ? "#fff" : "#455263")};
-  pointer-events: ${(props) => props.$isLogin ? 'initial' : 'none'};
+  pointer-events: ${(props) => (props.$isLogin ? "initial" : "none")};
 `;
 
 const LogoutBtn = styled.button`

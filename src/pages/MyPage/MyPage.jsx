@@ -5,8 +5,14 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Kakao } from "../../assets/common/kakao.svg"
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
+import { useSelector } from "react-redux";
 
 const MyPage = () => {
+
+  // 데이터 불러오기
+  const userInfo = useSelector(state=>state.userReducer);
+  console.log(userInfo);
+  
   return (
     <>
       <Mobile>
@@ -19,12 +25,12 @@ const MyPage = () => {
         <Contain>
           <TitleWrap>
             <Title>
-              <span>홍길동</span>님, <br />
+              <span>{userInfo.username}</span>님, <br />
               안녕하시오.
             </Title>
             <JoinEmeil>
-              <Kakao />
-              <span>asdf132@naver.com</span>
+              {/* <Kakao /> */}
+              <span>{userInfo.email}</span>
             </JoinEmeil>
           </TitleWrap>
           <NavWrap>

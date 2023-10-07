@@ -12,24 +12,25 @@ const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const code = searchParams.get("code");
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    console.log("code", code);
+    if (!code) {
+      navigate("/login");
+      return;
+    }
     loginSocialApi({
       code: code,
       memberType: "KAKAO",
     }).then((result) => {
       console.log(result);
     });
-    // if (!code) {
-    //   return <Navigate to="/login" />;
-    // }
 
     // const GRANT_TYPE = "authorization_code";
 
     // const response = await fetch(
     //   `https://kauth.kakao.com/oauth/token?grant_type=${GRANT_TYPE}&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${code}`,
+    // https://kauth.kakao.com/oauth/token?code=pCGvVvqQ23eXrt8P4qeiRWshB0uJpmrvwuuW6DkS7MLCkzEYaFkHBVyjuAv0icengg5qnQo9dJgAAAGLCwix7g&grant_type=authorization_code&client_secret=yJIGsT5q8680LdwtBA9vPATmEVgx71Ip&redirect_uri=https%3A%2F%2Fvw7rjas2pe.ap-northeast-1.awsapprunner.com%2Foauth%2Fkakao%2Fcallback&client_id=4aa8377c7918ab202874d5727e46c43c
     //   {
     //     method: "POST",
     //     headers: {

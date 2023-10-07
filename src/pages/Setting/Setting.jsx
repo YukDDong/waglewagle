@@ -36,7 +36,7 @@ const Setting = () => {
             </NavCont>
             <NavWrap>
               <li>
-                <Link to="/MyPage">
+                <Link to="/changePwd">
                   <b>비밀번호 변경</b>
                   <em>&gt;</em>
                 </Link>
