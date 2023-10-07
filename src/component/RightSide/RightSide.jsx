@@ -19,6 +19,7 @@ import {
   getGiwaHouse,
 } from "../../redux/actions/giwaHouseActions";
 import { makeGiwaHouse } from "../../redux/actions/userActions";
+import { getItem, setItem } from "../../utils/storage";
 
 const RightSide = ({
   openMakeup,
@@ -42,9 +43,9 @@ const RightSide = ({
     if (giwaSvg !== null) {
       openMakeup
         ? (giwaSvg.style.pointerEvents = "none")
-        : (giwaSvg.style.pointerEvents = "initial")
+        : (giwaSvg.style.pointerEvents = "initial");
     }
-  }, [openMakeup])
+  }, [openMakeup]);
 
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
@@ -70,6 +71,14 @@ const RightSide = ({
         url: generateRandomString(20),
       }).then((result) => {
         if (result.data.status === "SUCCESS") {
+          const autoLogin = getItem("autoLogin");
+          if (autoLogin) {
+            const localUserInfo = getItem("USERINFO");
+            setItem("USERINFO", {
+              ...localUserInfo,
+              boardId: result.data.data.broadId,
+            });
+          }
           dispatch(makeGiwaHouse(result.data.data));
           navigate("/main", { state: { from: "/makeGiwaHouse" } });
           return;

@@ -41,7 +41,7 @@ export default function NavBar({ isShowing = true }) {
 
   useEffect(() => {
     setIsLogin(userInfo.loggedIn);
-  }, []);
+  }, [userInfo.loggedIn]);
 
   useEffect(() => {
     if (!isShowing) {
@@ -91,7 +91,7 @@ export default function NavBar({ isShowing = true }) {
                 <p>
                   안녕하신가
                   <br />
-                  <span>{userName}</span>님.
+                  <span>{userInfo.username}</span>님.
                 </p>
               ) : (
                 <Link to="/login">
