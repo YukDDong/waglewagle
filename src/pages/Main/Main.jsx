@@ -168,7 +168,7 @@ const Main = () => {
 
     setTimeout(() => {
       setIsVisitorClick(false);
-    }, 1500);
+    }, 2000);
   }, [isVisitorClick]);
 
   useEffect(() => {
@@ -176,7 +176,7 @@ const Main = () => {
 
     setTimeout(() => {
       setgiwaAddOut(false);
-    }, 1500);
+    }, 2000);
   }, [giwaAddOut]);
 
   // 캡쳐
