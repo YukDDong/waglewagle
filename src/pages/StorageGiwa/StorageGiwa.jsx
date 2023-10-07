@@ -140,15 +140,12 @@ const StorageGiwa = () => {
               <VisitIcon />
               <b>보관함</b>
             </NavCont>
-            {
-              giwaList.length !== 0 &&
-              <Select onClick={() => setShowOptions((boolean) => !boolean)} $show={showOptions}>
-                <ul>
-                  <li onClick={handleOnChangeSelectValue}><button>{selectData.select}<ToggleArrow /></button></li>
-                  <li onClick={handleOnChangeSelectValue}><button>{selectData.option}</button></li>
-                </ul>
-              </Select>
-            }
+            <Select onClick={() => setShowOptions((boolean) => !boolean)} $show={showOptions}>
+              <ul>
+                <li onClick={handleOnChangeSelectValue}><button>{selectData.select}<ToggleArrow /></button></li>
+                <li onClick={handleOnChangeSelectValue}><button>{selectData.option}</button></li>
+              </ul>
+            </Select>
           </Nav>
           <GiwaWrap className="giwa_wrap">
             {
