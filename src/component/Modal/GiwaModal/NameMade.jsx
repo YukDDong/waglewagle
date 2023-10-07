@@ -22,6 +22,9 @@ const NameContain = ({ text, giwaInfo }) => {
     case 2:
       selectedFont = "EBS Hunminjeongeum";
       break;
+    case 3:
+      selectedFont = "Gmarket Sans";
+      break;
     default:
       break;
   }
@@ -39,8 +42,6 @@ const NameContain = ({ text, giwaInfo }) => {
     default:
       break;
   }
-
-  console.log("giwaInfo", giwaInfo);
 
   const checkProfanity = (text) => {
     let censoredText = text;
@@ -64,6 +65,9 @@ const NameContain = ({ text, giwaInfo }) => {
   };
 
   const handleNickNameBlur = () => {
+    if (nickName.trim() === "") {
+      return;
+    }
     if (englishRegex.test(nickName)) {
       dispatch(writeNickName(nickName));
       setIsChecked(
@@ -86,9 +90,7 @@ const NameContain = ({ text, giwaInfo }) => {
         $fontColor={fontColorDefault[giwaInfo.fontColor - 1]}
       >
         <Booklet />
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
       </Text>
       <NameInput>
         <SelectTitle
@@ -115,7 +117,7 @@ const NameContain = ({ text, giwaInfo }) => {
           <div>{isChecked ? isChecked : <span>이름이 무엇인가?</span>}</div>
         </TextNotification>
       </NameInput>
-    </NameWrap >
+    </NameWrap>
   );
 };
 export default NameContain;
@@ -178,7 +180,7 @@ const NameInput = styled.div`
     border-radius: 6px;
     border: 1px solid #e6e6e6;
     background-color: #fafafa;
-    color: #bdbdbd;
+    color: black;
     font-family: var(--font-hunmin);
     font-size: 16px;
     font-style: normal;
