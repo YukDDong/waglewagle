@@ -205,6 +205,7 @@ const GiwaImg = styled.div`
 const GiwaText = styled.div`
   padding: 5px 0 0;
   b {
+    height: 36px;
     display: block;
     margin: 0 0 10px;
     color: #212121;
@@ -238,6 +239,7 @@ const GuestBookWrap = styled.div`
       }
     }
     b {
+      height: 36px;
       float: right;
       margin: 14px 0 0;
       color: #222;
@@ -296,6 +298,7 @@ const Text = styled.div`
     line-height: 30px;
     font-family: var(--font-Inter);
     overflow-y: auto;
+    word-wrap: break-word;
     &::-webkit-scrollbar {
       width: 6px;
       background-color: #e6d6b757;

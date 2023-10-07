@@ -149,6 +149,7 @@ const Text = styled.div`
     line-height: 30px;
     font-family: ${(props) => props.$font};
     overflow-y: auto;
+    white-space: pre-line; // 문자열에서 \n 명령어 인식되도록
     &::-webkit-scrollbar {
       width: 6px;
       background-color: #e6d6b757;
