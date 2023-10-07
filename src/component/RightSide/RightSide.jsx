@@ -39,7 +39,6 @@ const RightSide = ({
   );
   const { changeDaytime, changeNight, bgColor } = useBgColor(); // BG Color context
 
-  console.log("giwaColor", giwaColor);
   const handleChangeGiwaStyle = (e) => {
     const name = e.target.name;
     // e.target.id === 'night' && changeNight()

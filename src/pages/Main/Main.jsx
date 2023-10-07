@@ -95,9 +95,6 @@ const Main = () => {
     });
   }, []);
 
-  console.log("initGiwaHouse", initGiwaHouse);
-  console.log("giwaHouseStyle", giwaHouseStyle);
-
   // useEffect(() => {
   //   let eventSource;
   //   const fetchSse = async () => {
@@ -278,6 +275,7 @@ const Main = () => {
           xBtnClickHandler={closeGusetBookModal}
           selectedGiwa={selectedGiwa}
           username={userInfo.username}
+          setGiwaList={setGiwaList}
         ></GuestBook>
 
         {/* 방명록 end */}
