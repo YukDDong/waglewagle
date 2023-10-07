@@ -86,7 +86,9 @@ const NameContain = ({ text, giwaInfo }) => {
         $fontColor={fontColorDefault[giwaInfo.fontColor - 1]}
       >
         <Booklet />
-        <p>{text}</p>
+        <p>
+          {text}
+        </p>
       </Text>
       <NameInput>
         <SelectTitle
@@ -113,7 +115,7 @@ const NameContain = ({ text, giwaInfo }) => {
           <div>{isChecked ? isChecked : <span>이름이 무엇인가?</span>}</div>
         </TextNotification>
       </NameInput>
-    </NameWrap>
+    </NameWrap >
   );
 };
 export default NameContain;
@@ -150,6 +152,9 @@ const Text = styled.div`
     font-family: ${(props) => props.$font};
     overflow-y: auto;
     white-space: pre-line; // 문자열에서 \n 명령어 인식되도록
+    span {
+      display: block;
+    }
     &::-webkit-scrollbar {
       width: 6px;
       background-color: #e6d6b757;
