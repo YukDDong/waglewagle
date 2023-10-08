@@ -37,7 +37,7 @@ export default function SocialLogin() {
       <p>
         <img src={kakaoIconPath} alt="카카오톡 아이콘" />
         {/* <kakaoIconPath /> */}
-        카카오톡으로 로그인
+        카카오 로그인
       </p>
     </Container>
   );
@@ -48,10 +48,10 @@ const Container = styled.button`
   height: 64px;
   display: block;
   display: flex;
-  background-color: #FAE100;
+  background-color: #fae100;
   justify-content: center;
   align-items: center;
-  gap: 15px; 
+  gap: 15px;
   border-radius: 6px;
   /* transition: all, .3s ease-in-out; */
   &.kakao {
@@ -63,7 +63,7 @@ const Container = styled.button`
   > p {
     padding: 0 0 0 30px;
     position: relative;
-    color: #371D1E;
+    color: #371d1e;
     text-align: center;
     font-family: var(--font-hunmin);
     font-size: 18px;
@@ -74,9 +74,10 @@ const Container = styled.button`
       width: 22px;
       left: -33px;
       left: 0;
-      top: 0; bottom: 0;
+      top: 0;
+      bottom: 0;
       margin: auto;
-      position: absolute; 
+      position: absolute;
     }
   }
 `;
