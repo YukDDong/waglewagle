@@ -87,7 +87,7 @@ const RightSide = ({
     } else {
       editGiwaHouseApi(giwaStyle.broadStyle.id, {
         colorCode: giwaColor,
-        backgroundCode: background,
+        backGroundCode: background,
         friendCode: friend,
       }).then((result) => {
         if (result.data.status === "SUCCESS") {
