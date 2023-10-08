@@ -185,15 +185,17 @@ const RightSide = ({
         </SelectWrap>
         <ButtonWrap>
           <Btn onClick={handleSubmit}>{btnText}</Btn>
-          <ResetBox>
-            <ResetIcon
-              width={24}
-              height={24}
-              onClick={() => {
-                dispatch(getGiwaHouse(initGiwaHouse));
-              }}
-            />
-          </ResetBox>
+          {/* 신규 기와집 생성 시 리프레시 버튼 삭제 */}
+          {isMakeGiwaHouse &&
+            (<ResetBox>
+              <ResetIcon
+                width={24}
+                height={24}
+                onClick={() => {
+                  dispatch(getGiwaHouse(initGiwaHouse));
+                }}
+              />
+            </ResetBox>)}
         </ButtonWrap>
       </div>
     </Container>
