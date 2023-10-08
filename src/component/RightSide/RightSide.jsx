@@ -186,7 +186,7 @@ const RightSide = ({
         <ButtonWrap>
           <Btn onClick={handleSubmit}>{btnText}</Btn>
           {/* 신규 기와집 생성 시 리프레시 버튼 삭제 */}
-          {isMakeGiwaHouse &&
+          {!isMakeGiwaHouse &&
             (<ResetBox>
               <ResetIcon
                 width={24}
