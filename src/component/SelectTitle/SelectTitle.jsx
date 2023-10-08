@@ -6,7 +6,9 @@ const SelectTitle = ({ title, fontSize = "20px", weight = 600 }) => {
   return (
     <Container $fontSize={fontSize} $weight={weight}> 
       <TitleIcon width={34} height={36} />
-      <span>{title}</span>
+      <span>
+        {title.split('\n').map(text => <span key={text}>{text}</span>)}
+      </span>
     </Container>
   );
 };
@@ -20,7 +22,7 @@ const Container = styled.h2`
   letter-spacing: 0.2px;
   text-transform: capitalize;
   display: flex;
-  align-items: center;
+  align-items: start;
   margin: 0 0 8px 0;
   > span { 
     margin:0 0 5px 5px; 
@@ -29,5 +31,8 @@ const Container = styled.h2`
     font-weight: ${(props) => props.$weight};
     line-height: 28px; 
     letter-spacing: 0.2px;
+    span {
+      display: block;
+    }
   }
 `;

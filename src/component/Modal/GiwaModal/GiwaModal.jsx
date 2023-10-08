@@ -197,12 +197,13 @@ const XBtnBox = styled.button`
 
 const TitleField = styled.h2`
   width: 100%;
-  padding-bottom: 14px;
   border-bottom: 1px solid #e0e0e0;
   font-family: var(--font-hunmin);
   font-size: 32px;
   color: #222;
+  padding: 0 27px 14px;
   font-weight: 600;
+  box-sizing: border-box;
   > span {
     color: #1748c1;
     text-align: center;
