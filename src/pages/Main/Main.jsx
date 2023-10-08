@@ -176,7 +176,7 @@ const Main = () => {
 
     setTimeout(() => {
       setgiwaAddOut(false);
-    }, 2000);
+    }, 4500);
   }, [giwaAddOut]);
 
   // 캡쳐
