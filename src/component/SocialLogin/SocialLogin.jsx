@@ -61,6 +61,7 @@ const Container = styled.button`
     /* background-color: #f0e000; */
   }
   > p {
+    padding: 0 0 0 30px;
     position: relative;
     color: #371D1E;
     text-align: center;
@@ -70,7 +71,9 @@ const Container = styled.button`
     font-weight: 600;
     line-height: 20px; /* 111.111% */
     img {
-      left: -38px;
+      width: 22px;
+      left: -33px;
+      left: 0;
       top: 0; bottom: 0;
       margin: auto;
       position: absolute; 
