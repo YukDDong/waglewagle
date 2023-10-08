@@ -27,6 +27,7 @@ import { EventSourcePolyfill } from "event-source-polyfill";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
 import CopyLink from "../../component/Popup/CopyLink";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -54,6 +55,7 @@ const Main = () => {
   const [initGiwaHouse, setInitGiwaHouse] = useState();
   const previousPath = location.state ? location.state.from : null;
   const token = getItem("AUTH");
+  const navigate = useNavigate();
 
   /* 널리알리기 - URL 클립보드 복사하기 */
   useEffect(() => {
@@ -89,7 +91,8 @@ const Main = () => {
         });
         return;
       } else {
-        alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        // alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        navigate("/login");
         return;
       }
     });
