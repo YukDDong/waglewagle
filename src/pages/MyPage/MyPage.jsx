@@ -28,7 +28,14 @@ const MyPage = () => {
               안녕하시오.
             </Title>
             <JoinEmeil>
-              {/* <Kakao /> */}
+              
+              {/* 카카오 아이콘 */}
+              {
+                (userInfo.memberType == "KAKAO") 
+                  ? <Kakao />
+                  : null
+              }
+
               <span>{userInfo.email}</span>
             </JoinEmeil>
           </TitleWrap>
