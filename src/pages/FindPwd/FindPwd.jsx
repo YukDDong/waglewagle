@@ -4,10 +4,13 @@ import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText } from "../../component/Input/Input";
-import { validEmail, IsTrue, IsFalse } from "../../component/ValidTest/ValidTest";
+import {
+  validEmail,
+  IsTrue,
+  IsFalse,
+} from "../../component/ValidTest/ValidTest";
 import { ButtonActDeact } from "../../component/Button/Button";
-import { validationEmailApi } from "../../apis/user";
-
+import { temporaryPasswordApi, validationEmailApi } from "../../apis/user";
 
 const FindPwd = () => {
   /* 이메일 발송 완료 팝업창  */
@@ -33,7 +36,6 @@ const FindPwd = () => {
     [data]
   );
 
-
   // 이메일 형식 판별
   useEffect(() => {
     // 판별
@@ -41,51 +43,57 @@ const FindPwd = () => {
     setEmailvalidation({
       message: "",
       isEmail: false,
-    })
+    });
   }, [data.email]);
-
 
   const visibleFtn = () => {
     /* 이메일 발송 로직 구현해야함... */
     setVisibleModal(false);
-    window.location.href = "/login"
+    window.location.href = "/login";
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     validationEmailApi(data.email).then((result) => {
       if (result.data.status === "SUCCESS") {
-        setVisibleModal(true)
-        setEmailvalidation({
-          message: result.data.message,
-          isEmail: true,
-        })
+        temporaryPasswordApi({
+          email: data.email,
+        }).then((response) => {
+          if (response.data.status === "SUCCESS") {
+            setVisibleModal(true);
+            setEmailvalidation({
+              message: result.data.message,
+              isEmail: true,
+            });
+          }
+        });
       }
       if (result.data.status === "FAIL") {
-        setEmailvalidation({
-          message: result.data.message,
-          isEmail: false,
-        })
+        if (result.data.message === "해당 이메일은 존재하지 않습니다. ") {
+          setEmailvalidation({
+            message: "존재하지 않는 이메일입니다.",
+            isEmail: false,
+          });
+        }
       }
     });
-  }
+  };
 
   return (
     <>
       <NavBar />
 
       {/* Modal */}
-      {(visibleModal)
-        ? <ModalBasic
+      {visibleModal ? (
+        <ModalBasic
           msg="성공적으로 메일을 보냈습니다!"
           buttonText="확인"
           onClickBtn={visibleFtn}
         />
-        : null}
+      ) : null}
 
       <Main>
         <MainDiv>
-
           {/* Title */}
           <Title title="비밀번호 찾기" />
           <Sub>
@@ -94,7 +102,6 @@ const FindPwd = () => {
           </Sub>
 
           <MainDivBottom>
-
             {/* Email */}
             <InputText
               placeholder="이메일을 적어주세요."
@@ -103,29 +110,27 @@ const FindPwd = () => {
             />
 
             {/* Email 판별 */}
-            {(data.email !== "")  // 비어있을 때
-              ? (data.isEmail)  // 이메일 형식에 맞는지
-                ? (<IsTrue></IsTrue>)
-                : (<IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>)
-              : null
-            }
+            {data.email !== "" ? ( // 비어있을 때
+              data.isEmail ? ( // 이메일 형식에 맞는지
+                <IsTrue></IsTrue>
+              ) : (
+                <IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>
+              )
+            ) : null}
 
             {/* 존재하지 않는 이메일 */}
-            {!emailvalidation.isEmail
-              ? <IsFalse>{emailvalidation.message}</IsFalse>
-              : null
-            }
+            {!emailvalidation.isEmail ? (
+              <IsFalse>{emailvalidation.message}</IsFalse>
+            ) : null}
 
             {/* 버튼 */}
             <ButtonActDeact
-              onClick={e => handleClick(e)}
+              onClick={(e) => handleClick(e)}
               disabled={!data.isEmail}
             >
               메일 보내기
             </ButtonActDeact>
-
           </MainDivBottom>
-
         </MainDiv>
       </Main>
     </>
@@ -133,7 +138,6 @@ const FindPwd = () => {
 };
 
 export default FindPwd;
-
 
 const Main = styled.main`
   width: 100%;
@@ -155,7 +159,7 @@ const MainDiv = styled.div`
 const MainDivBottom = styled.div`
   button {
     margin: 40px 0 0;
-    width: 100%
+    width: 100%;
   }
 `;
 
