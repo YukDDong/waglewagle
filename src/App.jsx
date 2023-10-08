@@ -89,7 +89,7 @@ const routes = [
   },
   {
     path: "/changePwd",
-    element: <AuthRoute loginOption={true} component={<ChangePwd />} />,
+    element: <ChangePwd />,
   },
   {
     path: "/confirmPwd",

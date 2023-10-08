@@ -3,27 +3,36 @@ import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
 import ModalBasic from "../../component/Modal/ModalBasic";
-import { validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
+import {
+  validPwd,
+  IsTrue,
+  IsFalse,
+  CheckInfo,
+} from "../../component/ValidTest/ValidTest";
 import { InputPwd } from "../../component/Input/Input";
 import { ButtonActDeact } from "../../component/Button/Button";
 import { changePwdApi } from "../../apis/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
 import { removeItem } from "../../utils/storage";
 
 const ChangePwd = () => {
-
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //// data
-
-  // 변수
   const [data, setData] = useState({
     pwd: "",
     confirmPwd: "",
   });
+  const previousPath = location.state ? location.state.confirmPwd : null;
+
+  useEffect(() => {
+    if (!previousPath) {
+      navigate("/main");
+      return;
+    }
+  }, []);
 
   // 함수
   const updateData = useCallback(
@@ -32,7 +41,6 @@ const ChangePwd = () => {
     },
     [data]
   );
-
 
   //// valid
 
@@ -45,13 +53,13 @@ const ChangePwd = () => {
   // 함수
   // 실시간 변수 업데이트
   useEffect(() => {
-    setIsValid({...isValid, 
+    setIsValid({
+      ...isValid,
       isPwd: validPwd(data.pwd),
-      isConfirmPwd: (data.pwd === data.confirmPwd)
+      isConfirmPwd: data.pwd === data.confirmPwd,
     });
   }, [data]);
 
-  
   //// visibleModal
 
   // 변수
@@ -62,20 +70,18 @@ const ChangePwd = () => {
     setVisibleModal(value);
   };
 
-
   // '비밀번호 변경' 버튼 클릭 시 이벤트
-  const handleClick = ()=>{
-    
+  const handleClick = () => {
     // 비밀번호 변경 요청
     changePwdApi({
-      password: data.pwd
+      password: data.pwd,
     }).then((result) => {
       if (result.status === 200) {
         // modal 열기
         visibleFtn(true);
       }
-    })
-  }
+    });
+  };
 
   // 로그아웃
   const logoutBtnClick = () => {
@@ -86,45 +92,42 @@ const ChangePwd = () => {
     navigate("/login");
   };
 
-
   return (
     <>
       <NavBar />
 
       {/* Modal */}
-      {(visibleModal)
-        ? <ModalBasic
-          msg = {"비밀번호를 성공적으로\n변경했습니다!"}
+      {visibleModal ? (
+        <ModalBasic
+          msg={"비밀번호를 성공적으로\n변경했습니다!"}
           buttonText="로그인 화면으로 이동"
           visibleFtn={visibleFtn}
           onClickBtn={logoutBtnClick}
         />
-        : null}
+      ) : null}
 
-      
       <Main>
         <MainDiv>
-
           <MainDivTop>
-
             {/* Title */}
             <Title title="비밀번호 변경" />
             <Sub>비밀번호를 변경해 주세요.</Sub>
-
           </MainDivTop>
 
           <MainDivBottom>
-
             {/* 비밀번호 */}
-            <InputPwd 
+            <InputPwd
               placeholder="비밀번호를 적어주세요."
               dataName="pwd"
               updateData={updateData}
             />
 
             {/* 비밀번호 판별 */}
-            {((data.pwd !== "") && (!isValid.isPwd)) ? (
-              <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
+            {data.pwd !== "" && !isValid.isPwd ? (
+              <IsFalse>
+                비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서
+                사용하세요.
+              </IsFalse>
             ) : (
               <CheckInfo>
                 <span>* </span>
@@ -136,15 +139,15 @@ const ChangePwd = () => {
             <Blank />
 
             {/* 비밀번호 확인 */}
-            <InputPwd 
+            <InputPwd
               placeholder="비밀번호를 한 번 더 적어주세요."
               dataName="confirmPwd"
               updateData={updateData}
             />
 
             {/* 비밀번호 확인 판별 */}
-            {(data.confirmPwd !== "") ? (
-              (isValid.isConfirmPwd) ? (
+            {data.confirmPwd !== "" ? (
+              isValid.isConfirmPwd ? (
                 <IsTrue>비밀번호가 일치합니다.</IsTrue>
               ) : (
                 <IsFalse>비밀번호가 일치하지 않습니다.</IsFalse>
@@ -152,15 +155,13 @@ const ChangePwd = () => {
             ) : null}
 
             {/* 버튼 */}
-            <ButtonActDeact 
+            <ButtonActDeact
               onClick={handleClick}
-              disabled={!((isValid.isPwd) && (isValid.isConfirmPwd))}
+              disabled={!(isValid.isPwd && isValid.isConfirmPwd)}
             >
               비밀번호 변경
             </ButtonActDeact>
-
           </MainDivBottom>
-
         </MainDiv>
       </Main>
     </>
@@ -168,7 +169,6 @@ const ChangePwd = () => {
 };
 
 export default ChangePwd;
-
 
 const Main = styled.main`
   width: 100%;
@@ -197,7 +197,7 @@ const MainDivBottom = styled.div`
   margin-top: 40px;
   button {
     margin: 40px 0 0;
-    width: 100%
+    width: 100%;
   }
 `;
 

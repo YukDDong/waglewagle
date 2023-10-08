@@ -49,3 +49,11 @@ export const changePwdApi = async (payload) => {
   const response = await client.put("/api/v1/users/password/change", payload);
   return response;
 };
+
+export const confirmPwdApi = async (payload) => {
+  const response = await client.post(
+    `/api/v1/users/password/validation`,
+    payload
+  );
+  return response;
+};
