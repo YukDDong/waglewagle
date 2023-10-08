@@ -57,3 +57,13 @@ export const confirmPwdApi = async (payload) => {
   );
   return response;
 };
+
+// 회원 이메일 확인
+export const validationEmailApi = async (payload) => {
+  const response = await client.get("/api/v1/users/validation", {
+    params: {
+      email: payload,
+    },
+  });
+  return response;
+};
