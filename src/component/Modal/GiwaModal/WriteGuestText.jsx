@@ -22,7 +22,7 @@ export const fontColorDefault = [
 ];
 const rangeData = ["왼쪽 정렬", "중앙 정렬", "오른쪽 정렬"];
 
-export const profanity = [/씨발/g, /개새끼/g, /놈/g, /년/g, /닥쳐/g, /애미/g];
+export const profanity = [/씨발/g, /개새끼/g, /놈/g, /닥쳐/g, /애미/g, /썅놈/g];
 
 export const englishRegex = /[a-zA-z]/;
 
