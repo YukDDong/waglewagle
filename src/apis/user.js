@@ -33,6 +33,11 @@ export const loginSocialApi = async (payload) => {
   return response;
 };
 
+export const loginNaverApi = async (payload) => {
+  const response = await client.post("/oauth/login/naver", payload);
+  return response;
+};
+
 // 회원탈퇴
 export const withdrawalApi = async (payload) => {
   const response = await client.delete(`/api/v1/users/${payload}`);

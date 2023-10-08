@@ -20,6 +20,7 @@ import { getItem } from "./utils/storage";
 import { useDispatch } from "react-redux";
 import { login } from "./redux/actions/userActions";
 import Logout from "./pages/Logout/Logout";
+import NaverLogin from "./pages/NaverLogin/NaverLogin";
 
 const routes = [
   {
@@ -57,6 +58,10 @@ const routes = [
   {
     path: "/oauth/kakao/callback",
     element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
+  },
+  {
+    path: "/oauth/naver/callback",
+    element: <AuthRoute loginOption={false} component={<NaverLogin />} />,
   },
   {
     path: "/findPwd",
