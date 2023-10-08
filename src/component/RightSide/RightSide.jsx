@@ -148,7 +148,7 @@ const RightSide = ({
               onChange={handleChangeGiwaStyle}
             />
             <SelectItem
-              label="적색 기와"
+              label="분홍 기와"
               img={giwaPink}
               name={"giwaColor"}
               value={3}
