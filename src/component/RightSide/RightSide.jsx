@@ -86,9 +86,9 @@ const RightSide = ({
       });
     } else {
       editGiwaHouseApi(giwaStyle.broadStyle.id, {
-        color: giwaColor,
-        background: background,
-        friend: friend,
+        colorCode: giwaColor,
+        backgroundCode: background,
+        friendCode: friend,
       }).then((result) => {
         if (result.data.status === "SUCCESS") {
           xBtnClickHandler();
@@ -186,8 +186,8 @@ const RightSide = ({
         <ButtonWrap>
           <Btn onClick={handleSubmit}>{btnText}</Btn>
           {/* 신규 기와집 생성 시 리프레시 버튼 삭제 */}
-          {!isMakeGiwaHouse &&
-            (<ResetBox>
+          {!isMakeGiwaHouse && (
+            <ResetBox>
               <ResetIcon
                 width={24}
                 height={24}
@@ -195,7 +195,8 @@ const RightSide = ({
                   dispatch(getGiwaHouse(initGiwaHouse));
                 }}
               />
-            </ResetBox>)}
+            </ResetBox>
+          )}
         </ButtonWrap>
       </div>
     </Container>
