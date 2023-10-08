@@ -72,6 +72,12 @@ const NameContain = ({ text, giwaInfo }) => {
   };
 
   const handleNickNameBlur = () => {
+    const nickNameInput = document.querySelector('#nickNameInput');
+    if (nickName !== "") {
+      nickNameInput.style.background = "#fff";
+    } else {
+      nickNameInput.style.background = "#fafafa";
+    }
     if (nickName.trim() === "") {
       return;
     }
@@ -101,13 +107,11 @@ const NameContain = ({ text, giwaInfo }) => {
       </Text>
       <NameInput>
         <SelectTitle
-          title={
-            "어떤 호명으로 등록이 되고 싶은가? 최대 8글자만 사용 가능하다네."
-          }
-          fontSize="16px"
+          title={"어떤 호명으로 등록이 되고 싶은가?\n최대 8글자만 사용 가능하다네."}
           weight={500}
         />
         <input
+          id="nickNameInput"
           type="text"
           value={nickName}
           onChange={(e) => {
@@ -130,10 +134,11 @@ const NameContain = ({ text, giwaInfo }) => {
 export default NameContain;
 
 const NameWrap = styled.div`
+  width: 100%;
   display: flex;
   margin: 36px 0 45px;
-  gap: 35px;
-  justify-content: space-between;
+  gap: 45px;
+  justify-content: start;
 `;
 
 const Text = styled.div`
@@ -142,6 +147,7 @@ const Text = styled.div`
   min-height: 357px;
   position: relative;
   padding: 50px 30px 50px 40px;
+  margin: 0 0 0 27px;
   box-sizing: border-box;
   svg {
     position: absolute;
@@ -179,14 +185,18 @@ const Text = styled.div`
 const NameInput = styled.div`
   box-sizing: border-box;
   padding: 92px 0 0;
-  svg {
-    min-width: 34px;
+  h2 {
+    margin: 0 0 24px 0;
+    > span {
+      color: #474747;
+      font-size: 16px;
+      line-height: 23px;
+    }
   }
   input {
     width: 275px;
     border-radius: 6px;
     border: 1px solid #e6e6e6;
-    background-color: #fafafa;
     color: black;
     font-family: var(--font-hunmin);
     font-size: 16px;
@@ -195,11 +205,10 @@ const NameInput = styled.div`
     padding: 11px 14px;
     line-height: 22px;
     letter-spacing: 0.64px;
+    box-sizing: border-box;
     &:hover,
     &:focus {
       outline: none;
-      border-color: #e6e6e6;
-      background-color: #fff;
     }
   }
 `;
@@ -208,6 +217,9 @@ const TextNotification = styled.div`
   margin: 20px 0 0;
   display: flex;
   align-items: start;
+  svg {
+    min-width: 34px;
+  }
   > div {
     margin: 0 0 0 3px;
   }
