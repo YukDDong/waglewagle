@@ -76,7 +76,7 @@ const ChangePwd = () => {
     changePwdApi({
       password: data.pwd,
     }).then((result) => {
-      if (result.status === 200) {
+      if (result.data.status === "SUCCESS") {
         // modal 열기
         visibleFtn(true);
       }
