@@ -38,12 +38,14 @@ const Setting = () => {
               <b>설정</b>
             </NavCont>
             <NavWrap>
-              <li>
-                <Link to="/confirmPwd">
-                  <b>비밀번호 변경</b>
-                  <em>&gt;</em>
-                </Link>
-              </li>
+              {userInfo.memberType === "GENERAL" ? (
+                <li>
+                  <Link to="/confirmPwd">
+                    <b>비밀번호 변경</b>
+                    <em>&gt;</em>
+                  </Link>
+                </li>
+              ) : null}
               <li>
                 <Link to="/Withdrawal">
                   <b>회원 탈퇴</b>
