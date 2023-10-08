@@ -94,15 +94,18 @@ const StorageGiwa = () => {
   }, [selectData]);
 
   const openGusetBookModal = (e) => {
-    document.querySelector("html,body").style.cssText = "overflow: hidden; padding: 0 17px 0 0";
+    // document.querySelector("html,body").style.cssText = "overflow: hidden; padding: 0 17px 0 0";
+    document.querySelectorAll(".giwa_wrap li").forEach(element => {
+      element.classList.remove("active");
+    });
     e.target.closest("li").classList.add("active");
     setOpenGusetBook(true);
   };
   const closeGusetBookModal = () => {
-    document.querySelector("html,body").style.cssText = "overflow: auto; padding: 0";
+    // document.querySelector("html,body").style.cssText = "overflow: auto; padding: 0";
     document.querySelectorAll(".giwa_wrap li").forEach(element => {
       element.classList.remove("active");
-    })
+    });
     setOpenGusetBook(false);
   };
 
@@ -124,7 +127,7 @@ const StorageGiwa = () => {
         {/* pc 최적화 팝업 end */}
       </Mobile>
       <NavBar />
-      <Container open={openGusetBook}>
+      <Container open={openGusetBook} className={openGusetBook ? "on" : null} >
         <AsideTitle>
           <Title>
             <span>{userName}</span>님, <br />
@@ -184,7 +187,7 @@ const StorageGiwa = () => {
         setGiwaList={setGiwaList}
       ></GuestBook>
       {/* 방명록 end */}
-      <Dimmed open={openGusetBook}></Dimmed>
+      {/* <Dimmed open={openGusetBook}></Dimmed> */}
     </>
   );
 };
@@ -192,17 +195,27 @@ const StorageGiwa = () => {
 export default StorageGiwa;
 
 const Container = styled.div`
+  width: 100%;
   max-width: 980px;
   margin: 0 auto;
-  padding: 240px 50px 0 50px;
-  position: relative;
+  padding: 240px 50px 120px 50px;
+  position: absolute;
   transition: all ease-in-out 1s;
-  left: ${({ open }) => open ? "-350px" : "0"};
-  /* overflow: hidden; */
+  transform: translate(-50%,0);
+  left:50%;
   &:after {
     content: "";
     display: block;
     clear: both;
+  }
+  &.on {
+    transform: translate(calc(-50% - 680px + 20vw),0);
+  }
+  @media screen and (max-width: 1600px) {
+    &.on {
+      max-width: 900px;
+      transform: translate(calc(-50% - 680px + 18vw),0);
+    }
   }
 `;
 
@@ -357,15 +370,9 @@ const GiwaLi = styled.li`
     }
   }
   &.active {
-    z-index: 103; 
-    > span {
-      color: #fff;
-    }
     button {
-      &:hover {
-        &:after {        
-          background-color: transparent;
-        }
+      &:after {        
+        background-color: rgba(231, 88, 82, .7);
       }
     }
   }
