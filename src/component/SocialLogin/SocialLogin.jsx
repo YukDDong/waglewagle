@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import kakaoIconPath from "../../assets/login/symbol-kakao.svg";
 import googleIconPath from "../../assets/login/symbol-google.svg";
 import naverIconPath from "../../assets/login/symbol-naver.svg";
-import { KAKAO_AUTH_URL } from "./socialLoginUrl";
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "./socialLoginUrl";
 
 export default function SocialLogin() {
   const linkToKakaoLogin = () => {
@@ -12,12 +12,12 @@ export default function SocialLogin() {
     console.log("google login");
   };
   const linkToNaverLogin = () => {
-    console.log("naver login");
+    window.location.href = NAVER_AUTH_URL;
   };
 
   const socialList = [
     { name: "kakao", link: linkToKakaoLogin },
-    { name: "google", link: linkToGoogleLogin },
+    // { name: "google", link: linkToGoogleLogin },
     { name: "naver", link: linkToNaverLogin },
   ];
 
@@ -38,9 +38,10 @@ const Container = styled.ul`
   width: 250px;
   height: 60px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-top: 20px;
+  gap: 15px;
 `;
 
 const SocialIconBox = styled.li``;
@@ -54,8 +55,8 @@ const IconImg = styled.span`
     props.social === "kakao"
       ? "#FAE100"
       : props.social === "google"
-        ? "#FFFFFF"
-        : "#00C300"};
+      ? "#FFFFFF"
+      : "#00C300"};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: start;
@@ -67,9 +68,9 @@ const IconImg = styled.span`
     width: 100%;
     height: 100%;
     background-image: ${(props) =>
-    props.social === "kakao"
-      ? `url(${kakaoIconPath})`
-      : props.social === "google"
+      props.social === "kakao"
+        ? `url(${kakaoIconPath})`
+        : props.social === "google"
         ? `url(${googleIconPath})`
         : `url(${naverIconPath})`};
     background-repeat: no-repeat;

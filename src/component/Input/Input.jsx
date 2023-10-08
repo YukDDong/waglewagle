@@ -13,9 +13,8 @@ function InputText({
   dataName,
   updateData,
   onEmailCheck,
-  isValid
+  isValid,
 }) {
-
   const location = useLocation().pathname;
   const [input, setInput] = useInput("");
   const [isFocus, setIsFocus] = useState(false);
@@ -34,13 +33,17 @@ function InputText({
     // Overlap
     <InputDiv $location={location} $isFocus={isFocus}>
       {/* 이메일 중복확인 버튼 start */}
-      {
-        (location === "/join" && isValid.isEmail) ? (
-          (!isValid.isEmeilCheck)
-            ? (<button className="check" onClick={(e) => onEmailCheck(e)}>중복확인</button>)
-            : (<button className="check available" onClick={(e) => onEmailCheck(e)}>사용가능</button>)
-        ) : null
-      }
+      {location === "/join" && isValid.isEmail ? (
+        !isValid.isEmeilCheck ? (
+          <button className="check" onClick={(e) => onEmailCheck(e)}>
+            중복확인
+          </button>
+        ) : (
+          <button className="check available" onClick={(e) => onEmailCheck(e)}>
+            사용가능
+          </button>
+        )
+      ) : null}
       {/* 이메일 중복확인 버튼 end */}
 
       {/* icon */}
@@ -57,18 +60,12 @@ function InputText({
         autoComplete="off"
         required
       />
-
-    </InputDiv >
+    </InputDiv>
   );
 }
 
 // InputPwd
-function InputPwd({
-  placeholder,
-  dataName,
-  updateData
-}) {
-
+function InputPwd({ placeholder, dataName, updateData }) {
   const location = useLocation().pathname;
   const [input, setInput] = useInput("");
   const [isFocus, setIsFocus] = useState(false);
@@ -86,10 +83,8 @@ function InputPwd({
   }, [dataName, input]);
 
   return (
-
     // Overlap
     <InputDiv $location={location} $isFocus={isFocus}>
-
       {/* icon */}
       <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
 
@@ -106,7 +101,10 @@ function InputPwd({
       />
 
       {/* EyeIconBtn */}
-      {location === "/join" ? (
+      {location === "/join" ||
+      location === "/changePwd" ||
+      location === "/confirmPwd" ||
+      location === "/login" ? (
         <EyeIconBtn
           onClick={() =>
             setPasswordShowing((passwordShowing) => !passwordShowing)
@@ -115,7 +113,6 @@ function InputPwd({
           {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
         </EyeIconBtn>
       ) : null}
-
     </InputDiv>
   );
 }
@@ -156,39 +153,39 @@ const InputDiv = styled.div`
     letter-spacing: 0.64px;
     &::placeholder {
       color: #bdbdbd;
+      font-weight: 400;
     }
     &:focus {
       outline: none;
       color: #222;
       font-size: 16px;
       font-style: normal;
-      font-weight: 500;
       line-height: normal;
       letter-spacing: 0.64px;
       &::placeholder {
-        color: #e75852;
+        color: transparent;
       }
     }
   }
   .check {
     width: fit-content;
     display: block;
-    position: absolute; 
-    right: 20px; 
+    position: absolute;
+    right: 20px;
     padding: 8px 13px;
     font-size: 12px;
     color: #fff;
     border-radius: 4px;
     margin: auto;
     font-weight: 700;
-    background-color: var(--btn-main-color);    
+    background-color: var(--btn-main-color);
     transition: all ease-in-out 0.3s;
     &:hover {
-      background-color: #D24640;
+      background-color: #d24640;
     }
     &.available {
-      background-color: #FDEFEE;
-      color: var(--btn-main-color); 
+      background-color: #fdefee;
+      color: var(--btn-main-color);
       cursor: initial;
     }
   }
@@ -201,6 +198,5 @@ const EyeIconBtn = styled.div`
   width: 18px;
   height: 18px;
 `;
-
 
 export { InputText, InputPwd };

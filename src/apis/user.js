@@ -33,6 +33,11 @@ export const loginSocialApi = async (payload) => {
   return response;
 };
 
+export const loginNaverApi = async (payload) => {
+  const response = await client.post("/oauth/login/naver", payload);
+  return response;
+};
+
 // 회원탈퇴
 export const withdrawalApi = async (payload) => {
   const response = await client.delete(`/api/v1/users/${payload}`);
@@ -42,5 +47,23 @@ export const withdrawalApi = async (payload) => {
 // 비밀번호 변경
 export const changePwdApi = async (payload) => {
   const response = await client.put("/api/v1/users/password/change", payload);
+  return response;
+};
+
+export const confirmPwdApi = async (payload) => {
+  const response = await client.post(
+    `/api/v1/users/password/validation`,
+    payload
+  );
+  return response;
+};
+
+// 회원 이메일 확인
+export const validationEmailApi = async (payload) => {
+  const response = await client.get("/api/v1/users/validation", {
+    params: {
+      email: payload,
+    },
+  });
   return response;
 };
