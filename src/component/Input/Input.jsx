@@ -57,7 +57,7 @@ function InputText({
         onFocus={onFocusChange}
         onBlur={onBlurChange}
         onChange={setInput}
-        autoComplete="off"
+        autoComplete="one-time-code"
         required
       />
     </InputDiv>
@@ -96,7 +96,7 @@ function InputPwd({ placeholder, dataName, updateData }) {
         onFocus={onFocusChange}
         onBlur={onBlurChange}
         onChange={setInput}
-        autoComplete="off"
+        autoComplete="one-time-code"
         required
       />
 
