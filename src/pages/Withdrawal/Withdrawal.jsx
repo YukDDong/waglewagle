@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from "react";
 import styled from 'styled-components';
 import Button from '../../component/Button/Button';
 import Title from "../../component/Title/Title";
@@ -10,6 +11,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
 import { removeItem } from "../../utils/storage";
+import ModalBasic from "../../component/Modal/ModalBasic";
 
 const Withdrawal = () => {
   
@@ -23,19 +25,27 @@ const Withdrawal = () => {
     removeItem("AUTH");
     removeItem("USERINFO");
     removeItem("autoLogin");
-    navigate("/login");
+    navigate("/");
   };
 
   // 회원 탈퇴 처리
   const onSubmit = () => {
-
     // 회원탈퇴 api 요청
     withdrawalApi(userInfo.userId).then((result) => {
-
-      // 로그아웃
-      logoutBtnClick();
+      // Modal 띄우기
+      visibleFtn(true);
     });
   }
+
+  //// visibleModal
+
+  // 변수
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  // 함수
+  const visibleFtn = (value) => {
+    setVisibleModal(value);
+  };
 
   return (
     <>
@@ -45,6 +55,17 @@ const Withdrawal = () => {
         {/* pc 최적화 팝업 end */}
       </Mobile>
       <NavBar />
+
+      {/* Modal */}
+      {(visibleModal)
+        ? <ModalBasic
+          msg = {"회원탈퇴가 완료되었습니다."}
+          buttonText="확인"
+          visibleFtn={visibleFtn}
+          onClickBtn={logoutBtnClick}
+        />
+        : null}
+
       <Main>
         <MainDiv>
           <Title title="회원을 탈퇴하실 건가요?ㅠㅠ" />

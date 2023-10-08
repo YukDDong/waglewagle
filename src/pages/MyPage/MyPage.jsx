@@ -113,7 +113,7 @@ const NavWrap = styled.ul`
       height: 100%;
       display: block;
       position: relative;
-      padding: 27px 0 27px 10px;
+      padding: 29px 0 29px 10px;
       &:hover {
         span {
           color: #E75852;

@@ -29,8 +29,6 @@ const GuestBook = ({
   let giwaTitle;
   let giwaFont;
 
-  console.log(giwa);
-
   useEffect(() => {
     if (!selectedGiwa) return;
     getGiwaDetailApi(selectedGiwa).then((result) => {

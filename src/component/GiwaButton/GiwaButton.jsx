@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import giwaData from "../../data/giwaPath";
 
@@ -9,18 +9,27 @@ const GiwaButton = ({
   url,
   setIsVisitorClick,
 }) => {
+
+  const giwaClickActive = (e) => {
+    document.querySelectorAll(".giwa_svg path").forEach(element => {
+      element.setAttribute("class", "");
+    });
+    e.target.setAttribute("class", "active");
+  }
+
   return (
     <GiwaContainer>
       <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px" className="giwa_svg">
         {giwaList.map((giwa, index) => (
           <path
             key={giwa.id}
-            onClick={() => {
+            onClick={(e) => {
               if (url) {
                 setIsVisitorClick(true);
               } else {
                 changeGiwa(giwa.id);
                 setOpen();
+                giwaClickActive(e);
               }
             }}
             d={giwaData[index].data}
@@ -57,6 +66,9 @@ const GiwaSvg = styled.svg`
     stroke-miterlimit: 10;
     cursor: pointer;
     transition: fill, 0.4s ease-in-out;
+    &.active {
+      fill: #cccccc2d;
+    }
     &:hover {
       fill: #cccccc2d;
     }
