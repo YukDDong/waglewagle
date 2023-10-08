@@ -202,14 +202,17 @@ const Main = () => {
     setOpenNav(true);
     setOpenMakeup(false);
   };
-
+  
   /* 방명록 모달창 */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
   };
-
+  
   const closeGusetBookModal = () => {
+    document.querySelectorAll(".giwa_svg path").forEach(element => {
+      element.setAttribute("class", "");
+    });
     setOpenNav(true);
     setOpenGusetBook(false);
   };
