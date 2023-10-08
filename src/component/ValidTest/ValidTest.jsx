@@ -80,10 +80,11 @@ const IsTrue = styled.span`
 `;
 
 const IsFalse = styled.span`
-  color: red;
-  font-size: 16px;
-  margin-top: 5px;
+  color: #E75852;
+  font-size: 14px;
+  margin-top: 8px;
   display: block;
+  font-weight: 500;
 `;
 
 const CheckInfo = styled.span`
@@ -93,7 +94,7 @@ const CheckInfo = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-top: 5px;
+  margin-top: 8px;
   > span {
     color: #e75852;
   }

@@ -153,17 +153,17 @@ const InputDiv = styled.div`
     letter-spacing: 0.64px;
     &::placeholder {
       color: #bdbdbd;
+      font-weight: 400;
     }
     &:focus {
       outline: none;
       color: #222;
       font-size: 16px;
       font-style: normal;
-      font-weight: 500;
       line-height: normal;
       letter-spacing: 0.64px;
       &::placeholder {
-        color: #e75852;
+        color: transparent;
       }
     }
   }
