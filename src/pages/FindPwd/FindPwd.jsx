@@ -38,6 +38,10 @@ const FindPwd = () => {
   useEffect(() => {
     // 판별
     updateData("isEmail", validEmail(data.email));
+    setEmailvalidation({
+      message: "",
+      isEmail: false,
+    })
   }, [data.email]);
 
 
