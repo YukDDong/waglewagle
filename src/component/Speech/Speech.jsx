@@ -132,10 +132,7 @@ const Container = styled.div`
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.16px;
-    transition: color, .2s ease-in-out;
-    &:hover {
-      color: #18306d;
-    }
+    transition: color, .2s ease-in-out;    
     p {
       margin: 9% 0 0;
     }
