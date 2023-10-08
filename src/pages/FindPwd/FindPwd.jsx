@@ -6,15 +6,22 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText } from "../../component/Input/Input";
 import { validEmail, IsTrue, IsFalse } from "../../component/ValidTest/ValidTest";
 import { ButtonActDeact } from "../../component/Button/Button";
+import { validationEmailApi } from "../../apis/user";
 
 
 const FindPwd = () => {
-
-  //// 기본 데이터
+  /* 이메일 발송 완료 팝업창  */
+  const [visibleModal, setVisibleModal] = useState(false);
 
   // 변수
   const [data, setData] = useState({
     email: "",
+    isEmail: false,
+  });
+
+  /* 이메일 유/무판단 */
+  const [emailvalidation, setEmailvalidation] = useState({
+    message: "",
     isEmail: false,
   });
 
@@ -26,49 +33,38 @@ const FindPwd = () => {
     [data]
   );
 
+
   // 이메일 형식 판별
   useEffect(() => {
-
     // 판별
     updateData("isEmail", validEmail(data.email));
-
   }, [data.email]);
 
 
-  //// 등록된 이메일 확인
-
-  // 변수
-  const [registeredEmail, setRegisteredEmail] = useState(false);
-
-  // 함수
-  const registeredEmailFtn = () => {
-
-    // 등록된 이메일인지 확인.
-    // 백엔드 통신
-
-    // 변수 업데이트
-    setRegisteredEmail(true);
-
-    // modal 보이기
-    setVisibleModal(true);
-  };
-
-
-  //// visibleModal
-
-  // 변수
-  const [visibleModal, setVisibleModal] = useState(false);
-
-  // 함수
-  const visibleFtn = (value) => {
-    setVisibleModal(value);
-  };
-
-  // modal 확인 누르면 로그인 화면 이동
-  const handleClick = ()=>{
+  const visibleFtn = () => {
+    /* 이메일 발송 로직 구현해야함... */
+    setVisibleModal(false);
     window.location.href = "/login"
-  }
+  };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    validationEmailApi(data.email).then((result) => {
+      if (result.data.status === "SUCCESS") {
+        setVisibleModal(true)
+        setEmailvalidation({
+          message: result.data.message,
+          isEmail: true,
+        })
+      }
+      if (result.data.status === "FAIL") {
+        setEmailvalidation({
+          message: result.data.message,
+          isEmail: false,
+        })
+      }
+    });
+  }
 
   return (
     <>
@@ -77,11 +73,9 @@ const FindPwd = () => {
       {/* Modal */}
       {(visibleModal)
         ? <ModalBasic
-          msg = {(registeredEmail)
-            ? "성공적으로 메일을 보냈습니다!"
-            : "등록되지 않은 이메일입니다."}
+          msg="성공적으로 메일을 보냈습니다!"
           buttonText="확인"
-          visibleFtn={visibleFtn}
+          onClickBtn={visibleFtn}
         />
         : null}
 
@@ -90,8 +84,10 @@ const FindPwd = () => {
 
           {/* Title */}
           <Title title="비밀번호 찾기" />
-          <Sub>비밀번호를 분실하셨나요?</Sub>
-          <Sub>이메일 주소를 통해 임시 비밀번호를 발급받으실 수 있습니다.</Sub>
+          <Sub>
+            비밀번호를 분실하셨나요? <br />
+            이메일 주소를 통해 임시 비밀번호를 발급받으실 수 있습니다.
+          </Sub>
 
           <MainDivBottom>
 
@@ -105,21 +101,27 @@ const FindPwd = () => {
             {/* Email 판별 */}
             {(data.email !== "")  // 비어있을 때
               ? (data.isEmail)  // 이메일 형식에 맞는지
-                ? (<IsTrue></IsTrue>) 
+                ? (<IsTrue></IsTrue>)
                 : (<IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>)
               : null
             }
 
+            {/* 존재하지 않는 이메일 */}
+            {!emailvalidation.isEmail
+              ? <IsFalse>{emailvalidation.message}</IsFalse>
+              : null
+            }
+
             {/* 버튼 */}
-            <ButtonActDeact 
-              onClick={handleClick}
+            <ButtonActDeact
+              onClick={e => handleClick(e)}
               disabled={!data.isEmail}
             >
               메일 보내기
             </ButtonActDeact>
 
           </MainDivBottom>
-          
+
         </MainDiv>
       </Main>
     </>
@@ -147,7 +149,6 @@ const MainDiv = styled.div`
 `;
 
 const MainDivBottom = styled.div`
-  margin-top: 40px;
   button {
     margin: 40px 0 0;
     width: 100%
@@ -155,10 +156,10 @@ const MainDivBottom = styled.div`
 `;
 
 const Sub = styled.h3`
-  margin-top: 14px;
+  margin: 15px 0 40px;
+  text-align: center;
   color: #9e9e9e;
   font-size: 16px;
-  font-style: normal;
-  font-weight: 350;
-  line-height: 10px;
+  line-height: 24px;
+  font-weight: 400;
 `;

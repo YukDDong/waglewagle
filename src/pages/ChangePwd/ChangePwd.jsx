@@ -206,10 +206,10 @@ const Blank = styled.div`
 `;
 
 const Sub = styled.h3`
-  margin-top: 14px;
+  margin: 15px 0 0;
   color: #9e9e9e;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 20px;
+  font-weight: 400;
+  line-height: 24px;
 `;

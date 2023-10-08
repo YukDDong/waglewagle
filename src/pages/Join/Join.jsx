@@ -72,7 +72,6 @@ const Join = () => {
   const onJoinSubmit = (e) => {
     e.preventDefault();
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm && isValid.isEmeilCheck) {
-      console.log(data.userId);
       joinApi({
         email: data.userId,
         password: data.pwd,
@@ -94,6 +93,7 @@ const Join = () => {
 
   /* 이메일 중복확인 */
   const onEmailCheck = (e) => {
+    console.log(data.userId)
     e.preventDefault();
     if (!e.target.classList.contains("available")) {
       checkEmailApi(data.userId).then((result) => {
@@ -282,9 +282,9 @@ const MainDivBottom = styled.form`
 const Sub = styled.h3`
   margin-top: 14px;
   color: #9e9e9e;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 20px;
 `;
 
