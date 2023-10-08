@@ -67,3 +67,12 @@ export const validationEmailApi = async (payload) => {
   });
   return response;
 };
+
+// 임시 비밀번호 발급
+export const temporaryPasswordApi = async (payload) => {
+  const response = await client.post(
+    "/api/v1/users/password/temporary-email",
+    payload
+  );
+  return response;
+};
