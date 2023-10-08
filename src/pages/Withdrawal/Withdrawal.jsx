@@ -25,15 +25,13 @@ const Withdrawal = () => {
     removeItem("AUTH");
     removeItem("USERINFO");
     removeItem("autoLogin");
-    navigate("/login");
+    navigate("/");
   };
 
   // 회원 탈퇴 처리
   const onSubmit = () => {
-
     // 회원탈퇴 api 요청
     withdrawalApi(userInfo.userId).then((result) => {
-
       // Modal 띄우기
       visibleFtn(true);
     });
