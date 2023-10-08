@@ -198,7 +198,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 980px;
   margin: 0 auto;
-  padding: 240px 50px 0 50px;
+  padding: 240px 50px 120px 50px;
   position: absolute;
   transition: all ease-in-out 1s;
   transform: translate(-50%,0);
