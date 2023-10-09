@@ -27,8 +27,11 @@ const Setting = () => {
               안녕하시오.
             </Title>
             <JoinEmeil>
-              {/* <Kakao /> */}
-              <span>{userInfo.email}</span>
+              {userInfo.memberType == "KAKAO" ? (
+                <Kakao />
+              ) : (
+                <span>{userInfo.email}</span>
+              )}
             </JoinEmeil>
           </div>
           <div>
