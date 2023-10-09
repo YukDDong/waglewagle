@@ -49,6 +49,9 @@ const Onboarding = () => {
                 이라는 의미를 담고 있어 이곳에서  많은 사람들이 <br />
                 한글날을 기억하며, ‘와글와글’ 떠들기 바랍니다.
               </p>
+              <span> 
+                <em>◆</em>                
+                와글와글 서비스는 10월 9일부터 10월 15일까지 운영하여, 서비스 이용 시 참고 부탁드립니다.</span>
             </div>
           </Title>
           <ButtonWrap>
@@ -106,6 +109,20 @@ const Title = styled.div`
         font-weight: 600;
       }
     }
+    > span {
+      display: block;
+      margin: 32px 0 0;
+      color: #1C3A85;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.8px;
+      > em {
+        position: relative;
+        top: -2px;
+        margin: 0 5px 0 0;
+        font-size: 8px;
+      }
+    }
   }
 `;
 
@@ -121,7 +138,7 @@ const ButtonWrap = styled.div`
     font-family: var(--font-hunmin);
     font-weight: 600; 
     padding: 21px 56px; 
-    margin: 60px 0 0;
+    margin: 50px 0 0;
     box-sizing: border-box; 
     color: white;
     font-size: 20px;    
