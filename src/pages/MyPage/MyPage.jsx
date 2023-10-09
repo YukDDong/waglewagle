@@ -1,17 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import NavBar from '../../component/NavBar/NavBar';
+import React from "react";
+import styled from "styled-components";
+import NavBar from "../../component/NavBar/NavBar";
 import { Link } from "react-router-dom";
-import { ReactComponent as Kakao } from "../../assets/common/kakao.svg"
+import { ReactComponent as Kakao } from "../../assets/common/kakao.svg";
 import MobilePopup from "../../component/MobilePopup/MobilePopup";
 import { Mobile } from "../../style/mediaQuery";
 import { useSelector } from "react-redux";
 
 const MyPage = () => {
-
   // 데이터 불러오기
-  const userInfo = useSelector(state=>state.userReducer);
-  
+  const userInfo = useSelector((state) => state.userReducer);
+
   return (
     <>
       <Mobile>
@@ -28,15 +27,12 @@ const MyPage = () => {
               안녕하시오.
             </Title>
             <JoinEmeil>
-              
               {/* 카카오 아이콘 */}
-              {
-                (userInfo.memberType == "KAKAO") 
-                  ? <Kakao />
-                  : null
-              }
-
-              <span>{userInfo.email}</span>
+              {userInfo.memberType == "KAKAO" ? (
+                <Kakao />
+              ) : (
+                <span>{userInfo.email}</span>
+              )}
             </JoinEmeil>
           </TitleWrap>
           <NavWrap>
@@ -92,7 +88,7 @@ const Title = styled.strong`
   line-height: 60px;
   font-weight: 600;
   span {
-    color: #E75852;
+    color: #e75852;
   }
 `;
 
@@ -104,7 +100,7 @@ const JoinEmeil = styled.strong`
     margin: 0 10px 0 0;
   }
   span {
-    color: #9E9E9E;
+    color: #9e9e9e;
     font-size: 22px;
     font-weight: 400;
   }
@@ -114,7 +110,7 @@ const NavWrap = styled.ul`
   li {
     width: 520px;
     font-family: var(--font-hunmin);
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid #e0e0e0;
     a {
       width: 100%;
       height: 100%;
@@ -123,24 +119,24 @@ const NavWrap = styled.ul`
       padding: 29px 0 29px 10px;
       &:hover {
         span {
-          color: #E75852;
+          color: #e75852;
         }
         b {
-          color: #E75852;
+          color: #e75852;
         }
       }
     }
     span {
       font-size: 28px;
-      color: #000;     
-      transition: color, .2s ease-in-out;
+      color: #000;
+      transition: color, 0.2s ease-in-out;
     }
     b {
       margin: 0 0 0 10px;
-      color: #000;      
+      color: #000;
       font-size: 42px;
       font-weight: 400;
-      transition: color, .2s ease-in-out;
+      transition: color, 0.2s ease-in-out;
     }
     em {
       height: fit-content;
@@ -149,9 +145,9 @@ const NavWrap = styled.ul`
       font-family: var(--font-hunmin);
       font-size: 24px;
       font-weight: 400;
-      right: 30px;      
+      right: 30px;
       margin: auto;
-      bottom: 0; 
+      bottom: 0;
       top: 0;
     }
   }
