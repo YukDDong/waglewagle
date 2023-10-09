@@ -46,6 +46,11 @@ const KakaoLogin = () => {
           })
         );
       }
+
+      if (result.data.status === "FAIL") {
+        navigate("/logout");
+        return;
+      }
     });
   }, []);
   return <div></div>;
