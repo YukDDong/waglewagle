@@ -33,7 +33,7 @@ const Completed = ({ setCompletedGiwa }) => {
         </Wrap>
         <Button>
           <Link  onClick={() => setCompletedGiwa(false)} onMouseOver={existMouseOver} onMouseLeave={mouseOut} >이미 있습니다</Link>
-          <Link to="/join" onMouseOver={okayMouseOver} onMouseLeave={mouseOut}>좋습니다!</Link>
+          <Link to="/" onMouseOver={okayMouseOver} onMouseLeave={mouseOut}>좋습니다!</Link>
         </Button>
       </Contain>
     </Modal>
