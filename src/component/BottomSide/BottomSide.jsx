@@ -41,35 +41,34 @@ const BottomSide = ({
   useEffect(() => {
     openMakeup
       ? gsap.to(ContainRef.current, 1, {
-        y: "100px",
-        opacity: 0,
-        display: "none",
-        ease: "Power1.easeInOut",
-      })
+          y: "100px",
+          opacity: 0,
+          display: "none",
+          ease: "Power1.easeInOut",
+        })
       : gsap.to(ContainRef.current, 1, {
-        y: 0,
-        opacity: 1,
-        display: "block",
-        ease: "Power1.easeInOut",
-      });
+          y: 0,
+          opacity: 1,
+          display: "block",
+          ease: "Power1.easeInOut",
+        });
   }, [openMakeup]);
 
   useEffect(() => {
     openGusetBook
       ? gsap.to(ContainRef.current, 1, {
-        y: "100px",
-        opacity: 0,
-        display: "none",
-        ease: "Power1.easeInOut",
-      })
+          y: "100px",
+          opacity: 0,
+          display: "none",
+          ease: "Power1.easeInOut",
+        })
       : gsap.to(ContainRef.current, 1, {
-        y: 0,
-        opacity: 1,
-        display: "block",
-        ease: "Power1.easeInOut",
-      });
+          y: 0,
+          opacity: 1,
+          display: "block",
+          ease: "Power1.easeInOut",
+        });
   }, [openGusetBook]);
-
 
   const clickToggleOpen = (e) => {
     const currentType = e.target.closest("li").getAttribute("type");
@@ -90,12 +89,16 @@ const BottomSide = ({
   };
 
   useEffect(() => {
-    document.addEventListener("mouseup", e => {
-      if ((!e.target.closest(".issue_news") && document.querySelector(".issue_news")) || !e.target.closest(".sharing") && document.querySelector(".sharing")) {
-        setIconToggle(boleand)
+    document.addEventListener("mouseup", (e) => {
+      if (
+        (!e.target.closest(".issue_news") &&
+          document.querySelector(".issue_news")) ||
+        (!e.target.closest(".sharing") && document.querySelector(".sharing"))
+      ) {
+        setIconToggle(boleand);
       }
     });
-  }, [])
+  }, []);
 
   return (
     <Contain ref={ContainRef} $bgColor={bgColor}>
@@ -127,13 +130,13 @@ const BottomSide = ({
           <SideBoard className="side2" />
         </Name>
         <Various>
-          {/* <li type="issue">
+          <li type="issue">
             <button onClick={(e) => clickToggleOpen(e)}>
               <Issue width={23} height={25} />
             </button>
             {iconToggle[0].boolean && <IssueNews background={background} />}
             <NewsNumber>{15}</NewsNumber>
-          </li> */}
+          </li>
           <li type="capture">
             <button
               onClick={(e) => {
@@ -172,7 +175,7 @@ const BottomSide = ({
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
-            {/* <NewsNumber>{15}</NewsNumber> */}
+            <NewsNumber>{15}</NewsNumber>
           </ToggleBtn>
         )}
       </IconBar>
@@ -202,11 +205,11 @@ const Contain = styled.div`
   > div {
     &.history {
       border: ${({ $bgColor }) =>
-    $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
+        $bgColor ? "1px solid #ECE0B9" : "1px solid #171A32"};
       box-shadow: ${({ $bgColor }) =>
-    $bgColor
-      ? "5px 5px 10px #ECE0B9"
-      : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
+        $bgColor
+          ? "5px 5px 10px #ECE0B9"
+          : "5px 5px 15px rgba(23, 26, 50, 0.478)"};
       > a {
         &:hover {
           span {
@@ -237,9 +240,11 @@ const Contain = styled.div`
             }
           }
           > button {
-            border: ${({ $bgColor }) => $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
+            border: ${({ $bgColor }) =>
+              $bgColor ? "1px solid #C09B73;" : "1px solid #fff"};
             &:hover {
-              background-color: ${({ $bgColor }) => $bgColor ? "#AE8960" : "#171A32"};
+              background-color: ${({ $bgColor }) =>
+                $bgColor ? "#AE8960" : "#171A32"};
               svg {
                 path {
                   stroke: #fff;
@@ -369,7 +374,7 @@ const IconBar = styled.div`
       &.inline {
         left: ${(props) => (props.$isOpen ? "2px" : "-1px")};
         transform: ${(props) =>
-    props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
+          props.$isOpen ? "rotate(0)" : "rotate(180deg)"};
       }
     }
   }

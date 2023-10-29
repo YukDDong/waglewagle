@@ -105,6 +105,7 @@ const Main = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        heartbeatTimeout: 120000,
       }
     );
     eventSource.addEventListener("sse", (event) => {
@@ -112,11 +113,13 @@ const Main = () => {
     });
 
     eventSource.onopen = async () => {
-      await console.log("연결됨!");
+      await console.log("sse 연결됨!");
     };
 
-    eventSource.onmessage = (e) => {
-      console.log("이벤트 없는 메시지!");
+    eventSource.onmessage = (e) => {};
+
+    eventSource.onerror = async (e) => {
+      await console.log(e);
     };
     return () => eventSource.close();
   }, []);
