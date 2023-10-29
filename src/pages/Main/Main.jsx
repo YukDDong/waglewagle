@@ -56,6 +56,7 @@ const Main = () => {
   const previousPath = location.state ? location.state.from : null;
   const token = getItem("AUTH");
   const navigate = useNavigate();
+  const [sseList, setSseList] = useState([]);
 
   /* 널리알리기 - URL 클립보드 복사하기 */
   useEffect(() => {
@@ -99,6 +100,7 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
+    if (url) return;
     const eventSource = new EventSourcePolyfill(
       `${BASE_URL}/api/v1/notification/connect`,
       {
@@ -109,11 +111,18 @@ const Main = () => {
       }
     );
     eventSource.addEventListener("sse", (event) => {
-      console.log("Received SSE event:", event.data);
+      if (event.data.includes("EventStream Created.")) {
+        console.log("Received SSE event:", event.data);
+        return;
+      }
+
+      const data = JSON.parse(event.data);
+      setSseList((pre) => [...pre, data]);
     });
 
     eventSource.onopen = async () => {
       await console.log("sse 연결됨!");
+      setSseList([]);
     };
 
     eventSource.onmessage = (e) => {};
@@ -123,6 +132,7 @@ const Main = () => {
     };
     return () => eventSource.close();
   }, []);
+  console.log("sse", sseList);
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -307,6 +317,7 @@ const Main = () => {
         background={giwaHouseStyle.background === 1 ? true : false}
         url={url}
         giwaTitle={giwaHouse.title}
+        sseList={sseList}
       />
 
       {/* 캡쳐 팝업 start */}
