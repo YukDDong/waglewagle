@@ -98,38 +98,28 @@ const Main = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   let eventSource;
-  //   const fetchSse = async () => {
-  //     try {
-  //       eventSource = new EventSource(
-  //         `${BASE_URL}/api/v1/notification/connect`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //           withCredentials: "include",
-  //         }
-  //       );
-  //       eventSource.onopen = () => {
-  //         console.log("연결됨");
-  //       };
+  useEffect(() => {
+    const eventSource = new EventSourcePolyfill(
+      `${BASE_URL}/api/v1/notification/connect`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    eventSource.addEventListener("sse", (event) => {
+      console.log("Received SSE event:", event.data);
+    });
 
-  //       /* EVENTSOURCE ONMESSAGE ---------------------------------------------------- */
-  //       eventSource.onmessage = async (event) => {
-  //         const res = await event.data;
-  //         console.log(res);
-  //       };
+    eventSource.onopen = async () => {
+      await console.log("연결됨!");
+    };
 
-  //       /* EVENTSOURCE ONERROR ------------------------------------------------------ */
-  //       eventSource.onerror = async (event) => {
-  //         if (!event.error.message.includes("No activity")) eventSource.close();
-  //       };
-  //     } catch (error) {}
-  //   };
-  //   fetchSse();
-  //   return () => eventSource.close();
-  // });
+    eventSource.onmessage = (e) => {
+      console.log("이벤트 없는 메시지!");
+    };
+    return () => eventSource.close();
+  }, []);
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -205,15 +195,15 @@ const Main = () => {
     setOpenNav(true);
     setOpenMakeup(false);
   };
-  
+
   /* 방명록 모달창 */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
   };
-  
+
   const closeGusetBookModal = () => {
-    document.querySelectorAll(".giwa_svg path").forEach(element => {
+    document.querySelectorAll(".giwa_svg path").forEach((element) => {
       element.setAttribute("class", "");
     });
     setOpenNav(true);
@@ -280,7 +270,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -341,7 +331,12 @@ const Main = () => {
         />
       )}
       {/* 링크 복사 팝업창 end */}
-      {completedGiwaHouse && <CopyLink setGiwaHouse={setCompletedGiwaHouse} setCopyLinkPop={setCopyLinkPop} />}
+      {completedGiwaHouse && (
+        <CopyLink
+          setGiwaHouse={setCompletedGiwaHouse}
+          setCopyLinkPop={setCopyLinkPop}
+        />
+      )}
     </Container>
   );
 };
@@ -372,7 +367,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
