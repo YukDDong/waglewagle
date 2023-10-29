@@ -166,9 +166,9 @@ const Login = () => {
           </MainDiv2>
 
           {/* SNS 계정 연결 */}
-          <LineDiv />
+          {/* <LineDiv /> */}
           {/* <SocialLoginText>SNS 계정으로 로그인</SocialLoginText> */}
-          <SocialLogin />
+          {/* <SocialLogin /> */}
         </MainDiv>
       </Main>
     </>
