@@ -135,7 +135,9 @@ const BottomSide = ({
             <button onClick={(e) => clickToggleOpen(e)}>
               <Issue width={23} height={25} />
             </button>
-            {iconToggle[0].boolean && <IssueNews background={background} />}
+            {iconToggle[0].boolean && (
+              <IssueNews background={background} sseList={sseList} />
+            )}
             <NewsNumber>{sseList.length}</NewsNumber>
           </li>
           <li type="capture">
@@ -176,7 +178,7 @@ const BottomSide = ({
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
-            <NewsNumber>{sseList.length}</NewsNumber>
+            {!iconIsOpen ? <NewsNumber>{sseList.length}</NewsNumber> : null}
           </ToggleBtn>
         )}
       </IconBar>
