@@ -171,7 +171,7 @@ const Main = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse, completedGiwa]);
+  }, [giwaHouse, completedGiwa, sseList]);
 
   useEffect(() => {
     if (!isVisitorClick) return;
