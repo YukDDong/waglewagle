@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import giwaNews from "../../../assets/bottomSide/giwa_news.png";
 import { giwaPatternItems } from "../../Modal/GiwaModal/SelectGiwa";
+import { deleteNewsApi } from "../../../apis/news";
 
 // const newsData = [
 //   {
@@ -37,9 +38,20 @@ import { giwaPatternItems } from "../../Modal/GiwaModal/SelectGiwa";
 // ]
 
 console.log(giwaPatternItems[3].giwaName);
-const IssueNews = ({ backgroundState, background, sseList }) => {
+const IssueNews = ({ backgroundState, background, sseList, deleteSseList }) => {
   // const [news, setNews] = useState(newsData);
   const bgColor = background;
+
+  const deleteNews = (id) => {
+    deleteNewsApi(id).then((result) => {
+      if (result.data.status === "SUCCESS") {
+        deleteSseList(id);
+      } else {
+        alert("알림 삭제가 실패했습니다.");
+        console.log("deleteNews failed", result);
+      }
+    });
+  };
 
   return (
     <IssueWrap $bgColor={bgColor} className="issue_news">
@@ -47,13 +59,17 @@ const IssueNews = ({ backgroundState, background, sseList }) => {
       <ul>
         {sseList
           .map((news) => (
-            <NewsTxt key={news.id}>
+            <NewsTxt
+              key={news.id}
+              onClick={() => {
+                deleteNews(news.id);
+              }}
+            >
               <div>
                 <img src={giwaNews} alt={news.title} />
               </div>
               <dl>
                 <dt>{news.title}</dt>
-
                 {news.type === "new" ? (
                   <dd>
                     '{news.userName}'님이 '
@@ -128,6 +144,7 @@ const IssueWrap = styled.div`
 const NewsTxt = styled.li`
   display: flex;
   align-items: center;
+  cursor: pointer;
   > div {
     min-width: 36px;
     width: 36px;

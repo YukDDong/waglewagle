@@ -132,7 +132,11 @@ const Main = () => {
     };
     return () => eventSource.close();
   }, []);
-  console.log("sse", sseList);
+
+  const deleteSseList = (id) => {
+    const filterSseList = sseList.filter((sse) => sse.id !== id);
+    setSseList(filterSseList);
+  };
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -318,6 +322,7 @@ const Main = () => {
         url={url}
         giwaTitle={giwaHouse.title}
         sseList={sseList}
+        deleteSseList={deleteSseList}
       />
 
       {/* 캡쳐 팝업 start */}
