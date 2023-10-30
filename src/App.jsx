@@ -55,10 +55,10 @@ const routes = [
     path: "/makeGiwaHouse",
     element: <AuthRoute loginOption={true} component={<MakeGiwaHouse />} />,
   },
-  {
-    path: "/oauth/kakao/callback",
-    element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
-  },
+  // {
+  //   path: "/oauth/kakao/callback",
+  //   element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
+  // },
   {
     path: "/oauth/naver/callback",
     element: <AuthRoute loginOption={false} component={<NaverLogin />} />,
