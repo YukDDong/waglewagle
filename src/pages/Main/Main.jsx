@@ -56,6 +56,7 @@ const Main = () => {
   const previousPath = location.state ? location.state.from : null;
   const token = getItem("AUTH");
   const navigate = useNavigate();
+  const [sseList, setSseList] = useState([]);
 
   /* 널리알리기 - URL 클립보드 복사하기 */
   useEffect(() => {
@@ -98,38 +99,44 @@ const Main = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   let eventSource;
-  //   const fetchSse = async () => {
-  //     try {
-  //       eventSource = new EventSource(
-  //         `${BASE_URL}/api/v1/notification/connect`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //           withCredentials: "include",
-  //         }
-  //       );
-  //       eventSource.onopen = () => {
-  //         console.log("연결됨");
-  //       };
+  useEffect(() => {
+    if (url) return;
+    const eventSource = new EventSourcePolyfill(
+      `${BASE_URL}/api/v1/notification/connect`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        heartbeatTimeout: 120000,
+      }
+    );
+    eventSource.addEventListener("sse", (event) => {
+      if (event.data.includes("EventStream Created.")) {
+        console.log("Received SSE event:", event.data);
+        return;
+      }
 
-  //       /* EVENTSOURCE ONMESSAGE ---------------------------------------------------- */
-  //       eventSource.onmessage = async (event) => {
-  //         const res = await event.data;
-  //         console.log(res);
-  //       };
+      const data = JSON.parse(event.data);
+      setSseList((pre) => [...pre, data]);
+    });
 
-  //       /* EVENTSOURCE ONERROR ------------------------------------------------------ */
-  //       eventSource.onerror = async (event) => {
-  //         if (!event.error.message.includes("No activity")) eventSource.close();
-  //       };
-  //     } catch (error) {}
-  //   };
-  //   fetchSse();
-  //   return () => eventSource.close();
-  // });
+    eventSource.onopen = async () => {
+      await console.log("sse 연결됨!");
+      setSseList([]);
+    };
+
+    eventSource.onmessage = (e) => {};
+
+    eventSource.onerror = async (e) => {
+      await console.log(e);
+    };
+    return () => eventSource.close();
+  }, []);
+
+  const deleteSseList = (id) => {
+    const filterSseList = sseList.filter((sse) => sse.id !== id);
+    setSseList(filterSseList);
+  };
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -164,7 +171,7 @@ const Main = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse, completedGiwa]);
+  }, [giwaHouse, completedGiwa, sseList]);
 
   useEffect(() => {
     if (!isVisitorClick) return;
@@ -205,15 +212,15 @@ const Main = () => {
     setOpenNav(true);
     setOpenMakeup(false);
   };
-  
+
   /* 방명록 모달창 */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
   };
-  
+
   const closeGusetBookModal = () => {
-    document.querySelectorAll(".giwa_svg path").forEach(element => {
+    document.querySelectorAll(".giwa_svg path").forEach((element) => {
       element.setAttribute("class", "");
     });
     setOpenNav(true);
@@ -280,7 +287,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
           initGiwaHouse={initGiwaHouse}
           giwaStyle={giwaHouse}
@@ -314,6 +321,8 @@ const Main = () => {
         background={giwaHouseStyle.background === 1 ? true : false}
         url={url}
         giwaTitle={giwaHouse.title}
+        sseList={sseList}
+        deleteSseList={deleteSseList}
       />
 
       {/* 캡쳐 팝업 start */}
@@ -341,7 +350,12 @@ const Main = () => {
         />
       )}
       {/* 링크 복사 팝업창 end */}
-      {completedGiwaHouse && <CopyLink setGiwaHouse={setCompletedGiwaHouse} setCopyLinkPop={setCopyLinkPop} />}
+      {completedGiwaHouse && (
+        <CopyLink
+          setGiwaHouse={setCompletedGiwaHouse}
+          setCopyLinkPop={setCopyLinkPop}
+        />
+      )}
     </Container>
   );
 };
@@ -372,7 +386,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
