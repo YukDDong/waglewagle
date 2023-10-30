@@ -32,6 +32,7 @@ const BottomSide = ({
   url,
   giwaTitle,
   sseList,
+  deleteSseList,
 }) => {
   const userInfo = useSelector((state) => state.userReducer);
   const [iconIsOpen, setIconIsOpen] = useState(false);
@@ -136,9 +137,15 @@ const BottomSide = ({
               <Issue width={23} height={25} />
             </button>
             {iconToggle[0].boolean && (
-              <IssueNews background={background} sseList={sseList} />
+              <IssueNews
+                background={background}
+                sseList={sseList}
+                deleteSseList={deleteSseList}
+              />
             )}
-            <NewsNumber>{sseList.length}</NewsNumber>
+            {sseList.length > 0 ? (
+              <NewsNumber>{sseList.length}</NewsNumber>
+            ) : null}
           </li>
           <li type="capture">
             <button
@@ -178,7 +185,11 @@ const BottomSide = ({
           <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
-            {!iconIsOpen ? <NewsNumber>{sseList.length}</NewsNumber> : null}
+            {!iconIsOpen ? (
+              sseList.length > 0 ? (
+                <NewsNumber>{sseList.length}</NewsNumber>
+              ) : null
+            ) : null}
           </ToggleBtn>
         )}
       </IconBar>

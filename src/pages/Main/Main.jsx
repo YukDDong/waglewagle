@@ -132,7 +132,11 @@ const Main = () => {
     };
     return () => eventSource.close();
   }, []);
-  console.log("sse", sseList);
+
+  const deleteSseList = (id) => {
+    const filterSseList = sseList.filter((sse) => sse.id !== id);
+    setSseList(filterSseList);
+  };
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -167,7 +171,7 @@ const Main = () => {
       .catch((error) => {
         console.error("오류:", error);
       });
-  }, [giwaHouse, completedGiwa]);
+  }, [giwaHouse, completedGiwa, sseList]);
 
   useEffect(() => {
     if (!isVisitorClick) return;
@@ -318,6 +322,7 @@ const Main = () => {
         url={url}
         giwaTitle={giwaHouse.title}
         sseList={sseList}
+        deleteSseList={deleteSseList}
       />
 
       {/* 캡쳐 팝업 start */}
